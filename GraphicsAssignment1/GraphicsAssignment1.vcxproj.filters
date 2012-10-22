@@ -30,6 +30,9 @@
     <ClInclude Include="TableSurface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sun.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TableSurface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

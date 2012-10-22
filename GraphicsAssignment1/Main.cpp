@@ -2,6 +2,7 @@
 #include "Main.h"
 #include "SpaceWall.h"
 #include "TableSurface.h"
+#include "Sun.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -16,9 +17,9 @@ void getFaceNormal(float *norm,float pointa[3],float pointb[3],float pointc[3]);
 Camera camera = Camera();
 
 
-SpaceWall skybox ; 
-TableSurface table ; 
-
+SpaceWall skybox; 
+TableSurface table; 
+Sun sun; 
 
 //positions of the cubes
 float positionz[10];
@@ -288,6 +289,7 @@ void init (void)
 
    skybox   = SpaceWall(0.0 , 0.0 , -10.0  );
    table  = TableSurface(0.0 , -5.0 , 0.0  );
+   sun  = Sun(0.0 , 3.0 , 0.0  );
 }
 
 
@@ -391,6 +393,7 @@ void display (void)
 
 	skybox.display();
 	table.display();
+	sun.display();
 
 	cube(light_position[0] , light_position[1] , light_position[2]  , 0.2);
 
@@ -482,6 +485,8 @@ void idle(void)
 	angleX += 0.01;
 	angleY += 0.01;
 	//angleZ += 0.01;
+
+	sun.update();
 	skybox.update();
 
 	glutPostRedisplay();
