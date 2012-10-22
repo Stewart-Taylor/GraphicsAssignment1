@@ -80,11 +80,13 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="SpaceWall.h" />
+    <ClInclude Include="TextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SpaceWall.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

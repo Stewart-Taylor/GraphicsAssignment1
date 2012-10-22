@@ -284,7 +284,7 @@ void init (void)
 	glEnable(GL_TEXTURE_2D);
    cubepositions();
 
-   testWall   = SpaceWall(2.0 , 1.0 , 0.0 , 1.0);
+   testWall   = SpaceWall(0.0 , 0.0 , -10.0  );
 }
 
 
