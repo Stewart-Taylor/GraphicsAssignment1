@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include "Main.h"
 #include "SpaceWall.h"
-
+#include "TableSurface.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -16,7 +16,9 @@ void getFaceNormal(float *norm,float pointa[3],float pointb[3],float pointc[3]);
 Camera camera = Camera();
 
 
-SpaceWall testWall ; 
+SpaceWall skybox ; 
+TableSurface table ; 
+
 
 //positions of the cubes
 float positionz[10];
@@ -284,7 +286,8 @@ void init (void)
 	glEnable(GL_TEXTURE_2D);
    cubepositions();
 
-   testWall   = SpaceWall(0.0 , 0.0 , -10.0  );
+   skybox   = SpaceWall(0.0 , 0.0 , -10.0  );
+   table  = TableSurface(0.0 , -5.0 , 0.0  );
 }
 
 
@@ -379,14 +382,15 @@ void display (void)
 
 
     
-	   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
 
 
 
     camera.update();
 
-	testWall.display();
+	skybox.display();
+	table.display();
 
 	cube(light_position[0] , light_position[1] , light_position[2]  , 0.2);
 
@@ -398,7 +402,6 @@ void display (void)
 	 glutSolidSphere(1.0, 100, 100);
 
     glutSwapBuffers(); //swap the buffers
-   // angle++; //increase the angle
 }
 
 void reshape (int w, int h)
@@ -476,12 +479,12 @@ void keyboard (unsigned char key, int x, int y)
 
 void idle(void)
 {
-		angleX += 0.01;
+	angleX += 0.01;
 	angleY += 0.01;
 	//angleZ += 0.01;
-	testWall.update();
+	skybox.update();
 
-	 glutPostRedisplay();
+	glutPostRedisplay();
 }
 
 void mouseUpdate(int x , int y)
@@ -492,7 +495,7 @@ void mouseUpdate(int x , int y)
 int main (int argc, char **argv)
 {
     glutInit (&argc, argv);
-  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (500, 500); 
     glutInitWindowPosition (200, 200);
     glutCreateWindow ("Lighting Demo"); 

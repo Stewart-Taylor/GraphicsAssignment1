@@ -12,11 +12,6 @@ SpaceWall::SpaceWall()
 
 }
 
-typedef struct {
-  double x;
-  double y;
-  double z;
-} XYZ;
 
 SpaceWall::SpaceWall(float x , float y , float z )
 {
@@ -116,5 +111,5 @@ void SpaceWall::setAngle(float xAngleT , float yAngleT , float zAngleT)
 
 void SpaceWall::update()
 {
-	xAngleTexture += 0.0000001f; // Use time dependent update instead!
+	//xAngleTexture += 0.0000001f; // Use time dependent update instead!
 }
