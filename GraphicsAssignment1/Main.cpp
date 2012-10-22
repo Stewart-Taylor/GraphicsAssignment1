@@ -344,9 +344,17 @@ void crossProduct(GLfloat *c,GLfloat a[3], GLfloat b[3])		//finds the cross prod
 
 void display (void)
 {
+	GLfloat density = 0.002f;
+	GLfloat fogColor[4] = {0.10, 0.027, 0.188, 1.0};
+	glFogi (GL_FOG_MODE, GL_LINEAR);
+	glFogfv (GL_FOG_COLOR, fogColor);
+	glFogf (GL_FOG_DENSITY, density);
+	glHint (GL_FOG_HINT, GL_NICEST);
+	glFogf(GL_FOG_START, 100.0f);
+	glFogf(GL_FOG_END, 600.0f); 
+    glEnable (GL_FOG);
 
-    
-       GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
+   GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
    GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
    GLfloat mat_shininess[] = { shiny };
    GLfloat light_position[] = { 10.0, 0.0, 10.0, 0.0 };
@@ -399,7 +407,7 @@ void reshape (int w, int h)
     glMatrixMode (GL_PROJECTION); //set the matrix to projection
 
     glLoadIdentity ();
-    gluPerspective (60, (GLfloat)w / (GLfloat)h, 0.1, 100.0); //set the perspective (angle of sight, width, height, , depth)
+    gluPerspective (60, (GLfloat)w / (GLfloat)h, 0.1, 1600.0); //set the perspective (angle of sight, width, height, , depth)
     glMatrixMode (GL_MODELVIEW); //set the matrix back to model
 
 }

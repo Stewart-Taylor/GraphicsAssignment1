@@ -5,12 +5,18 @@
 #include <stdio.h>	
 #include <freeglut.h>
 #include <glaux.h>
-
+#include <math.h>
 
 SpaceWall::SpaceWall()
 {
 
 }
+
+typedef struct {
+  double x;
+  double y;
+  double z;
+} XYZ;
 
 SpaceWall::SpaceWall(float x , float y , float z )
 {
@@ -18,13 +24,13 @@ SpaceWall::SpaceWall(float x , float y , float z )
 	yPosition = y;
 	zPosition = z;
 	xAngle = 0;
-	yAngle = 0;
+	yAngle = 90;
 	zAngle = 0;
 	xAngleTexture = 0;
 	yAngleTexture = 0;
 	zAngleTexture = 0;
-	scale = 40;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\space2.bmp");
+	scale = 800;
+	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\spaceTile.bmp");
 }
 
 
@@ -36,8 +42,8 @@ SpaceWall::~SpaceWall(void)
 void SpaceWall::display(void)
 {
 	glPushMatrix(); 
-	
-	glEnable(GL_TEXTURE_2D);
+
+	glEnable(GL_TEXTURE_2D);  // move
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
@@ -45,22 +51,54 @@ void SpaceWall::display(void)
 	glRotatef(xAngleTexture, 0.0, 0, 1.0);
     
 	glMatrixMode(GL_MODELVIEW);
-			   
+
 	glTranslated(xPosition ,yPosition ,zPosition);
 	glRotatef(xAngle, 1.0, 0.0, 0.0);
 	glRotatef(yAngle, 0.0, 1.0, 0.0);
 	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
-
-	glColor3f( 1.0, 1.0, 0.0 );
+			   
 	glBegin(GL_POLYGON);
+	glTexCoord2f(1.0, -1.0);     glVertex3f(  0.5, -0.5, -0.5 );      
+	glTexCoord2f(1.0,  1.0);   glVertex3f(  0.5,  0.5, -0.5 );     
+	glTexCoord2f(-1.0,  1.0);     glVertex3f( -0.5,  0.5, -0.5 );      
+	glTexCoord2f(-1.0, -1.0);  glVertex3f( -0.5, -0.5, -0.5 );      
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glTexCoord2f(1.0, -1.0); glVertex3f(  0.5, -0.5, 0.5 );
+	glTexCoord2f(1.0,  1.0); glVertex3f(  0.5,  0.5, 0.5 );
+	glTexCoord2f(-1.0,  1.0); glVertex3f( -0.5,  0.5, 0.5 );
+	glTexCoord2f(-1.0, -1.0); glVertex3f( -0.5, -0.5, 0.5 );
+	glEnd();
  
-	glTexCoord2f(-0.5, -0.5);	glVertex3f( -0.5, -0.5, -0.5);       
-	glTexCoord2f(-0.5,  0.5);	glVertex3f( -0.5,  0.5, -0.5);      
-	glTexCoord2f(0.5,  0.5);	glVertex3f(  0.5,  0.5, -0.5);       
-	glTexCoord2f(0.5, -0.5);	glVertex3f(  0.5, -0.5, -0.5);       
+	glBegin(GL_POLYGON);
+	glTexCoord2f(1.0, -1.0);	glVertex3f( 0.5, -0.5, -0.5 );
+	glTexCoord2f(1.0,  1.0);	glVertex3f( 0.5,  0.5, -0.5 );
+	glTexCoord2f(-1.0,  1.0);	glVertex3f( 0.5,  0.5,  0.5 );
+	glTexCoord2f(-1.0, -1.0);	glVertex3f( 0.5, -0.5,  0.5 );
+	glEnd();
  
+	glBegin(GL_POLYGON);
+	glTexCoord2f(1.0, -1.0);	glVertex3f( -0.5, -0.5,  0.5 );
+	glTexCoord2f(1.0,  1.0);	glVertex3f( -0.5,  0.5,  0.5 );
+	glTexCoord2f(-1.0,  1.0);	glVertex3f( -0.5,  0.5, -0.5 );
+	glTexCoord2f(-1.0, -1.0);	glVertex3f( -0.5, -0.5, -0.5 );
+	glEnd();
+ 
+	glBegin(GL_POLYGON);
+	glTexCoord2f(1.0, -1.0);	glVertex3f(  0.5,  0.5,  0.5 );
+	glTexCoord2f(1.0,  1.0);	glVertex3f(  0.5,  0.5, -0.5 );
+	glTexCoord2f(-1.0,  1.0);	glVertex3f( -0.5,  0.5, -0.5 );
+	glTexCoord2f(-1.0, -1.0);	glVertex3f( -0.5,  0.5,  0.5 );
+	glEnd();
+ 
+	glBegin(GL_POLYGON);
+	glTexCoord2f(1.0, -1.0);	glVertex3f(  0.5, -0.5, -0.5 );
+	glTexCoord2f(1.0,  1.0);	glVertex3f(  0.5, -0.5,  0.5 );
+	glTexCoord2f(-1.0,  1.0);	glVertex3f( -0.5, -0.5,  0.5 );
+	glTexCoord2f(-1.0, -1.0);	glVertex3f( -0.5, -0.5, -0.5 );
 	glEnd();
 
 	glPopMatrix();
