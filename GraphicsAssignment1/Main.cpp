@@ -21,9 +21,12 @@ TableSurface table;
 Sun sun; 
 Cylinder centralPole; 
 Cylinder powerPole; 
+Cylinder powerPole2; 
 Gear mainGear; 
 Gear bigGear; 
 Gear powerGear; 
+Gear bigPowerGear; 
+Gear smallMiddleGear; 
 
 GLfloat angleX;
 GLfloat angleY;
@@ -117,8 +120,11 @@ void init (void)
 	centralPole = Cylinder(0,3.0,0 ,0.54 , 12.0 , 30);
 	boxTest = Box(0,-3.99,0 , 10,10,2);
 	mainGear = Gear(0 ,-2.7 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
+	bigPowerGear = Gear(-4.3 ,-2.2 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
 	powerGear = Gear(4.3 ,-2.7 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
+	smallMiddleGear = Gear(0 ,-2.2 ,0 , 0.5 , 1.6 ,  0.4 , 20 ,0.35);
 	powerPole = Cylinder(4.3 ,-1.7 ,3.8 ,0.18 , 2.0 , 30);
+	powerPole2 = Cylinder(-4.3 ,-1.7 ,3.8 ,0.18 , 2.0 , 30);
 
 	setUpPlanet(mercury , 5 ,4.1 ,4.5 , 0.4 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mercury.bmp");
 	setUpPlanet(venus , 10 ,1.62 ,4.0 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\venus.bmp");
@@ -189,7 +195,10 @@ void display (void)
 	centralPole.display();
 	mainGear.display();
 	powerGear.display();
+	smallMiddleGear.display();
+	bigPowerGear.display();
 	powerPole.display();
+	powerPole2.display();
 	sun.display();
 	boxTest.display();
 
@@ -228,8 +237,8 @@ void keyboard (unsigned char key, int x, int y)
 	if (key=='l'){light_position[0] -= 0.1f;}
 	if (key=='u'){light_position[2] += 0.1f;}
 	if (key=='o'){light_position[2] -= 0.1f;}
-	if (key=='m'){orbitSpeed += 0.001f;}
-	if (key=='n'){orbitSpeed -= 0.001f;}
+	if (key=='m'){orbitSpeed += 0.0001f;}
+	if (key=='n'){orbitSpeed -= 0.0001f;}
 }
 
 void mouseUpdate(int x , int y)
@@ -259,6 +268,9 @@ void idle(void)
 	mainGear.spin(orbitSpeed * 60);  // 0.06
 	powerGear.spin(-orbitSpeed * 200); // -0.2
 	powerPole.spin(orbitSpeed * 200);   // 0.2
+	smallMiddleGear.spin(orbitSpeed * 200);
+	powerPole2.spin(orbitSpeed * 60);
+	bigPowerGear.spin(-orbitSpeed * 60);
 	sun.update();
 	skybox.update();
 	updatePlanets();
