@@ -1,6 +1,6 @@
 #include <freeglut.h>
 #pragma once
-class Cylinder
+class OutPole
 {
 public:
 	GLfloat xPosition;
@@ -14,12 +14,11 @@ public:
 	GLuint slices;
 	GLfloat radius;
 	GLfloat length;
-	Cylinder();
-	Cylinder(float x , float y , float z , float radius , float length , int slices );
-	~Cylinder(void);
+	OutPole();
+	OutPole(float x , float y , float z , float radius , float length , int slices );
+	~OutPole(void);
 	void display(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
 	void setPosition(float xPositionT , float yPositionT , float zPositionT);
 	void spin();
 };
-

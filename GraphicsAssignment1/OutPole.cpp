@@ -1,4 +1,4 @@
-#include "Cylinder.h"
+#include "OutPole.h"
 #include "TextureLoader.h"
 
 #include <windows.h>	
@@ -7,15 +7,14 @@
 #include <glaux.h>
 #include <math.h>
 
-GLfloat PI = 3.14159265359;
 
-Cylinder::Cylinder()
+OutPole::OutPole()
 {
 
 }
 
 
-Cylinder::Cylinder(float x , float y , float z , float radiusT , float lengthT  ,int slicesT)
+OutPole::OutPole(float x , float y , float z , float radiusT , float lengthT  ,int slicesT)
 {
 	xPosition = x;
 	yPosition = y;
@@ -31,13 +30,13 @@ Cylinder::Cylinder(float x , float y , float z , float radiusT , float lengthT  
 }
 
 
-Cylinder::~Cylinder(void)
+OutPole::~OutPole(void)
 {
 }
 
 
 
-void Cylinder::display(void)
+void OutPole::display(void)
 {
 	glPushMatrix(); 
 
@@ -46,12 +45,15 @@ void Cylinder::display(void)
 	glBindTexture(GL_TEXTURE_2D, texName);
 
 	glMatrixMode(GL_MODELVIEW);
-
-	glTranslated(xPosition ,yPosition ,zPosition);
-	glRotatef(xAngle, 1.0, 0.0, 0.0);
-	glRotatef(yAngle, 0.0, 1.0, 0.0);
-	glRotatef(zAngle, 0.0, 0.0, 1.0);
+//	glTranslated(xPosition ,yPosition ,zPosition);
+	//glRotatef(xAngle, 1.0, 0.0, 0.0);
+//	glRotatef(yAngle, 0.0, 1.0, 0.0);
+	//glRotatef(zAngle, 0.0, 0.0, 1.0);
+	//glTranslated(0,0 ,0);
 	glTranslated(0,0 ,0);
+	glRotatef(yAngle, 0.0, 1.0, 0.0);
+
+	glTranslated(xPosition ,yPosition ,length/2);
 	glScaled(scale ,scale ,scale);
 			   
 
@@ -83,7 +85,7 @@ void Cylinder::display(void)
 	glBegin(GL_TRIANGLE_STRIP);  //ENDS
 	for (int i = 0; i < slices + 1; ++i)
 	{
-		GLfloat theta = 2.0f * PI * GLfloat(i) / GLfloat(slices);//get the current angle 
+		GLfloat theta = 2.0f * 3.14159265359 * GLfloat(i) / GLfloat(slices);//get the current angle 
 
 		GLfloat xT = radius * cosf(theta);//calculate the x component 
 		GLfloat yT = radius * sinf(theta);//calculate the y component 
@@ -97,7 +99,7 @@ void Cylinder::display(void)
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i < slices + 1; ++i)
 	{
-		GLfloat theta = 2.0f * PI * GLfloat(i) / GLfloat(slices);//get the current angle 
+		GLfloat theta = 2.0f * 3.14159265359 * GLfloat(i) / GLfloat(slices);//get the current angle 
 
 		GLfloat xT = radius * cosf(theta);//calculate the x component 
 		GLfloat yT = radius * sinf(theta);//calculate the y component 
@@ -113,21 +115,21 @@ void Cylinder::display(void)
 }
 
 
-void Cylinder::setAngle(float xAngleT , float yAngleT , float zAngleT)
+void OutPole::setAngle(float xAngleT , float yAngleT , float zAngleT)
 {
 	xAngle = xAngleT;
 	yAngle = yAngleT;
 	zAngle = zAngleT;
 }
 
-void Cylinder::setPosition(float xPositionT , float yPositionT , float zPositionT)
+void OutPole::setPosition(float xPositionT , float yPositionT , float zPositionT)
 {
 	xPosition = xPositionT;
 	yPosition = yPositionT;
 	zPosition = zPositionT;
 }
 
-void Cylinder::spin()
+void OutPole::spin()
 {
 	zAngle -= 1.0f;
 }

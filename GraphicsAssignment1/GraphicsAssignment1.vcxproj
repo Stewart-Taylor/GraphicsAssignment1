@@ -84,6 +84,7 @@
     <ClInclude Include="Gear.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NormalHelper.h" />
+    <ClInclude Include="OutPole.h" />
     <ClInclude Include="SpaceWall.h" />
     <ClInclude Include="Sun.h" />
     <ClInclude Include="TableSurface.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="Gear.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NormalHelper.cpp" />
+    <ClCompile Include="OutPole.cpp" />
     <ClCompile Include="SpaceWall.cpp" />
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="TableSurface.cpp" />

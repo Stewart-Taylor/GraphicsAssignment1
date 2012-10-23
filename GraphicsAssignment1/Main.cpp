@@ -7,10 +7,12 @@
 #include "Box.h"
 #include "Gear.h"
 #include "Earth.h"
+#include "OutPole.h"
 
 #include <math.h>
 #include <stdlib.h>
 #include <freeglut.h>
+
 
 
 Camera camera = Camera();
@@ -23,6 +25,7 @@ Cylinder tCylin;
 Gear gearT; 
 Earth earth;
 Cylinder earthPole;
+OutPole earthPole2;
 
 GLfloat angleX;
 GLfloat angleY;
@@ -60,6 +63,8 @@ void init (void)
 	gearT = Gear(0 ,-2.5 ,0);
 	earth = Earth(10 ,3 ,0);
 	earthPole = Cylinder(10 , 1.0 ,0 , 0.1 , 3.0 , 30);
+	earthPole2 = OutPole(0 , -0.5 ,0 , 0.2 , 20.2 , 30);
+	earthPole2.setAngle(0,0,90);
 }
 
 
@@ -111,6 +116,7 @@ void display (void)
 	sun.display();
 	earth.display();
 	earthPole.display();
+	earthPole2.display();
 	boxTest.display();
 	
 	glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
@@ -166,6 +172,15 @@ void updateEarth(void)
 	earth.spin();
 
 	earthPole.setPosition(xPositionT , earthPole.yPosition , zPositionT);
+	earthPole.spin();
+
+	earthPole2.spin();
+
+	float angle = atan2(zPositionT , xPositionT);
+	angle = -angle * 180 / 3.1415926;;
+	angle+= 90;
+	earthPole2.setAngle(0,  angle, 0);  // 57.3
+
 }
 
 void idle(void)
@@ -174,7 +189,6 @@ void idle(void)
 	sun.update();
 	skybox.update();
 	updateEarth();
-
 	glutPostRedisplay();
 }
 
