@@ -37,7 +37,7 @@ void TableSurface::display(void)
 	glPushMatrix(); 
 
 	glEnable(GL_TEXTURE_2D);  // move
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
 

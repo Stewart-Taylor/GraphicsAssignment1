@@ -38,14 +38,14 @@ GLfloat cubeX;
 GLfloat cubeY;
 GLfloat cubeZ;
 
-GLfloat light_position[] = {1.0 ,2.0 ,1.0 , 0.0};
+
 
 
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
 
-
+GLfloat light_position[] = { 10.0, 4.0, 10.0, 0.0 };
 
 void cubepositions (void) 
 { //set the positions of the cubes
@@ -368,26 +368,25 @@ void display (void)
 	glFogf(GL_FOG_END, 600.0f); 
     glEnable (GL_FOG);
 
-   GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
+       GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
    GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
    GLfloat mat_shininess[] = { shiny };
-   GLfloat light_position[] = { 10.0, 0.0, 10.0, 0.0 };
+  // GLfloat light_position[] = { 10.0, 0.0, 10.0, 0.0 };
   // GLfloat light_position[] = { xpos, ypos, zpos, 0.0 };
+ 
 
    GLfloat mat_diffuse2[] = { 0.8, 0.2, 0.2, 1.0 };
    GLfloat mat_diffuse3[] = { 0.2, 0.8, 0.2, 1.0 };
-    GLfloat ambient[] = { 0.2, 0.2, 0.2, 1.0 };
 
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_SMOOTH);
+  // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-   glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-
+      glLightfv(GL_LIGHT0, GL_POSITION, light_position);
    glMatrixMode (GL_MODELVIEW);
    glLoadIdentity();
 
@@ -408,6 +407,8 @@ void display (void)
 	sun.display();
 
 	boxTest.display();
+	glTranslated(5 ,0 ,0);
+	 glutSolidSphere(1.0, 100, 100);
 
     glutSwapBuffers(); //swap the buffers
 }
@@ -426,6 +427,14 @@ void reshape (int w, int h)
 void keyboard (unsigned char key, int x, int y)
 {
 	camera.keyboardControl(key , x , y);
+
+
+		    if (key=='k'){light_position[1] += 0.1f;}
+		if (key=='i'){light_position[1] -= 0.1f;}
+		if (key=='j'){light_position[0] += 0.1f;}
+		if (key=='l'){light_position[0] -= 0.1f;}
+		if (key=='u'){light_position[2] += 0.1f;}
+		if (key=='o'){light_position[2] -= 0.1f;}
 
     /*if (key=='q')
     {
