@@ -68,6 +68,12 @@ void Camera::keyboardControl(unsigned char key, int x, int y) {
     if (xrot < -360) xrot += 360;
     }
 
+	if (key=='e')
+    {
+    yrot -= 1;
+    if (yrot < -360) yrot += 360;
+    }
+
     if (key=='w')
     {
     float xrotrad, yrotrad;
