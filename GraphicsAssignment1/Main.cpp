@@ -6,6 +6,7 @@
 #include "Cylinder.h"
 #include "Box.h"
 #include "Gear.h"
+#include "Earth.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -25,6 +26,7 @@ TableSurface table;
 Sun sun; 
 Cylinder tCylin; 
 Gear gearT; 
+Earth earth;
 
 //positions of the cubes
 float positionz[10];
@@ -299,6 +301,7 @@ void init (void)
    tCylin = Cylinder(0,-5,0);
    boxTest = Box(0,-5,0);
    gearT = Gear(0 , -2.5 ,0);
+   earth = Earth(10 ,3 ,0);
 }
 
 
@@ -406,6 +409,8 @@ void display (void)
 	gearT.display();
 	sun.display();
 
+	earth.display();
+
 	boxTest.display();
 	glTranslated(5 ,0 ,0);
 	 glutSolidSphere(1.0, 100, 100);
@@ -502,6 +507,7 @@ void idle(void)
 	gearT.update();
 	sun.update();
 	skybox.update();
+	earth.update();
 
 	glutPostRedisplay();
 }

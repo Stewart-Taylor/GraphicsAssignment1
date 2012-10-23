@@ -45,6 +45,9 @@
     <ClInclude Include="NormalHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Earth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NormalHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Earth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
