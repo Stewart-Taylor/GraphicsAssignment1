@@ -11,11 +11,16 @@ public:
 	GLfloat zAngle;
 	GLfloat scale;
 	GLuint texName;
+	GLfloat inner_radius;
+	GLfloat outer_radius;
+	GLfloat width;
+	GLint teeth;
+	GLfloat tooth_depth;
 	Gear();
-	Gear(float x , float y , float z );
+	Gear(GLfloat x , GLfloat y , GLfloat z , GLfloat innerRad , GLfloat outerRad ,GLfloat widthT , GLuint teethT , GLfloat depthT );
 	~Gear(void);
 	void display(void);
-	void setAngle(float xAngleT , float yAngleT , float zAngleT);
+	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
 	void update();
 };
 

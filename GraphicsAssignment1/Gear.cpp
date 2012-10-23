@@ -1,6 +1,4 @@
 #include "Gear.h"
-
-
 #include "TextureLoader.h"
 
 #include <windows.h>	
@@ -15,7 +13,7 @@ Gear::Gear()
 }
 
 
-Gear::Gear(float x , float y , float z )
+Gear::Gear(GLfloat x , GLfloat y , GLfloat z , GLfloat innerRad , GLfloat outerRad ,GLfloat widthT , GLuint teethT , GLfloat depthT )
 {
 	xPosition = x;
 	yPosition = y;
@@ -23,7 +21,12 @@ Gear::Gear(float x , float y , float z )
 	xAngle = 90;
 	yAngle = 0;
 	zAngle = 0;
-	scale = 2;
+	scale = 1;
+	inner_radius = innerRad;
+	outer_radius = outerRad; 
+	width = widthT;
+	teeth = teethT;
+	tooth_depth = depthT;
 	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\tileSteel.bmp");
 }
 
@@ -38,14 +41,13 @@ void Gear::display(void)
 {
 	glPushMatrix(); 
 
-	GLfloat M_PI = 3.141; // change
+	GLfloat M_PI = 3.14159265359; // change
 
 	glEnable(GL_TEXTURE_2D);  // move
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
-
-		  glColor3f(0.8,0.8,0.8);
+	glColor3f(0.8,0.8,0.8);
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -56,14 +58,6 @@ void Gear::display(void)
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
 			   
-
-	GLfloat inner_radius = 0.28;
-	GLfloat outer_radius = 1.7; 
-	GLfloat width = 0.1;
-	GLint teeth = 50;
-	GLfloat tooth_depth = 0.15;
-
-
 	GLint i;
 	GLfloat r0, r1, r2;
 	GLfloat angle, da;
@@ -82,10 +76,10 @@ void Gear::display(void)
 	{
 		angle = i * 2.0 * M_PI / teeth;
 
-	glTexCoord2f(r0 * cos(angle) ,r0 * sin(angle) ); 	glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
-	glTexCoord2f(r1 * cos(angle), r1 * sin(angle) );	glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
-	glTexCoord2f(r0 * cos(angle), r0 * sin(angle) );	glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
-	glTexCoord2f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da) );	glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5);
+		glTexCoord2f(r0 * cos(angle) ,r0 * sin(angle) ); 	glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
+		glTexCoord2f(r1 * cos(angle), r1 * sin(angle) );	glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
+		glTexCoord2f(r0 * cos(angle), r0 * sin(angle) );	glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
+		glTexCoord2f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da) );	glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5);
 	}
 	glEnd();
 
@@ -95,10 +89,10 @@ void Gear::display(void)
 	{
 		angle = i * 2.0 * M_PI / teeth;
 
-	glTexCoord2f(r1 * cos(angle), r1 * sin(angle) ); 	glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
-	glTexCoord2f(r2 * cos(angle + da), r2 * sin(angle + da) ); 	glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
-	glTexCoord2f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da) ); 	glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5);
-	glTexCoord2f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da) ); 	glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5);
+		glTexCoord2f(r1 * cos(angle), r1 * sin(angle) ); 	glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
+		glTexCoord2f(r2 * cos(angle + da), r2 * sin(angle + da) ); 	glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
+		glTexCoord2f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da) ); 	glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5);
+		glTexCoord2f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da) ); 	glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5);
 	}
 	glEnd();
 
@@ -107,10 +101,10 @@ void Gear::display(void)
 	for (i = 0; i <= teeth; i++) 
 	{
 		angle = i * 2.0 * M_PI / teeth;
-glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r1 * cos(angle), r1 * sin(angle) ); glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
-glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r0 * cos(angle), r0 * sin(angle) ); glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
-glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da) ); glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5);
-glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r0 * cos(angle), r0 * sin(angle) ); glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
+		glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r1 * cos(angle), r1 * sin(angle) ); glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
+		glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r0 * cos(angle), r0 * sin(angle) ); glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
+		glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da) ); glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5);
+		glNormal3f(0.0, 0.0, -1.0);		glTexCoord2f(r0 * cos(angle), r0 * sin(angle) ); glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
 	}
 	glEnd();
 
