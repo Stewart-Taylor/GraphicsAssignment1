@@ -34,7 +34,8 @@ GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
 
-GLfloat orbitTimer;
+GLfloat orbitTimer  = 9939;
+GLfloat orbitSpeed = 0.001f;
 
 GLfloat light_position[] = { 0.29999962 , 1.9000014 , -1.1000001};
 
@@ -76,7 +77,14 @@ struct PlanetPart
 
 };
 
+PlanetPart mercury;
+PlanetPart venus;
 PlanetPart earth;
+PlanetPart mars;
+PlanetPart jupiter;
+PlanetPart saturn;
+PlanetPart uranus;
+PlanetPart neptune;
 
 
 void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y );
@@ -105,21 +113,34 @@ void init (void)
 
 	skybox = SpaceWall(0.0 , 0.0 , -10.0);
 	table = TableSurface(0.0 , -5.0 , 0.0);
-	sun = Sun(0.0 , 3.0 , 0.0);
-	centralPole = Cylinder(0,-1,0 ,0.54 , 4.0 , 30);
+	sun = Sun(0.0 , 8.0 , 0.0);
+	centralPole = Cylinder(0,3.0,0 ,0.54 , 12.0 , 30);
 	boxTest = Box(0,-3.99,0 , 10,10,2);
 	mainGear = Gear(0 ,-2.7 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
 	powerGear = Gear(4.3 ,-2.7 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
 	powerPole = Cylinder(4.3 ,-1.7 ,3.8 ,0.18 , 2.0 , 30);
 
-	setUpPlanet(earth , 15 ,2 ,-1.5 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
+	setUpPlanet(mercury , 5 ,4.1 ,4.5 , 0.4 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mercury.bmp");
+	setUpPlanet(venus , 10 ,1.62 ,4.0 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\venus.bmp");
+	setUpPlanet(earth , 15 ,1 ,3.5 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
+	setUpPlanet(mars , 20 ,0.53 ,3.0 , 0.53 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mars.bmp");
+	setUpPlanet(jupiter , 25 ,0.08 ,2.5 , 2.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\jupiter.bmp");
+	setUpPlanet(saturn , 30 ,0.0339 ,2.0 , 1.5 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\saturn.bmp");
+	setUpPlanet(uranus , 35 ,0.011 ,1.5 , 1.2 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\uranus.bmp");
+	setUpPlanet(neptune , 40 ,0.006 ,1.0 , 1.2, "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\neptune.bmp");
 }
 
 
 void drawPlanets()
 {
+	mercury.display();
+	venus.display();
 	earth.display();
-
+	mars.display();
+	jupiter.display();
+	saturn.display();
+	uranus.display();
+	neptune.display();
 }
 
 void display (void)
@@ -175,8 +196,6 @@ void display (void)
 	drawPlanets();
 
 
-
-	
 	glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
 	glutSolidSphere(1.0, 100, 100);
 
@@ -209,7 +228,8 @@ void keyboard (unsigned char key, int x, int y)
 	if (key=='l'){light_position[0] -= 0.1f;}
 	if (key=='u'){light_position[2] += 0.1f;}
 	if (key=='o'){light_position[2] -= 0.1f;}
-
+	if (key=='m'){orbitSpeed += 0.001f;}
+	if (key=='n'){orbitSpeed -= 0.001f;}
 }
 
 void mouseUpdate(int x , int y)
@@ -219,9 +239,16 @@ void mouseUpdate(int x , int y)
 
 void updatePlanets(void)
 {
-	orbitTimer+= 0.001f;
+	orbitTimer+= orbitSpeed;
 
+	mercury.update();
+	venus.update();
 	earth.update();
+	mars.update();
+	jupiter.update();
+	saturn.update();
+	uranus.update();
+	neptune.update();
 }
 
 
@@ -229,9 +256,9 @@ void updatePlanets(void)
 
 void idle(void)
 {
-	mainGear.spin(0.06f);
-	powerGear.spin(-0.2f);
-	powerPole.spin(0.2f);
+	mainGear.spin(orbitSpeed * 60);  // 0.06
+	powerGear.spin(-orbitSpeed * 200); // -0.2
+	powerPole.spin(orbitSpeed * 200);   // 0.2
 	sun.update();
 	skybox.update();
 	updatePlanets();
@@ -246,7 +273,7 @@ int main (int argc, char **argv)
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (500, 500); 
     glutInitWindowPosition (200, 200);
-    glutCreateWindow ("Lighting Demo"); 
+    glutCreateWindow ("Mechanical Orrey"); 
     init (); 
     glutDisplayFunc (display); 
     glutIdleFunc (idle); 
