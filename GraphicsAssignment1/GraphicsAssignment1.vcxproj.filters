@@ -45,10 +45,10 @@
     <ClInclude Include="NormalHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Earth.h">
+    <ClInclude Include="OutPole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OutPole.h">
+    <ClInclude Include="Planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,10 +83,10 @@
     <ClCompile Include="NormalHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Earth.cpp">
+    <ClCompile Include="OutPole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OutPole.cpp">
+    <ClCompile Include="Planet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include "Earth.h"
+#include "Planet.h"
 
 #include "TextureLoader.h"
 
@@ -8,13 +8,13 @@
 #include <glaux.h>
 #include <math.h>
 
-Earth::Earth()
+Planet::Planet()
 {
 
 }
 
 
-Earth::Earth(float x , float y , float z )
+Planet::Planet(float x , float y , float z  ,char* path )
 {
 	xPosition = x;
 	yPosition = y;
@@ -24,11 +24,12 @@ Earth::Earth(float x , float y , float z )
 	zAngle = 0;
 	scale = 1;
 	time = 0;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
+	// texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
+	 texName = TextureLoader::loadTexture(path);
 }
 
 
-Earth::~Earth(void)
+Planet::~Planet(void)
 {
 }
 
@@ -39,7 +40,7 @@ typedef struct {
 } XYZ;
 
 
-void Earth::display(void)
+void Planet::display(void)
 {
 	glPushMatrix(); 
 
@@ -126,21 +127,21 @@ void Earth::display(void)
 }
 
 
-void Earth::setAngle(float xAngleT , float yAngleT , float zAngleT)
+void Planet::setAngle(float xAngleT , float yAngleT , float zAngleT)
 {
 	xAngle = xAngleT;
 	yAngle = yAngleT;
 	zAngle = zAngleT;
 }
 
-void Earth::setPosition(float xPositionT , float yPositionT , float zPositionT)
+void Planet::setPosition(float xPositionT , float yPositionT , float zPositionT)
 {
 	xPosition = xPositionT;
 	yPosition = yPositionT;
 	zPosition = zPositionT;
 }
 
-void Earth::spin()
+void Planet::spin()
 {
 //	xAngle += 0.01f;
 //	yAngle  += 0.01f;

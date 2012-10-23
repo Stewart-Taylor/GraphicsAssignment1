@@ -80,7 +80,7 @@
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cylinder.h" />
-    <ClInclude Include="Earth.h" />
+    <ClInclude Include="Planet.h" />
     <ClInclude Include="Gear.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NormalHelper.h" />
@@ -94,7 +94,7 @@
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cylinder.cpp" />
-    <ClCompile Include="Earth.cpp" />
+    <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Gear.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NormalHelper.cpp" />

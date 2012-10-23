@@ -6,14 +6,12 @@
 #include "Cylinder.h"
 #include "Box.h"
 #include "Gear.h"
-#include "Earth.h"
+#include "Planet.h"
 #include "OutPole.h"
 
 #include <math.h>
 #include <stdlib.h>
 #include <freeglut.h>
-
-
 
 Camera camera = Camera();
 
@@ -26,27 +24,74 @@ Cylinder powerPole;
 Gear mainGear; 
 Gear bigGear; 
 Gear powerGear; 
-Earth earth;
-Cylinder earthPole;
-OutPole earthPole2;
 
 GLfloat angleX;
 GLfloat angleY;
 GLfloat angleZ;
 
-GLfloat cubeX;
-GLfloat cubeY;
-GLfloat cubeZ;
 
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
 
-GLfloat earthTimer;
+GLfloat orbitTimer;
 
 GLfloat light_position[] = { 0.29999962 , 1.9000014 , -1.1000001};
 
 
+
+struct PlanetPart
+{
+	Planet planet;
+	Cylinder upPole;
+	OutPole outPole;
+	GLfloat radius;
+	GLfloat rotateModifier;
+
+	void update(void)
+	{
+		float	xPositionT= 0 + sin(orbitTimer*rotateModifier)*radius;
+		float zPositionT = 0 + cos(orbitTimer*rotateModifier)*radius;
+
+		planet.setPosition(xPositionT ,planet.yPosition , zPositionT);
+		planet.spin();
+
+		upPole.setPosition(xPositionT , upPole.yPosition , zPositionT);
+		upPole.spin(1.0);
+
+		outPole.spin();
+
+		float angle = atan2(zPositionT , xPositionT);
+		angle = -angle * 180 / 3.1415926;;
+		angle+= 90;
+		outPole.setAngle(0,  angle, 0);  // 57.3
+	}
+
+	void display(void)
+	{
+		planet.display();
+		upPole.display();
+		outPole.display();
+	}
+
+};
+
+PlanetPart earth;
+
+
+void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y );
+
+
+void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y  , GLfloat planetScale , char* path )
+{
+	part.planet = Planet(10 ,(y+ 4) ,0 , path);
+	part.planet.scale = planetScale;
+	part.upPole = Cylinder(10 , (y + 2.0) ,0 , 0.1 , 4.0 , 30);
+	part.outPole = OutPole(0 , y ,0 , 0.2 , radiusT + 0.2 , 30);
+	part.outPole.setAngle(0,0,90);
+	part.radius = radiusT;
+	part.rotateModifier = mod;
+}
 
 void init (void) 
 {
@@ -66,12 +111,16 @@ void init (void)
 	mainGear = Gear(0 ,-2.7 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
 	powerGear = Gear(4.3 ,-2.7 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
 	powerPole = Cylinder(4.3 ,-1.7 ,3.8 ,0.18 , 2.0 , 30);
-	earth = Earth(10 ,3 ,0);
-	earthPole = Cylinder(10 , 1.0 ,0 , 0.1 , 3.0 , 30);
-	earthPole2 = OutPole(0 , -0.5 ,0 , 0.2 , 20.2 , 30);
-	earthPole2.setAngle(0,0,90);
+
+	setUpPlanet(earth , 15 ,2 ,-1.5 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
 }
 
+
+void drawPlanets()
+{
+	earth.display();
+
+}
 
 void display (void)
 {
@@ -115,16 +164,18 @@ void display (void)
 
 
 	skybox.display();
-	//table.display();
+	table.display();
 	centralPole.display();
 	mainGear.display();
 	powerGear.display();
 	powerPole.display();
 	sun.display();
-	earth.display();
-	earthPole.display();
-	earthPole2.display();
 	boxTest.display();
+
+	drawPlanets();
+
+
+
 	
 	glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
 	glutSolidSphere(1.0, 100, 100);
@@ -166,29 +217,15 @@ void mouseUpdate(int x , int y)
 	//	camera.mouseControl(x,y);
 }
 
-void updateEarth(void)
+void updatePlanets(void)
 {
-	earthTimer+= 0.001f;
+	orbitTimer+= 0.001f;
 
-	float earthRadius = 20;
-
-	float	xPositionT= 0 + sin(earthTimer)*earthRadius;
-	float zPositionT = 0 + cos(earthTimer)*earthRadius;
-
-	earth.setPosition(xPositionT ,earth.yPosition , zPositionT);
-	earth.spin();
-
-	earthPole.setPosition(xPositionT , earthPole.yPosition , zPositionT);
-	earthPole.spin(1.0);
-
-	earthPole2.spin();
-
-	float angle = atan2(zPositionT , xPositionT);
-	angle = -angle * 180 / 3.1415926;;
-	angle+= 90;
-	earthPole2.setAngle(0,  angle, 0);  // 57.3
-
+	earth.update();
 }
+
+
+
 
 void idle(void)
 {
@@ -197,7 +234,8 @@ void idle(void)
 	powerPole.spin(0.2f);
 	sun.update();
 	skybox.update();
-	updateEarth();
+	updatePlanets();
+
 	glutPostRedisplay();
 }
 

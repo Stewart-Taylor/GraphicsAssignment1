@@ -1,6 +1,6 @@
 #include <freeglut.h>
 #pragma once
-class Earth
+class Planet
 {
 public:
 	GLfloat xPosition;
@@ -12,9 +12,9 @@ public:
 	GLfloat zAngle;
 	GLfloat scale;
 	GLuint texName;
-	Earth();
-	Earth(float x , float y , float z );
-	~Earth(void);
+	Planet();
+	Planet(float x , float y , float z , char* path );
+	~Planet(void);
 	void display(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
 	void setPosition(float xPositionT , float yPositionT , float zPositionT);
