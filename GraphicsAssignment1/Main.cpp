@@ -3,6 +3,8 @@
 #include "SpaceWall.h"
 #include "TableSurface.h"
 #include "Sun.h"
+#include "Cylinder.h"
+#include "Box.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -16,10 +18,11 @@ void getFaceNormal(float *norm,float pointa[3],float pointb[3],float pointc[3]);
 
 Camera camera = Camera();
 
-
+Box boxTest; 
 SpaceWall skybox; 
 TableSurface table; 
 Sun sun; 
+Cylinder tCylin; 
 
 //positions of the cubes
 float positionz[10];
@@ -287,9 +290,12 @@ void init (void)
 	glEnable(GL_TEXTURE_2D);
    cubepositions();
 
+
    skybox   = SpaceWall(0.0 , 0.0 , -10.0  );
    table  = TableSurface(0.0 , -5.0 , 0.0  );
    sun  = Sun(0.0 , 3.0 , 0.0  );
+   tCylin = Cylinder(0,-5,0);
+   boxTest = Box(0,-5,0);
 }
 
 
@@ -367,6 +373,7 @@ void display (void)
 
    GLfloat mat_diffuse2[] = { 0.8, 0.2, 0.2, 1.0 };
    GLfloat mat_diffuse3[] = { 0.2, 0.8, 0.2, 1.0 };
+    GLfloat ambient[] = { 0.2, 0.2, 0.2, 1.0 };
 
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_SMOOTH);
@@ -376,7 +383,7 @@ void display (void)
    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
+   glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
    glMatrixMode (GL_MODELVIEW);
    glLoadIdentity();
@@ -393,16 +400,10 @@ void display (void)
 
 	skybox.display();
 	table.display();
+	tCylin.display();
 	sun.display();
 
-	cube(light_position[0] , light_position[1] , light_position[2]  , 0.2);
-
-	cube2(-2,0,0,0.6);
-    cube(cubeX  - 3, cubeY , cubeZ , 1.0); //call the cube drawing function
-	cube(cubeX + 4 , cubeY , cubeZ + 2 , 1.0); //call the cube drawing function
-	cube(cubeX , cubeY  + 2, cubeZ + 10 , 1.0); //call the cube drawing function
-	
-	 glutSolidSphere(1.0, 100, 100);
+	boxTest.display();
 
     glutSwapBuffers(); //swap the buffers
 }
