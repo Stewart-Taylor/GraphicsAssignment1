@@ -22,7 +22,7 @@ Sun sun;
 Cylinder tCylin; 
 Gear gearT; 
 Earth earth;
-
+Cylinder earthPole;
 
 GLfloat angleX;
 GLfloat angleY;
@@ -35,6 +35,8 @@ GLfloat cubeZ;
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
+
+GLfloat earthTimer;
 
 GLfloat light_position[] = { 0.29999962 , 1.9000014 , -1.1000001};
 
@@ -53,10 +55,11 @@ void init (void)
 	skybox = SpaceWall(0.0 , 0.0 , -10.0);
 	table = TableSurface(0.0 , -5.0 , 0.0);
 	sun = Sun(0.0 , 3.0 , 0.0);
-	tCylin = Cylinder(0,-5,0);
+	tCylin = Cylinder(0,-5,0 ,1.0 , 1.0 , 30);
 	boxTest = Box(0,-3.99,0 , 10,10,2);
 	gearT = Gear(0 ,-2.5 ,0);
 	earth = Earth(10 ,3 ,0);
+	earthPole = Cylinder(10 , 1.0 ,0 , 0.1 , 3.0 , 30);
 }
 
 
@@ -107,6 +110,7 @@ void display (void)
 	gearT.display();
 	sun.display();
 	earth.display();
+	earthPole.display();
 	boxTest.display();
 	
 	glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
@@ -149,13 +153,27 @@ void mouseUpdate(int x , int y)
 	//	camera.mouseControl(x,y);
 }
 
+void updateEarth(void)
+{
+	earthTimer+= 0.001f;
+
+	float earthRadius = 20;
+
+	float	xPositionT= 0 + sin(earthTimer)*earthRadius;
+	float zPositionT = 0 + cos(earthTimer)*earthRadius;
+
+	earth.setPosition(xPositionT ,earth.yPosition , zPositionT);
+	earth.spin();
+
+	earthPole.setPosition(xPositionT , earthPole.yPosition , zPositionT);
+}
 
 void idle(void)
 {
 	gearT.update();
 	sun.update();
 	skybox.update();
-	earth.update();
+	updateEarth();
 
 	glutPostRedisplay();
 }
@@ -179,3 +197,7 @@ int main (int argc, char **argv)
     glutMainLoop (); 
     return 0;
 }
+
+
+
+

@@ -1,5 +1,4 @@
 #include "Cylinder.h"
-
 #include "TextureLoader.h"
 
 #include <windows.h>	
@@ -8,21 +7,26 @@
 #include <glaux.h>
 #include <math.h>
 
+GLfloat PI = 3.14159265359;
+
 Cylinder::Cylinder()
 {
 
 }
 
 
-Cylinder::Cylinder(float x , float y , float z )
+Cylinder::Cylinder(float x , float y , float z , float radiusT , float lengthT  ,int slicesT)
 {
 	xPosition = x;
 	yPosition = y;
 	zPosition = z;
-	xAngle = 90;
+	xAngle = 90; // straight up
 	yAngle = 0;
 	zAngle = 0;
 	scale = 1;
+	radius = radiusT;
+	length = lengthT;
+	slices =slicesT;
 	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\steel.bmp");
 }
 
@@ -36,8 +40,6 @@ Cylinder::~Cylinder(void)
 void Cylinder::display(void)
 {
 	glPushMatrix(); 
-
-	
 
 	glEnable(GL_TEXTURE_2D);  // move
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -53,86 +55,60 @@ void Cylinder::display(void)
 	glScaled(scale ,scale ,scale);
 			   
 
-	GLfloat M_PI = 3.141;
-	
-	//glTranslated(xPosition ,yPosition ,zPosition);
-//	glRotatef(xAngle, 1.0, 0.0, 0.0);
-//	glRotatef(yAngle, 0.0, 1.0, 0.0);
-//	glRotatef(zAngle, 0.0, 0.0, 1.0);
-	//glRotatef(120, 0.0, 1.0, 0.0);
-//	glTranslated(0,0 ,0);
+	GLfloat hl = length * 0.5f;
+	GLfloat a = 0.0f;
+	GLfloat step = 6.28318 / (GLfloat)slices;
 
-	GLfloat radius = 0.5f;
-	GLfloat halfLength = 15.2;
-	int slices = 50;
-
-				float hl = halfLength * 0.5f;
-float a = 0.0f;
-float step = 6.28318 / (float)slices;
-
-
-GLfloat Nx ; //= X ; //= radius *cos(Theta)
-GLfloat Ny ; //= Y ; //= 0
-GLfloat Nz ; //= Z ; // = R*SIN(Theta)
-GLfloat angle ;
+	GLfloat Nx ; //= X ; //= radius *cos(Theta)
+	GLfloat Ny ; //= Y ; //= 0
+	GLfloat Nz ; //= Z ; // = R*SIN(Theta)
+	GLfloat angle ;
  
-glBegin(GL_TRIANGLE_STRIP);
-for (int i = 0; i < slices + 1; ++i)
-{
-    float x = cos(a) * radius;
-    float y = sin(a) * radius;
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i = 0; i < slices + 1; ++i)
+	{
+		GLfloat x = cos(a) * radius;
+		GLfloat y = sin(a) * radius;
 
-	angle = (i*360)/slices;                      //here theta is (current slice)*360/(number of slices).
-	Nx = radius * cos(angle);
-	Ny = 0;
-	Nz = radius * sin(angle);
-
-	GLfloat nVector[3] = { x, y , 0};
-//NormalHelper::normalize(nVector);
-
-
-	glNormal3f(nVector[0], nVector[1], nVector[2]);
-	glTexCoord2f(x,0); glVertex3f(x,y, hl);
-	glTexCoord2f(x,4);    glVertex3f(x,y,-hl);
+		glNormal3f(x, y, 0);
+		glTexCoord2f(x,0); glVertex3f(x,y, hl);
+		glTexCoord2f(x,4);    glVertex3f(x,y,-hl);
     
-		
- 
-    a += step;
-}
-glEnd();
+		a += step;
+	}
+	glEnd();
 
 
-//draw ends
-glBegin(GL_TRIANGLE_STRIP);
-for (int i = 0; i < slices + 1; ++i)
-{
-		float theta = 2.0f * 3.1415926f * float(i) / float(slices);//get the current angle 
 
-		float xT = radius * cosf(theta);//calculate the x component 
-		float yT = radius * sinf(theta);//calculate the y component 
+	glBegin(GL_TRIANGLE_STRIP);  //ENDS
+	for (int i = 0; i < slices + 1; ++i)
+	{
+		GLfloat theta = 2.0f * PI * GLfloat(i) / GLfloat(slices);//get the current angle 
+
+		GLfloat xT = radius * cosf(theta);//calculate the x component 
+		GLfloat yT = radius * sinf(theta);//calculate the y component 
 
 		glNormal3f(xT, yT, 0);
-	glTexCoord2f(0,0);	glVertex3f(0 , 0 , hl);
-	glTexCoord2f(xT,yT);	glVertex3f(xT , yT, hl );//output vertex 
-}
-glEnd();
+		glTexCoord2f(0,0);		glVertex3f(0 , 0 , hl);
+		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, hl );//output vertex 
+	}
+	glEnd();
 
-glBegin(GL_TRIANGLE_STRIP);
-for (int i = 0; i < slices + 1; ++i)
-{
-		float theta = 2.0f * 3.1415926f * float(i) / float(slices);//get the current angle 
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i = 0; i < slices + 1; ++i)
+	{
+		GLfloat theta = 2.0f * PI * GLfloat(i) / GLfloat(slices);//get the current angle 
 
-		float xT = radius * cosf(theta);//calculate the x component 
-		float yT = radius * sinf(theta);//calculate the y component 
+		GLfloat xT = radius * cosf(theta);//calculate the x component 
+		GLfloat yT = radius * sinf(theta);//calculate the y component 
 
-				glNormal3f(xT, yT, 0);
-	glTexCoord2f(0,0);	glVertex3f(0 , 0 , -hl);
-	glTexCoord2f(xT,yT);	glVertex3f(xT , yT, -hl );//output vertex 
-}
-glEnd();
+		glNormal3f(xT, yT, 0);
+		glTexCoord2f(0,0);		glVertex3f(0 , 0 , -hl);
+		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, -hl );//output vertex 
+	}
+	glEnd();
 
 	glPopMatrix();
-
 	glDisable(GL_TEXTURE_2D);
 }
 
@@ -144,9 +120,14 @@ void Cylinder::setAngle(float xAngleT , float yAngleT , float zAngleT)
 	zAngle = zAngleT;
 }
 
-void Cylinder::update()
+void Cylinder::setPosition(float xPositionT , float yPositionT , float zPositionT)
 {
-	xAngle += 0.01f;
-	yAngle  += 0.01f;
-	zAngle  += 0.005f;
+	xPosition = xPositionT;
+	yPosition = yPositionT;
+	zPosition = zPositionT;
+}
+
+void Cylinder::spin()
+{
+	zAngle += 1.0f;
 }

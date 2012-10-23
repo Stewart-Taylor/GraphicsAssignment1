@@ -17,5 +17,6 @@ public:
 	~Earth(void);
 	void display(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
-	void update();
+	void setPosition(float xPositionT , float yPositionT , float zPositionT);
+	void spin();
 };

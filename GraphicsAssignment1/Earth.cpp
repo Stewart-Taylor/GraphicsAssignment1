@@ -48,7 +48,7 @@ void Earth::display(void)
 	c.y = 0;
 	c.z = 0;
 
-//	glEnable(GL_TEXTURE_2D);  // move
+	glEnable(GL_TEXTURE_2D);  // move
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
@@ -133,15 +133,22 @@ void Earth::setAngle(float xAngleT , float yAngleT , float zAngleT)
 	zAngle = zAngleT;
 }
 
-void Earth::update()
+void Earth::setPosition(float xPositionT , float yPositionT , float zPositionT)
+{
+	xPosition = xPositionT;
+	yPosition = yPositionT;
+	zPosition = zPositionT;
+}
+
+void Earth::spin()
 {
 //	xAngle += 0.01f;
 //	yAngle  += 0.01f;
 	zAngle  += 1.0f;
 
-	float rad = 20;
-	time += 0.001f;
-	xPosition= 0 + sin(time)*rad;
-zPosition = 0 + cos(time)*rad;
+//	float rad = 20;
+//	time += 0.001f;
+//	xPosition= 0 + sin(time)*rad;
+//zPosition = 0 + cos(time)*rad;
 
 }
