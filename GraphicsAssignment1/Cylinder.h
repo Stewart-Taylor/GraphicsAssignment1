@@ -20,6 +20,6 @@ public:
 	void display(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
 	void setPosition(float xPositionT , float yPositionT , float zPositionT);
-	void spin();
+	void spin(GLfloat speed);
 };
 

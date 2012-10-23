@@ -21,6 +21,6 @@ public:
 	~Gear(void);
 	void display(void);
 	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
-	void update();
+	void spin(GLfloat speed);
 };
 

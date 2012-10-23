@@ -21,9 +21,11 @@ Box boxTest;
 SpaceWall skybox; 
 TableSurface table; 
 Sun sun; 
-Cylinder tCylin; 
-Gear gearT; 
+Cylinder centralPole; 
+Cylinder powerPole; 
+Gear mainGear; 
 Gear bigGear; 
+Gear powerGear; 
 Earth earth;
 Cylinder earthPole;
 OutPole earthPole2;
@@ -59,9 +61,11 @@ void init (void)
 	skybox = SpaceWall(0.0 , 0.0 , -10.0);
 	table = TableSurface(0.0 , -5.0 , 0.0);
 	sun = Sun(0.0 , 3.0 , 0.0);
-	tCylin = Cylinder(0,-1,0 ,0.54 , 4.0 , 30);
+	centralPole = Cylinder(0,-1,0 ,0.54 , 4.0 , 30);
 	boxTest = Box(0,-3.99,0 , 10,10,2);
-	gearT = Gear(0 ,-2.5 ,0 , 0.28 , 1.7 ,  0.1 , 50 ,0.15);
+	mainGear = Gear(0 ,-2.7 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
+	powerGear = Gear(4.3 ,-2.7 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
+	powerPole = Cylinder(4.3 ,-1.7 ,3.8 ,0.18 , 2.0 , 30);
 	earth = Earth(10 ,3 ,0);
 	earthPole = Cylinder(10 , 1.0 ,0 , 0.1 , 3.0 , 30);
 	earthPole2 = OutPole(0 , -0.5 ,0 , 0.2 , 20.2 , 30);
@@ -111,9 +115,11 @@ void display (void)
 
 
 	skybox.display();
-	table.display();
-	tCylin.display();
-	gearT.display();
+	//table.display();
+	centralPole.display();
+	mainGear.display();
+	powerGear.display();
+	powerPole.display();
 	sun.display();
 	earth.display();
 	earthPole.display();
@@ -173,7 +179,7 @@ void updateEarth(void)
 	earth.spin();
 
 	earthPole.setPosition(xPositionT , earthPole.yPosition , zPositionT);
-	earthPole.spin();
+	earthPole.spin(1.0);
 
 	earthPole2.spin();
 
@@ -186,7 +192,9 @@ void updateEarth(void)
 
 void idle(void)
 {
-	gearT.update();
+	mainGear.spin(0.06f);
+	powerGear.spin(-0.2f);
+	powerPole.spin(0.2f);
 	sun.update();
 	skybox.update();
 	updateEarth();

@@ -175,9 +175,9 @@ void Gear::setAngle(float xAngleT , float yAngleT , float zAngleT)
 	zAngle = zAngleT;
 }
 
-void Gear::update()
+void Gear::spin(GLfloat speed)
 {
 	//xAngle += 0.01f;
 	//yAngle  += 0.01f;
-	zAngle  += 0.01f;
+	zAngle  += speed;
 }

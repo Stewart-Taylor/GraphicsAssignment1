@@ -127,7 +127,7 @@ void Cylinder::setPosition(float xPositionT , float yPositionT , float zPosition
 	zPosition = zPositionT;
 }
 
-void Cylinder::spin()
+void Cylinder::spin(GLfloat speed)
 {
-	zAngle -= 1.0f;
+	zAngle -= speed;
 }
