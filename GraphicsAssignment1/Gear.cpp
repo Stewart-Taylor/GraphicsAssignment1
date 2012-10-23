@@ -24,7 +24,7 @@ Gear::Gear(float x , float y , float z )
 	yAngle = 0;
 	zAngle = 0;
 	scale = 2;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\steel.bmp");
+	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\tileSteel.bmp");
 }
 
 
@@ -45,7 +45,7 @@ void Gear::display(void)
 	glBindTexture(GL_TEXTURE_2D, texName);
 
 
-		   glColor3f (0.3, 0.3, 0.3);
+		  glColor3f(0.8,0.8,0.8);
 
 	glMatrixMode(GL_MODELVIEW);
 

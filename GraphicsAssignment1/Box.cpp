@@ -52,7 +52,7 @@ void Box::display(void)
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,4.0);
 			   
-	   glColor3f(0.0,1.0,0.0);
+	   glColor3f(0.4,0.4,0.4);
    glBegin(GL_POLYGON);
 
 

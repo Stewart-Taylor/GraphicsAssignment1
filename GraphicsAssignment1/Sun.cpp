@@ -81,7 +81,7 @@ void Sun::display(void)
       return;
    }
 
-   for (j=0;j < n; j++) {
+   for (j=0;j <= n; j++) {
       phi1 = j * TWOPI / n;
       phi2 = (j + 1) * TWOPI / n;	//next phi
 
@@ -136,5 +136,5 @@ void Sun::update()
 {
 	xAngle += 0.01f;
 	yAngle  += 0.01f;
-	zAngle  += 0.005f;
+	//zAngle  += 0.005f;
 }

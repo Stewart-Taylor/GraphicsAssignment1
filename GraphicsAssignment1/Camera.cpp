@@ -9,7 +9,7 @@
 
 
 //angle of rotation
-float xpos = 2, ypos = 0, zpos = 10, xrot = 30, yrot = 0, angle=0.0;
+float xpos = 2, ypos = 7.0, zpos = 10, xrot = 30, yrot = 0, angle=0.0;
 
 float cRadius = 10.0f; // our radius distance from our character
 
@@ -37,7 +37,7 @@ void Camera::update()
     
     
     glRotatef(yrot,0.0,1.0,0.0);  //rotate our camera on the y-axis (up and down)
-    glTranslated(-xpos,-7.0f,-zpos); //translate the screento the position of our camera
+    glTranslated(-xpos,-ypos,-zpos); //translate the screento the position of our camera
 
 }
 
@@ -67,6 +67,16 @@ void Camera::keyboardControl(unsigned char key, int x, int y) {
     xrot -= 1;
     if (xrot < -360) xrot += 360;
     }
+
+	    if (key=='x')
+    {
+		ypos -= 0.1f;
+		}
+
+			    if (key=='c')
+    {
+		ypos += 0.1f;
+		}
 
 	if (key=='e')
     {
