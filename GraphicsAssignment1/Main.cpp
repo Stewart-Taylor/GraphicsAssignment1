@@ -5,6 +5,7 @@
 #include "Sun.h"
 #include "Cylinder.h"
 #include "Box.h"
+#include "Gear.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -23,6 +24,7 @@ SpaceWall skybox;
 TableSurface table; 
 Sun sun; 
 Cylinder tCylin; 
+Gear gearT; 
 
 //positions of the cubes
 float positionz[10];
@@ -296,6 +298,7 @@ void init (void)
    sun  = Sun(0.0 , 3.0 , 0.0  );
    tCylin = Cylinder(0,-5,0);
    boxTest = Box(0,-5,0);
+   gearT = Gear(0 , -2.5 ,0);
 }
 
 
@@ -401,6 +404,7 @@ void display (void)
 	skybox.display();
 	table.display();
 	tCylin.display();
+	gearT.display();
 	sun.display();
 
 	boxTest.display();
@@ -486,7 +490,7 @@ void idle(void)
 	angleX += 0.01;
 	angleY += 0.01;
 	//angleZ += 0.01;
-
+	gearT.update();
 	sun.update();
 	skybox.update();
 
