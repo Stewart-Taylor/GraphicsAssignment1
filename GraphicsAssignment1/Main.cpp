@@ -12,11 +12,6 @@
 #include <stdlib.h>
 #include <freeglut.h>
 
-void crossProduct(float *c,float a[3], float b[3]);
-void normalize(float *vect);
-void getFaceNormal(float *norm,float pointa[3],float pointb[3],float pointc[3]);
-
-
 
 Camera camera = Camera();
 
@@ -28,9 +23,6 @@ Cylinder tCylin;
 Gear gearT; 
 Earth earth;
 
-//positions of the cubes
-float positionz[10];
-float positionx[10];
 
 GLfloat angleX;
 GLfloat angleY;
@@ -40,248 +32,13 @@ GLfloat cubeX;
 GLfloat cubeY;
 GLfloat cubeZ;
 
-
-
-
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
 
 GLfloat light_position[] = { 10.0, 4.0, 10.0, 0.0 };
 
-void cubepositions (void) 
-{ //set the positions of the cubes
 
-    for (int i=0;i<10;i++)
-    {
-    positionz[i] = rand()%5 + 1;
-    positionx[i] = rand()%5 + 1;
-    }
-}
-
-//draw the cube
-void cube(GLfloat x , GLfloat y , GLfloat z , GLfloat size)
-{
-
-
-
-	GLfloat mat_d[] = {0.1, 0.5, 0.8, 1.0};
-GLfloat mat_s[] = {1.0, 1.0, 1.0, 1.0};
-GLfloat low_sh[] = {5.0};
-
-	glPushMatrix(); 
-	glTranslated(x ,y ,z);
-	
-
-	glRotatef(angleX, 1.0, 0.0, 0.0);
-	glRotatef(angleY, 0.0, 1.0, 0.0);
-	glRotatef(angleZ, 0.0, 0.0, 1.0);
-	glTranslated(0,0 ,0);
-	glScaled(size ,size ,size);
-
-
-	
-   glColor3f(1.0,0.0,0.0);
-   glBegin(GL_POLYGON);
-
-
-
-   GLfloat normal[3] ;
-   GLfloat pointa[3] = {0.5,0.5,0.5};
-   GLfloat pointb[3]= {-0.5,0.5,0.5};
-   GLfloat pointc[3]= {-0.5,-0.5,0.5};
-   GLfloat pointd[3]= {0.5,-0.5,0.5};
-   
-    getFaceNormal(normal, pointa, pointb, pointc);
-
-	 glNormal3f(normal[0], normal[1], normal[2]);
-     glVertex3f(0.5,0.5,0.5);
-     glVertex3f(-0.5,0.5,0.5);
-     glVertex3f(-0.5,-0.5,0.5);
-     glVertex3f(0.5,-0.5,0.5);
-   glEnd();
-
-   
-   glBegin(GL_POLYGON);
-    glColor3f(0.0,1.0,0.0);
-  
-	   GLfloat normal1[3] ;
-   GLfloat pointa1[3] = {0.5,0.5,0.5};
-   GLfloat pointb1[3]= {0.5,-0.5,0.5};
-   GLfloat pointc1[3]= {0.5,-0.5,-0.5};
-   GLfloat pointd1[3]= {0.5,0.5,-0.5};
-   
-    getFaceNormal(normal1, pointa1, pointb1, pointc1);
-
-	 glNormal3f(normal1[0], normal1[1], normal1[2]);
-
-
-     glVertex3f(0.5,0.5,0.5);
-     glVertex3f(0.5,-0.5,0.5);
-     glVertex3f(0.5,-0.5,-0.5);
-     glVertex3f(0.5,0.5,-0.5);
-   glEnd();
-  
-   glColor3f(0.0,1.0,1.0);
-   glBegin(GL_POLYGON);
- 
-   	   GLfloat normal2[3] ;
-   GLfloat pointa2[3] = {0.5,0.5,-0.5};
-   GLfloat pointb2[3]= {0.5,-0.5,-0.5};
-   GLfloat pointc2[3]= {-0.5,-0.5,-0.5};
-   GLfloat pointd2[3]= {-0.5,0.5,-0.5};
-   
-    getFaceNormal(normal2, pointa2, pointb2, pointc2);
-
-	 glNormal3f(normal2[0], normal2[1], normal2[2]);
-
-     glVertex3f(0.5,0.5,-0.5);
-     glVertex3f(0.5,-0.5,-0.5);
-     glVertex3f(-0.5,-0.5,-0.5);
-     glVertex3f(-0.5,0.5,-0.5);
-   glEnd();
-  
-   glColor3f(1.0,0.0,1.0);
-   glBegin(GL_POLYGON);
-
-      	   GLfloat normal3[3] ;
-   GLfloat pointa3[3] = {-0.5,0.5,0.5};
-   GLfloat pointb3[3]= {-0.5,0.5,0.5};
-   GLfloat pointc3[3]= {-0.5,-0.5,-0.5};
-   GLfloat pointd3[3]= {-0.5,-0.5,0.5};
-   
-    getFaceNormal(normal3, pointa3, pointb3, pointc3);
-
-	 glNormal3f(normal3[0], normal3[1], normal3[2]);
-
-     glVertex3f(-0.5,0.5,0.5);
-     glVertex3f(-0.5,0.5,-0.5);
-     glVertex3f(-0.5,-0.5,-0.5);
-     glVertex3f(-0.5,-0.5,0.5);
-   glEnd();
-  
-   glColor3f(0.0,0.0,1.0);
-   glBegin(GL_POLYGON);
-
-         	   GLfloat normal4[3] ;
-   GLfloat pointa4[3] = {0.5,0.5,0.5};
-   GLfloat pointb4[3]= {0.5,0.5,-0.5};
-   GLfloat pointc4[3]= {-0.5,0.5,-0.5};
-   GLfloat pointd4[3]= {-0.5,0.5,0.5};
-   
-    getFaceNormal(normal4, pointa4, pointb4, pointc4);
-
-	 glNormal3f(normal4[0], normal4[1], normal4[2]);
-
-     glVertex3f(0.5,0.5,0.5);
-     glVertex3f(0.5,0.5,-0.5);
-     glVertex3f(-0.5,0.5,-0.5);
-     glVertex3f(-0.5,0.5,0.5);
-   glEnd();
-  
-   glColor3f(1.0,1.0,0.0);
-   glBegin(GL_POLYGON);
-
-            	   GLfloat normal5[3] ;
-   GLfloat pointa5[3] = {0.5,-0.5,0.5};
-   GLfloat pointb5[3]= {-0.5,-0.5,0.5};
-   GLfloat pointc5[3]= {-0.5,-0.5,-0.5};
-   GLfloat pointd5[3]= {0.5,-0.5,-0.5};
-   
-    getFaceNormal(normal5, pointa5, pointb5, pointc5);
-
-	 glNormal3f(normal5[0], normal5[1], normal5[2]);
-
-     glVertex3f(0.5,-0.5,0.5);
-     glVertex3f(-0.5,-0.5,0.5);
-     glVertex3f(-0.5,-0.5,-0.5);
-     glVertex3f(0.5,-0.5,-0.5);
-   glEnd();
-
-
-   
-  glPopMatrix(); 
-}
-
-
-
-void cube2(GLfloat x , GLfloat y , GLfloat z , GLfloat size) {
-
-		glPushMatrix(); 
-	glTranslated(x ,y ,z);
-	
-
-	glRotatef(angleX, 1.0, 0.0, 0.0);
-	glRotatef(angleY, 0.0, 1.0, 0.0);
-	glRotatef(angleZ, 0.0, 0.0, 1.0);
-	glTranslated(0,0 ,0);
-
-		glScaled(size ,size ,size);
-
-   glColor3f(1.0,0.0,0.0);
-   glBegin(GL_POLYGON);
-
-
-               	   GLfloat normal1[3] ;
-				   GLfloat pointa1[3] = {0.0, 0.0, 1.0};
-   GLfloat pointb1[3]= {0.5,0.5,0.5};
-   GLfloat pointc1[3]= {-0.5,0.5,0.5};
-   GLfloat pointd1[3]= {0.5,-0.5,0.5};
-   
-    getFaceNormal(normal1, pointa1, pointb1, pointc1);
-
-	 glNormal3f(normal1[0], normal1[1], normal1[2]);
-
-
-   //  glNormal3f(0.0, 0.0, 1.0);
-     glVertex3f(0.5,0.5,0.5);
-     glVertex3f(-0.5,0.5,0.5);
-     glVertex3f(-0.5,-0.5,0.5);
-     glVertex3f(0.5,-0.5,0.5);
-   glEnd();
-   glColor3f(0.0,1.0,0.0);
-   glBegin(GL_POLYGON);
-     glNormal3f(1.0, 0.0, 0.0);
-     glVertex3f(0.5,0.5,0.5);
-     glVertex3f(0.5,-0.5,0.5);
-     glVertex3f(0.5,-0.5,-0.5);
-     glVertex3f(0.5,0.5,-0.5);
-   glEnd();
-   glColor3f(0.0,1.0,1.0);
-   glBegin(GL_POLYGON);
-     glNormal3f(1.0, 0.0, -1.0);
-     glVertex3f(0.5,0.5,-0.5);
-     glVertex3f(0.5,-0.5,-0.5);
-     glVertex3f(-0.5,-0.5,-0.5);
-     glVertex3f(-0.5,0.5,-0.5);
-   glEnd();
-   glColor3f(1.0,0.0,1.0);
-   glBegin(GL_POLYGON);
-     glNormal3f(-1.0, 0.0, 0.0);
-     glVertex3f(-0.5,0.5,0.5);
-     glVertex3f(-0.5,0.5,-0.5);
-     glVertex3f(-0.5,-0.5,-0.5);
-     glVertex3f(-0.5,-0.5,0.5);
-   glEnd();
-   glColor3f(0.0,0.0,1.0);
-   glBegin(GL_POLYGON);
-     glNormal3f(0.0, 1.0, 0.0);
-     glVertex3f(0.5,0.5,0.5);
-     glVertex3f(0.5,0.5,-0.5);
-     glVertex3f(-0.5,0.5,-0.5);
-     glVertex3f(-0.5,0.5,0.5);
-   glEnd();
-   glColor3f(1.0,1.0,0.0);
-   glBegin(GL_POLYGON);
-     glNormal3f(0.0, -1.0, 0.0);
-     glVertex3f(0.5,-0.5,0.5);
-     glVertex3f(-0.5,-0.5,0.5);
-     glVertex3f(-0.5,-0.5,-0.5);
-     glVertex3f(0.5,-0.5,-0.5);
-   glEnd();
-
-   glPopMatrix();
-}
 
 void init (void) 
 {
@@ -292,71 +49,15 @@ void init (void)
 	glCullFace(GL_BACK);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
-   cubepositions();
 
-
-   skybox   = SpaceWall(0.0 , 0.0 , -10.0  );
-   table  = TableSurface(0.0 , -5.0 , 0.0  );
-   sun  = Sun(0.0 , 3.0 , 0.0  );
-   tCylin = Cylinder(0,-5,0);
-   boxTest = Box(0,-5,0);
-   gearT = Gear(0 , -2.5 ,0);
-   earth = Earth(10 ,3 ,0);
+	skybox = SpaceWall(0.0 , 0.0 , -10.0);
+	table = TableSurface(0.0 , -5.0 , 0.0);
+	sun = Sun(0.0 , 3.0 , 0.0);
+	tCylin = Cylinder(0,-5,0);
+	boxTest = Box(0,-5,0);
+	gearT = Gear(0 ,-2.5 ,0);
+	earth = Earth(10 ,3 ,0);
 }
-
-
-
-void getFaceNormal(GLfloat *norm,GLfloat pointa[3],GLfloat pointb[3],GLfloat pointc[3])
-{
-	float vect[2][3];
-	int a,b;
-	float point[3][3];
-
-	for (a=0;a<3;++a)
-	{
-		point[0][a]=pointa[a];						//copies points into point[][]
-		point[1][a]=pointb[a]; 
-		point[2][a]=pointc[a];
-	}
-
-	for (a=0;a<2;++a)									//calculates vectors from point[0] to point[1]
-	{														//and point[0] to point[2]
-		for (b=0;b<3;++b)
-		{
-			vect[a][b]=point[2-a][b]-point[0][b];			
-		}
-	}
-
-	crossProduct(norm,vect[0],vect[1]);			//calculates vector at 90° to to 2 vectors
-	normalize(norm);									//makes the vector length 1
-}
-
-
-void normalize(GLfloat * vect)	//scales a vector a length of 1
-{
-	float length;
-	int a;
-
-	length=sqrt(					//A^2 + B^2 + C^2 = length^2
-				pow(vect[0],2)+	
-				pow(vect[1],2)+
-				pow(vect[2],2)
-				);
-
-	for (a=0;a<3;++a)				//divides vector by its length to normalise
-	{
-		vect[a]/=length;
-	}
-}
-
-void crossProduct(GLfloat *c,GLfloat a[3], GLfloat b[3])		//finds the cross product of two vectors
-{															
-	c[0]=a[1]*b[2] - b[1]*a[2];
-	c[1]=a[2]*b[0] - b[2]*a[0];
-	c[2]=a[0]*b[1] - b[0]*a[1];
-}
-
-
 
 
 void display (void)
@@ -369,44 +70,29 @@ void display (void)
 	glHint (GL_FOG_HINT, GL_NICEST);
 	glFogf(GL_FOG_START, 100.0f);
 	glFogf(GL_FOG_END, 600.0f); 
-    glEnable (GL_FOG);
-
-	glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable( GL_LINE_SMOOTH );
-glEnable( GL_POLYGON_SMOOTH );
-glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
-glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
-
-
-       GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
-   GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
-   GLfloat mat_shininess[] = { shiny };
-  // GLfloat light_position[] = { 10.0, 0.0, 10.0, 0.0 };
-  // GLfloat light_position[] = { xpos, ypos, zpos, 0.0 };
- 
-
-   GLfloat mat_diffuse2[] = { 0.8, 0.2, 0.2, 1.0 };
-   GLfloat mat_diffuse3[] = { 0.2, 0.8, 0.2, 1.0 };
-
-   glClearColor (0.0, 0.0, 0.0, 0.0);
-   glShadeModel (GL_SMOOTH);
-  // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-
-   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-   glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-
-      glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-   glMatrixMode (GL_MODELVIEW);
-   glLoadIdentity();
+    glEnable(GL_FOG);
 
 
 
-    
+
+	GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
+	GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
+	GLfloat mat_shininess[] = { shiny };
+	GLfloat mat_diffuse2[] = { 0.8, 0.2, 0.2, 1.0 };
+	GLfloat mat_diffuse3[] = { 0.2, 0.8, 0.2, 1.0 };
+
+	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
+	glShadeModel (GL_SMOOTH);
+  //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );  // WIREFRAME
 
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glMatrixMode (GL_MODELVIEW);
+	glLoadIdentity();
 
     camera.update();
 
@@ -415,14 +101,13 @@ glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
 	tCylin.display();
 	gearT.display();
 	sun.display();
-
 	earth.display();
-
 	boxTest.display();
-	glTranslated(5 ,0 ,0);
-	 glutSolidSphere(1.0, 100, 100);
+	
+	glTranslated(5 ,0 ,0);  // REMOVE LATER
+	glutSolidSphere(1.0, 100, 100);
 
-    glutSwapBuffers(); //swap the buffers
+    glutSwapBuffers();
 }
 
 void reshape (int w, int h)
@@ -440,77 +125,23 @@ void keyboard (unsigned char key, int x, int y)
 {
 	camera.keyboardControl(key , x , y);
 
+	if (key=='k'){light_position[1] += 0.1f;}
+	if (key=='i'){light_position[1] -= 0.1f;}
+	if (key=='j'){light_position[0] += 0.1f;}
+	if (key=='l'){light_position[0] -= 0.1f;}
+	if (key=='u'){light_position[2] += 0.1f;}
+	if (key=='o'){light_position[2] -= 0.1f;}
 
-		    if (key=='k'){light_position[1] += 0.1f;}
-		if (key=='i'){light_position[1] -= 0.1f;}
-		if (key=='j'){light_position[0] += 0.1f;}
-		if (key=='l'){light_position[0] -= 0.1f;}
-		if (key=='u'){light_position[2] += 0.1f;}
-		if (key=='o'){light_position[2] -= 0.1f;}
-
-    /*if (key=='q')
-    {
-    xrot += 1;
-    if (xrot >360) xrot -= 360;
-    }
-
-    if (key=='z')
-    {
-    xrot -= 1;
-    if (xrot < -360) xrot += 360;
-    }
-
-    if (key=='w')
-    {
-    float xrotrad, yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xrotrad = (xrot / 180 * 3.141592654f); 
-    xpos += float(sin(yrotrad));
-    zpos -= float(cos(yrotrad));
-    ypos -= float(sin(xrotrad));
-    }
-
-    if (key=='s')
-    {
-    float xrotrad, yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xrotrad = (xrot / 180 * 3.141592654f); 
-    xpos -= float(sin(yrotrad));
-    zpos += float(cos(yrotrad));
-    ypos += float(sin(xrotrad));
-    }
-
-    if (key=='d')
-    {
-    float yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xpos += float(cos(yrotrad)) * 0.2;
-    zpos += float(sin(yrotrad)) * 0.2;
-    }
-
-    if (key=='a')
-    {
-    float yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xpos -= float(cos(yrotrad)) * 0.2;
-    zpos -= float(sin(yrotrad)) * 0.2;
-    }
-
-    if (key==27)
-    {
-    exit(0);
-    }
-	*/
 }
 
-
+void mouseUpdate(int x , int y)
+{
+	//	camera.mouseControl(x,y);
+}
 
 
 void idle(void)
 {
-	angleX += 0.01;
-	angleY += 0.01;
-	//angleZ += 0.01;
 	gearT.update();
 	sun.update();
 	skybox.update();
@@ -519,10 +150,6 @@ void idle(void)
 	glutPostRedisplay();
 }
 
-void mouseUpdate(int x , int y)
-{
-//	camera.mouseControl(x,y);
-}
 
 int main (int argc, char **argv)
 {
