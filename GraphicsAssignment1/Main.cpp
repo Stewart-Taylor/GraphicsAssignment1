@@ -54,7 +54,7 @@ void init (void)
 	table = TableSurface(0.0 , -5.0 , 0.0);
 	sun = Sun(0.0 , 3.0 , 0.0);
 	tCylin = Cylinder(0,-5,0);
-	boxTest = Box(0,-5,0);
+	boxTest = Box(0,-3.99,0 , 10,10,2);
 	gearT = Gear(0 ,-2.5 ,0);
 	earth = Earth(10 ,3 ,0);
 }
@@ -71,7 +71,6 @@ void display (void)
 	glFogf(GL_FOG_START, 100.0f);
 	glFogf(GL_FOG_END, 600.0f); 
     glEnable(GL_FOG);
-
 
 
 

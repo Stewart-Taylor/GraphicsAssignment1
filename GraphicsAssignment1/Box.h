@@ -9,10 +9,12 @@ public:
 	GLfloat xAngle;
 	GLfloat yAngle;
 	GLfloat zAngle;
-	GLfloat scale;
+	GLfloat width;
+	GLfloat height;
+	GLfloat length;
 	GLuint texName;
 	Box();
-	Box(float x , float y , float z );
+	Box(float x , float y , float z , float widthT , float heightT , float lengthT );
 	~Box(void);
 	void display(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
