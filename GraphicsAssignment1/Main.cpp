@@ -371,6 +371,13 @@ void display (void)
 	glFogf(GL_FOG_END, 600.0f); 
     glEnable (GL_FOG);
 
+	glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable( GL_LINE_SMOOTH );
+glEnable( GL_POLYGON_SMOOTH );
+glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
+glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST );
+
+
        GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
    GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
    GLfloat mat_shininess[] = { shiny };
