@@ -47,6 +47,8 @@ void Sun::display(void)
 	c.y = 0;
 	c.z = 0;
 
+
+
 	glEnable(GL_TEXTURE_2D);  // move
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
@@ -59,6 +61,10 @@ void Sun::display(void)
 	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
+
+		GLfloat whiteSpecularMaterial[] = {0.5, 0.5, 0.5};
+		GLfloat blank[] = {0.0, 0.0, 0.0};
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteSpecularMaterial);
 			   
 
 		GLfloat r = 1.0;
@@ -122,6 +128,7 @@ void Sun::display(void)
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, blank);
 }
 
 

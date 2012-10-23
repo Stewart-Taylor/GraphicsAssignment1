@@ -36,7 +36,7 @@ GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
 
-GLfloat light_position[] = { 10.0, 4.0, 10.0, 0.0 };
+GLfloat light_position[] = { 0.29999962 , 1.9000014 , -1.1000001};
 
 
 
@@ -88,12 +88,18 @@ void display (void)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	
 
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity();
 
+
     camera.update();
+
+
+	
+
 
 	skybox.display();
 	table.display();
@@ -103,8 +109,13 @@ void display (void)
 	earth.display();
 	boxTest.display();
 	
-	glTranslated(5 ,0 ,0);  // REMOVE LATER
+	glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
 	glutSolidSphere(1.0, 100, 100);
+
+	        glPushMatrix();
+			glTranslated(-light_position[0] ,-light_position[1] ,-light_position[2]);
+            glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+        glPopMatrix();
 
     glutSwapBuffers();
 }

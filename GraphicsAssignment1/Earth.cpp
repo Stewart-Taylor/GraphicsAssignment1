@@ -48,7 +48,7 @@ void Earth::display(void)
 	c.y = 0;
 	c.z = 0;
 
-	glEnable(GL_TEXTURE_2D);  // move
+//	glEnable(GL_TEXTURE_2D);  // move
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
