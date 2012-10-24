@@ -444,9 +444,9 @@ void idle(void)
 {
 	mainGear.spin(orbitSpeed * 60);  // 0.06
 	powerGear.spin(-orbitSpeed * 200); // -0.2
-	powerPole.spin(orbitSpeed * 200);   // 0.2
+	//powerPole.spin(orbitSpeed * 200);   // 0.2
 	smallMiddleGear.spin(orbitSpeed * 200);
-	powerPole2.spin(orbitSpeed * 60);
+	//powerPole2.spin(orbitSpeed * 60);
 	bigPowerGear.spin(-orbitSpeed * 60);
 	sideGear.spin(-orbitSpeed * 400);
 	sidePole.spin(orbitSpeed * 400);
