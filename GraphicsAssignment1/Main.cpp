@@ -32,6 +32,15 @@ Gear smallMiddleGear;
 Gear sideGear; 
 Cylinder sidePole; 
 
+Cylinder neptunePole;
+Cylinder uranusPole;
+Cylinder saturnPole;
+Cylinder jupiterPole;
+Cylinder marsPole;
+Cylinder earthPole;
+Cylinder venusPole;
+Cylinder mercuryPole;
+
 GLfloat angleX;
 GLfloat angleY;
 GLfloat angleZ;
@@ -144,6 +153,17 @@ void init (void)
 	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 
 
+	neptunePole = Cylinder(0,4.62,0 ,0.9 , 3.3 , 30);
+	uranusPole = Cylinder(0,5.0,0 ,0.8 , 3.5 , 30);
+	saturnPole = Cylinder(0,5.4,0 ,0.7 , 3.7 , 30);
+	jupiterPole = Cylinder(0,5.8,0 ,0.6 , 3.9 , 30);
+	marsPole = Cylinder(0,6.2,0 ,0.5 , 4.1 , 30);
+	earthPole = Cylinder(0,6.58,0 ,0.4 , 4.3 , 30);
+	venusPole = Cylinder(0,6.96,0 ,0.3 , 4.5 , 30);
+	mercuryPole = Cylinder(0,8,0 ,0.2 , 5.0 , 30);
+
+
+
 	saturnRing = Cylinder(0 ,11.0 ,0 ,2.4 , 0.2 , 30);
 	saturnRing.yAngle = -12;
 	
@@ -243,8 +263,9 @@ void drawShadows()
    shadow_matrix(light_position,plane_eq,shadow_proj);
       glMultMatrixf(shadow_proj);
 		
+
 	  coverBox.displayShadow();
-	  centralPole.displayShadow();
+	//  centralPole.displayShadow();
 	mainGear.displayShadow();
 	powerGear.displayShadow();
 	smallMiddleGear.displayShadow();
@@ -255,6 +276,15 @@ void drawShadows()
 	powerPole2.displayShadow();
 	sun.displayShadow();
 	boxTest.displayShadow();
+
+	neptunePole.displayShadow();   // ONLY one visible at set lighting angle
+	//uranusPole.displayShadow();  
+	//saturnPole.displayShadow();
+	//jupiterPole.displayShadow();
+	//marsPole.displayShadow();
+	//earthPole.displayShadow();
+	//venusPole.displayShadow();
+	//mercuryPole.displayShadow();
 
 	drawPlanetsShadow();
 
@@ -307,7 +337,7 @@ void display (void)
 	glEnable(GL_CULL_FACE);
 	table.display();
 	drawShadows();
-	centralPole.display();
+	//centralPole.display();
 	mainGear.display();
 	powerGear.display();
 	smallMiddleGear.display();
@@ -321,6 +351,17 @@ void display (void)
 	coverBox.display();
 
 	drawPlanets();
+
+
+	neptunePole.display();
+	uranusPole.display();
+	saturnPole.display();
+	jupiterPole.display();
+	marsPole.display();
+	earthPole.display();
+	venusPole.display();
+	mercuryPole.display();
+	
 
 
 	//glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
@@ -382,6 +423,16 @@ void updatePlanets(void)
 	//update saturn ring
 	saturnRing.xPosition = saturn.planet.xPosition;
 	saturnRing.zPosition = saturn.planet.zPosition;
+
+
+	neptunePole.zAngle = -neptune.outPole.yAngle;
+	uranusPole.zAngle = -uranus.outPole.yAngle;
+	saturnPole.zAngle = -saturn.outPole.yAngle;
+	jupiterPole.zAngle = -jupiter.outPole.yAngle;
+	marsPole.zAngle = -mars.outPole.yAngle;
+	earthPole.zAngle = -earth.outPole.yAngle;
+	venusPole.zAngle = -venus.outPole.yAngle;
+	mercuryPole.zAngle = -mercury.outPole.yAngle;
 }
 
 
