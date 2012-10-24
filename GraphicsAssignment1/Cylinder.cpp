@@ -27,7 +27,7 @@ Cylinder::Cylinder(float x , float y , float z , float radiusT , float lengthT  
 	radius = radiusT;
 	length = lengthT;
 	slices =slicesT;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\steel.bmp");
+	texName = TextureLoader::loadTexture("Textures\\steel.bmp");
 }
 
 

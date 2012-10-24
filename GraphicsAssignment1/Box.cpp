@@ -25,7 +25,7 @@ Box::Box(GLfloat x , GLfloat y , GLfloat z, GLfloat widthT , GLfloat heightT , G
 	width = widthT;
 	height = heightT;
 	length = lengthT;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\brass.bmp"); // CHANGE
+	texName = TextureLoader::loadTexture("Textures\\brass.bmp"); // CHANGE
 }
 
 

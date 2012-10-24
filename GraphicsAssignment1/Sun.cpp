@@ -23,7 +23,7 @@ Sun::Sun(float x , float y , float z )
 	yAngle = 0;
 	zAngle = 0;
 	scale = 3;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\sun.bmp");
+	texName = TextureLoader::loadTexture("Textures\\sun.bmp");
 }
 
 

@@ -23,7 +23,6 @@ TableSurface::TableSurface(float x , float y , float z )
 	yAngle = 0;
 	zAngle = 0;
 	scale = 120;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\wood.bmp");
 }
 
 
@@ -35,11 +34,6 @@ TableSurface::~TableSurface(void)
 void TableSurface::display(void)
 {
 	glPushMatrix(); 
-
-//	glEnable(GL_TEXTURE_2D);  // move
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glBindTexture(GL_TEXTURE_2D, texName);
-
 
 	glMatrixMode(GL_MODELVIEW);
 

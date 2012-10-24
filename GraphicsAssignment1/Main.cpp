@@ -168,14 +168,14 @@ void init (void)
 	saturnRing.yAngle = -12;
 	
 
-	setUpPlanet(mercury , 5 ,4.1 ,9.5 , 0.4 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mercury.bmp");
-	setUpPlanet(venus , 10 ,1.62 ,9.0 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\venus.bmp");
-	setUpPlanet(earth , 15 ,1 ,8.5 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
-	setUpPlanet(mars , 20 ,0.53 ,8.0 , 0.53 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mars.bmp");
-	setUpPlanet(jupiter , 25 ,0.08 ,7.5 , 2.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\jupiter.bmp");
-	setUpPlanet(saturn , 30 ,0.0339 ,7.0 , 1.5 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\saturn.bmp");
-	setUpPlanet(uranus , 35 ,0.011 ,6.5 , 1.2 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\uranus.bmp");
-	setUpPlanet(neptune , 40 ,0.006 ,6.0 , 1.2, "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\neptune.bmp");
+	setUpPlanet(mercury , 5 ,4.1 ,9.5 , 0.4 , "Textures\\mercury.bmp");
+	setUpPlanet(venus , 10 ,1.62 ,9.0 , 1.0 , "Textures\\venus.bmp");
+	setUpPlanet(earth , 15 ,1 ,8.5 , 1.0 , "Textures\\earth.bmp");
+	setUpPlanet(mars , 20 ,0.53 ,8.0 , 0.53 , "Textures\\mars.bmp");
+	setUpPlanet(jupiter , 25 ,0.08 ,7.5 , 2.0 , "Textures\\jupiter.bmp");
+	setUpPlanet(saturn , 30 ,0.0339 ,7.0 , 1.5 , "Textures\\saturn.bmp");
+	setUpPlanet(uranus , 35 ,0.011 ,6.5 , 1.2 , "Textures\\uranus.bmp");
+	setUpPlanet(neptune , 40 ,0.006 ,6.0 , 1.2, "Textures\\neptune.bmp");
 }
 
 
@@ -444,9 +444,7 @@ void idle(void)
 {
 	mainGear.spin(orbitSpeed * 60);  // 0.06
 	powerGear.spin(-orbitSpeed * 200); // -0.2
-	//powerPole.spin(orbitSpeed * 200);   // 0.2
 	smallMiddleGear.spin(orbitSpeed * 200);
-	//powerPole2.spin(orbitSpeed * 60);
 	bigPowerGear.spin(-orbitSpeed * 60);
 	sideGear.spin(-orbitSpeed * 400);
 	sidePole.spin(orbitSpeed * 400);

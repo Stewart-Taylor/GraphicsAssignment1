@@ -25,7 +25,7 @@ SpaceWall::SpaceWall(float x , float y , float z )
 	yAngleTexture = 0;
 	zAngleTexture = 0;
 	scale = 800;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\spaceTile.bmp");
+	texName = TextureLoader::loadTexture("Textures\\spaceTile.bmp");
 }
 
 

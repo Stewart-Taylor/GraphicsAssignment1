@@ -27,7 +27,7 @@ Gear::Gear(GLfloat x , GLfloat y , GLfloat z , GLfloat innerRad , GLfloat outerR
 	width = widthT;
 	teeth = teethT;
 	tooth_depth = depthT;
-	texName = TextureLoader::loadTexture("C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\tileSteelDark.bmp");
+	texName = TextureLoader::loadTexture("Textures\\tileSteelDark.bmp");
 }
 
 
