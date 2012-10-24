@@ -71,7 +71,7 @@ void Planet::display(void)
    float PI = 3.141;
    float TWOPI = PI * 2;
 
-   int n = 100;
+   int n = 30;
 
    if (r < 0)
       r = -r;
@@ -147,7 +147,7 @@ void Planet::displayShadow(void)
 	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
-		glColor4f(0.2,0.2,0.2,0.1);	   
+		glColor4f(0.1,0.1,0.1,0.3);	   
 
 	GLfloat r = 1.0;
 	int i,j;
@@ -156,7 +156,7 @@ void Planet::displayShadow(void)
 	float PI = 3.141;
 	float TWOPI = PI * 2;
 
-   int n = 100;
+   int n = 10;
 
    if (r < 0)
       r = -r;
@@ -169,12 +169,12 @@ void Planet::displayShadow(void)
       return;
    }
 
-   for (j=0;j <= n; j++) {
+   for (j=0;j < n; j++) {
       phi1 = j * TWOPI / n;
       phi2 = (j + 1) * TWOPI / n;	//next phi
 
       glBegin(GL_QUAD_STRIP);
-      for (i=0;i <= n;i++) {
+      for (i=0;i < n;i++) {
          theta = i * PI / n;
 
         e.x = sin ( theta ) * cos ( phi2 );
@@ -231,7 +231,7 @@ void Planet::spin()
 {
 //	xAngle += 0.01f;
 //	yAngle  += 0.01f;
-	zAngle  += 1.0f;
+//	zAngle  += 1.0f;
 
 //	float rad = 20;
 //	time += 0.001f;

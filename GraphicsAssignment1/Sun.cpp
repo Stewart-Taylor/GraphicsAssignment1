@@ -62,7 +62,7 @@ void Sun::display(void)
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
 
-		GLfloat whiteSpecularMaterial[] = {0.5, 0.5, 0.5};
+		GLfloat whiteSpecularMaterial[] = {0.1, 0.1, 0.1};
 		GLfloat blank[] = {0.0, 0.0, 0.0};
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteSpecularMaterial);
 			   
@@ -74,7 +74,7 @@ void Sun::display(void)
    float PI = 3.141;
    float TWOPI = PI * 2;
 
-   int n = 100;
+   int n = 70;
 
    if (r < 0)
       r = -r;
@@ -158,7 +158,7 @@ void Sun::displayShadow(void)
 	float PI = 3.141;
 	float TWOPI = PI * 2;
 
-   int n = 100;
+   int n = 20;
 
    if (r < 0)
       r = -r;

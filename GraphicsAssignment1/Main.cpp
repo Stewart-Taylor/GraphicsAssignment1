@@ -105,8 +105,8 @@ void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y  ,
 {
 	part.planet = Planet(10 ,(y+ 4) ,0 , path);
 	part.planet.scale = planetScale;
-	part.upPole = Cylinder(10 , (y + 2.0) ,0 , 0.1 , 4.0 , 30);
-	part.outPole = OutPole(0 , y ,0 , 0.2 , radiusT + 0.2 , 30);
+	part.upPole = Cylinder(10 , (y + 2.0) ,0 , 0.1 , 4.0 , 15);
+	part.outPole = OutPole(0 , y ,0 , 0.2 , radiusT + 0.2 , 15);
 	part.outPole.setAngle(0,0,90);
 	part.radius = radiusT;
 	part.rotateModifier = mod;
@@ -273,7 +273,7 @@ void display (void)
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	
-
+	
 	
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity();
@@ -283,8 +283,9 @@ void display (void)
 	
 	camera.update();
 
-
+	glDisable(GL_CULL_FACE);
 	skybox.display();
+	glEnable(GL_CULL_FACE);
 	table.display();
 	drawShadows();
 	centralPole.display();
