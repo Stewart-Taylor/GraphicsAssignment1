@@ -23,6 +23,9 @@ OutPole::OutPole(float x , float y , float z , float radiusT , float lengthT  ,i
 	yAngle = 0;
 	zAngle = 0;
 	scale = 1;
+	originPosX = 0;
+	originPosY = 0;
+	originPosZ = 0;
 	radius = radiusT;
 	length = lengthT;
 	slices =slicesT;
@@ -50,7 +53,7 @@ void OutPole::display(void)
 //	glRotatef(yAngle, 0.0, 1.0, 0.0);
 	//glRotatef(zAngle, 0.0, 0.0, 1.0);
 	//glTranslated(0,0 ,0);
-	glTranslated(0,0 ,0);
+	glTranslated(originPosX,originPosY,originPosZ);
 	glRotatef(yAngle, 0.0, 1.0, 0.0);
 
 	glTranslated(xPosition ,yPosition ,length/2);
@@ -121,7 +124,7 @@ void OutPole::displayShadow(void)
 	glPushMatrix(); 
 
 	glMatrixMode(GL_MODELVIEW);
-	glTranslated(0,0 ,0);
+	glTranslated(originPosX,originPosY,originPosZ);
 	glRotatef(yAngle, 0.0, 1.0, 0.0);
 
 	glTranslated(xPosition ,yPosition ,length/2);
@@ -167,7 +170,13 @@ void OutPole::setPosition(float xPositionT , float yPositionT , float zPositionT
 	zPosition = zPositionT;
 }
 
-void OutPole::spin()
+
+
+void OutPole::setOriginPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT  )
 {
-	zAngle -= 1.0f;
+	originPosX = xPositionT;
+	originPosY = yPositionT;
+	originPosZ = zPositionT;
 }
+
+

@@ -41,6 +41,9 @@ Cylinder earthPole;
 Cylinder venusPole;
 Cylinder mercuryPole;
 
+
+Cylinder moonCylinder;
+
 GLfloat angleX;
 GLfloat angleY;
 GLfloat angleZ;
@@ -76,7 +79,6 @@ struct PlanetPart
 		upPole.setPosition(xPositionT , upPole.yPosition , zPositionT);
 		upPole.spin(1.0);
 
-		outPole.spin();
 
 		float angle = atan2(zPositionT , xPositionT);
 		angle = -angle * 180 / 3.1415926;;
@@ -109,7 +111,7 @@ PlanetPart jupiter;
 PlanetPart saturn;
 PlanetPart uranus;
 PlanetPart neptune;
-
+PlanetPart moon;
 
 void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y );
 
@@ -151,7 +153,7 @@ void init (void)
 	sideGear.setAngle(180 ,90 ,0);
 	powerPole = Cylinder(4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
-
+	moonCylinder = Cylinder(-4.3 ,3.3 ,2.0 ,0.3, 1.0 , 30);
 
 	neptunePole = Cylinder(0,4.62,0 ,0.9 , 3.3 , 30);
 	uranusPole = Cylinder(0,5.0,0 ,0.8 , 3.5 , 30);
@@ -176,6 +178,7 @@ void init (void)
 	setUpPlanet(saturn , 30 ,0.0339 ,7.0 , 1.5 , "Textures\\saturn.bmp");
 	setUpPlanet(uranus , 35 ,0.011 ,6.5 , 1.2 , "Textures\\uranus.bmp");
 	setUpPlanet(neptune , 40 ,0.006 ,6.0 , 1.2, "Textures\\neptune.bmp");
+	setUpPlanet(moon , 2 ,13 ,8.8  , 0.3 , "Textures\\neptune.bmp");
 }
 
 
@@ -191,6 +194,8 @@ void drawPlanets()
 	neptune.display();
 
 	saturnRing.display();
+
+	moon.display();
 }
 
 void drawPlanetsShadow()
@@ -198,6 +203,7 @@ void drawPlanetsShadow()
 	mercury.displayShadow();
 	venus.displayShadow();
 	earth.displayShadow();
+	moon.displayShadow();
 	mars.displayShadow();
 	jupiter.displayShadow();
 	saturn.displayShadow();
@@ -264,8 +270,7 @@ void drawShadows()
       glMultMatrixf(shadow_proj);
 		
 
-	  coverBox.displayShadow();
-	//  centralPole.displayShadow();
+	coverBox.displayShadow();
 	mainGear.displayShadow();
 	powerGear.displayShadow();
 	smallMiddleGear.displayShadow();
@@ -276,7 +281,8 @@ void drawShadows()
 	powerPole2.displayShadow();
 	sun.displayShadow();
 	boxTest.displayShadow();
-
+	moonCylinder.displayShadow();
+	
 	neptunePole.displayShadow();   // ONLY one visible at set lighting angle
 	//uranusPole.displayShadow();  
 	//saturnPole.displayShadow();
@@ -349,7 +355,8 @@ void display (void)
 	sun.display();
 	boxTest.display();
 	coverBox.display();
-
+	moonCylinder.display();
+	
 	drawPlanets();
 
 
@@ -433,6 +440,30 @@ void updatePlanets(void)
 	earthPole.zAngle = -earth.outPole.yAngle;
 	venusPole.zAngle = -venus.outPole.yAngle;
 	mercuryPole.zAngle = -mercury.outPole.yAngle;
+
+
+
+	float xPositionT= earth.planet.xPosition + sin(orbitTimer* moon.rotateModifier)*moon.radius;
+	float zPositionT =  earth.planet.zPosition + cos(orbitTimer* moon.rotateModifier)*moon.radius;
+
+	moon.planet.setPosition(xPositionT ,moon.planet.yPosition , zPositionT);
+	moon.planet.spin();
+
+	moon.upPole.setPosition(xPositionT , moon.upPole.yPosition , zPositionT);
+	moon.upPole.spin(1.0);
+
+	//moon.outPole.setPosition(earth.planet.xPosition , moon.outPole.yPosition ,  earth.planet.zPosition);
+	moon.outPole.setOriginPosition(earth.planet.xPosition , 0 , earth.planet.zPosition); 
+
+	GLfloat deltaZ = moon.planet.zPosition - earth.planet.zPosition;
+	GLfloat deltaX = moon.planet.xPosition - earth.planet.xPosition;
+	GLfloat angle = atan2(deltaZ , deltaX) ; // * 180 /  3.1415926;
+	angle = -angle * 180 / 3.1415926;
+	angle+= 90;
+
+	moon.outPole.setAngle(0,  angle , 0);  // 57.3
+
+	moonCylinder.setPosition(earth.upPole.xPosition ,earth.upPole.yPosition - 1.8 , earth.upPole.zPosition);
 }
 
 
