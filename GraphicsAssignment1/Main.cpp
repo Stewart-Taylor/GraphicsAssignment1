@@ -23,6 +23,7 @@ Sun sun;
 Cylinder centralPole; 
 Cylinder powerPole; 
 Cylinder powerPole2; 
+Cylinder saturnRing; 
 Gear mainGear; 
 Gear bigGear; 
 Gear powerGear; 
@@ -142,6 +143,11 @@ void init (void)
 	powerPole = Cylinder(4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 
+
+	saturnRing = Cylinder(0 ,11.0 ,0 ,2.4 , 0.2 , 30);
+	saturnRing.yAngle = -12;
+	
+
 	setUpPlanet(mercury , 5 ,4.1 ,9.5 , 0.4 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mercury.bmp");
 	setUpPlanet(venus , 10 ,1.62 ,9.0 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\venus.bmp");
 	setUpPlanet(earth , 15 ,1 ,8.5 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
@@ -163,6 +169,8 @@ void drawPlanets()
 	saturn.display();
 	uranus.display();
 	neptune.display();
+
+	saturnRing.display();
 }
 
 void drawPlanetsShadow()
@@ -175,6 +183,8 @@ void drawPlanetsShadow()
 	saturn.displayShadow();
 	uranus.displayShadow();
 	neptune.displayShadow();
+
+	saturnRing.displayShadow();
 }
 
 void shadow_matrix(GLfloat lt[4],
@@ -368,7 +378,13 @@ void updatePlanets(void)
 	saturn.update();
 	uranus.update();
 	neptune.update();
+
+	//update saturn ring
+	saturnRing.xPosition = saturn.planet.xPosition;
+	saturnRing.zPosition = saturn.planet.zPosition;
 }
+
+
 
 
 
