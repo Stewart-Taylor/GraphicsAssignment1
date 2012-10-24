@@ -16,6 +16,7 @@
 Camera camera = Camera();
 
 Box boxTest; 
+Box coverBox; 
 SpaceWall skybox; 
 TableSurface table; 
 Sun sun; 
@@ -129,6 +130,7 @@ void init (void)
 	sun = Sun(0.0 , 13.0 , 0.0);
 	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
 	boxTest = Box(0,1.01,0 , 10,10,2);
+	coverBox = Box(0,3.2,3.8 , 10,1,0.5);
 	mainGear = Gear(0 ,2.3 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
 	bigPowerGear = Gear(-4.3 ,2.8 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
 	powerGear = Gear(4.3 ,2.3 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
@@ -231,13 +233,14 @@ void drawShadows()
    shadow_matrix(light_position,plane_eq,shadow_proj);
       glMultMatrixf(shadow_proj);
 		
+	  coverBox.displayShadow();
 	  centralPole.displayShadow();
 	mainGear.displayShadow();
 	powerGear.displayShadow();
 	smallMiddleGear.displayShadow();
 	bigPowerGear.displayShadow();
 	sideGear.displayShadow();
-	sidePole.display();
+	sidePole.displayShadow();
 	powerPole.displayShadow();
 	powerPole2.displayShadow();
 	sun.displayShadow();
@@ -305,6 +308,7 @@ void display (void)
 	powerPole2.display();
 	sun.display();
 	boxTest.display();
+	coverBox.display();
 
 	drawPlanets();
 
