@@ -17,6 +17,7 @@ public:
 	Box(float x , float y , float z , float widthT , float heightT , float lengthT );
 	~Box(void);
 	void display(void);
+	void displayShadow(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
 	void update();
 };

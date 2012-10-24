@@ -18,6 +18,7 @@ public:
 	OutPole(float x , float y , float z , float radius , float length , int slices );
 	~OutPole(void);
 	void display(void);
+	void displayShadow(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
 	void setPosition(float xPositionT , float yPositionT , float zPositionT);
 	void spin();

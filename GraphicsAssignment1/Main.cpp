@@ -40,9 +40,9 @@ GLfloat shiny = 50.0;
 GLfloat orbitTimer  = 9939;
 GLfloat orbitSpeed = 0.001f;
 
-GLfloat light_position[] = { 0.29999962 , 1.9000014 , -1.1000001};
+GLfloat light_position[] = { 20.0 , 48.0 ,7.0 , 1.0};
 
-
+//lx = 0.0;ly = 3.0;lz = 7.0;lw = 1.0;
 
 struct PlanetPart
 {
@@ -76,6 +76,14 @@ struct PlanetPart
 		planet.display();
 		upPole.display();
 		outPole.display();
+	}
+
+
+	void displayShadow(void)
+	{
+		planet.displayShadow();
+		upPole.displayShadow();
+		outPole.displayShadow();
 	}
 
 };
@@ -115,25 +123,25 @@ void init (void)
 	glEnable(GL_TEXTURE_2D);
 
 	skybox = SpaceWall(0.0 , 0.0 , -10.0);
-	table = TableSurface(0.0 , -5.0 , 0.0);
-	sun = Sun(0.0 , 8.0 , 0.0);
-	centralPole = Cylinder(0,3.0,0 ,0.54 , 12.0 , 30);
-	boxTest = Box(0,-3.99,0 , 10,10,2);
-	mainGear = Gear(0 ,-2.7 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
-	bigPowerGear = Gear(-4.3 ,-2.2 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
-	powerGear = Gear(4.3 ,-2.7 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
-	smallMiddleGear = Gear(0 ,-2.2 ,0 , 0.5 , 1.6 ,  0.4 , 20 ,0.35);
-	powerPole = Cylinder(4.3 ,-1.7 ,3.8 ,0.18 , 2.0 , 30);
-	powerPole2 = Cylinder(-4.3 ,-1.7 ,3.8 ,0.18 , 2.0 , 30);
+	table = TableSurface(0.0 , 0.0 , 0.0);
+	sun = Sun(0.0 , 13.0 , 0.0);
+	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
+	boxTest = Box(0,1.01,0 , 10,10,2);
+	mainGear = Gear(0 ,2.3 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
+	bigPowerGear = Gear(-4.3 ,2.8 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
+	powerGear = Gear(4.3 ,2.3 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
+	smallMiddleGear = Gear(0 ,2.8 ,0 , 0.5 , 1.6 ,  0.4 , 20 ,0.35);
+	powerPole = Cylinder(4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
+	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 
-	setUpPlanet(mercury , 5 ,4.1 ,4.5 , 0.4 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mercury.bmp");
-	setUpPlanet(venus , 10 ,1.62 ,4.0 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\venus.bmp");
-	setUpPlanet(earth , 15 ,1 ,3.5 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
-	setUpPlanet(mars , 20 ,0.53 ,3.0 , 0.53 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mars.bmp");
-	setUpPlanet(jupiter , 25 ,0.08 ,2.5 , 2.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\jupiter.bmp");
-	setUpPlanet(saturn , 30 ,0.0339 ,2.0 , 1.5 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\saturn.bmp");
-	setUpPlanet(uranus , 35 ,0.011 ,1.5 , 1.2 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\uranus.bmp");
-	setUpPlanet(neptune , 40 ,0.006 ,1.0 , 1.2, "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\neptune.bmp");
+	setUpPlanet(mercury , 5 ,4.1 ,9.5 , 0.4 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mercury.bmp");
+	setUpPlanet(venus , 10 ,1.62 ,9.0 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\venus.bmp");
+	setUpPlanet(earth , 15 ,1 ,8.5 , 1.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\earth.bmp");
+	setUpPlanet(mars , 20 ,0.53 ,8.0 , 0.53 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\mars.bmp");
+	setUpPlanet(jupiter , 25 ,0.08 ,7.5 , 2.0 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\jupiter.bmp");
+	setUpPlanet(saturn , 30 ,0.0339 ,7.0 , 1.5 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\saturn.bmp");
+	setUpPlanet(uranus , 35 ,0.011 ,6.5 , 1.2 , "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\uranus.bmp");
+	setUpPlanet(neptune , 40 ,0.006 ,6.0 , 1.2, "C:\\Users\\Stewart\\Documents\\Visual Studio 2010\\Projects\\opengl\\TextureExample\\Debug\\neptune.bmp");
 }
 
 
@@ -147,6 +155,93 @@ void drawPlanets()
 	saturn.display();
 	uranus.display();
 	neptune.display();
+}
+
+void drawPlanetsShadow()
+{
+	mercury.displayShadow();
+	venus.displayShadow();
+	earth.displayShadow();
+	mars.displayShadow();
+	jupiter.displayShadow();
+	saturn.displayShadow();
+	uranus.displayShadow();
+	neptune.displayShadow();
+}
+
+void shadow_matrix(GLfloat lt[4],
+				   GLfloat pl[4],
+				   GLfloat shadow_proj[16])
+// First define values for usual notation  
+// for plane and light position/direction.
+{
+	GLfloat lx, ly, lz, lw; // light coordinates
+	GLfloat a, b, c, d; // for equation of plane
+	GLfloat rdotl; //dot product of normal and light position/direction
+
+ // Light position is (lx, ly, lz, lw). The plane on which to draw the 
+ // shadows has equation a*x + b*y + c*z + d = 0
+
+	lx = lt[0]; ly = lt[1]; lz = lt[2]; lw = lt[3];
+	a = pl[0]; b = pl[1]; c = pl[2]; d = pl[3];
+    rdotl = a*lx + b*ly + c*lz + d*lw;
+
+   shadow_proj[0]  = -a*lx + rdotl;
+   shadow_proj[1]  = -a*ly;
+   shadow_proj[2]  = -a*lz;
+   shadow_proj[3]  = -a*lw;
+   shadow_proj[4]  = -b*lx;
+   shadow_proj[5]  = -b*ly + rdotl;
+   shadow_proj[6]  = -b*lz;
+   shadow_proj[7]  = -b*lw;
+   shadow_proj[8]  = -c*lx;
+   shadow_proj[9]  = -c*ly;
+   shadow_proj[10] = -c*lz + rdotl;
+   shadow_proj[11] = -c*lw;
+   shadow_proj[12] = -d*lx;
+   shadow_proj[13] = -d*ly;
+   shadow_proj[14] = -d*lz;
+   shadow_proj[15] = -d*lw + rdotl;
+}
+
+
+void drawShadows()
+{
+
+	   GLfloat shadow_proj[16];
+	glDisable(GL_TEXTURE_2D);
+// Disable lighting and depth testing for drawing of shadows
+   glDisable(GL_LIGHTING);
+   glDisable(GL_DEPTH_TEST);
+// Enable blending so shadows are combined with floor pattern
+   glEnable(GL_BLEND);
+   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glPushMatrix();
+// Multiply modelview matrix by the shadow projection matrix
+
+// Draw shadows in dark grey, with opacity 0.5
+
+      GLfloat plane_eq[] = {0.0, 1.0, 0.0, 0.0};
+   shadow_matrix(light_position,plane_eq,shadow_proj);
+      glMultMatrixf(shadow_proj);
+		
+	  centralPole.displayShadow();
+	mainGear.displayShadow();
+	powerGear.displayShadow();
+	smallMiddleGear.displayShadow();
+	bigPowerGear.displayShadow();
+	powerPole.displayShadow();
+	powerPole2.displayShadow();
+	sun.displayShadow();
+	boxTest.displayShadow();
+
+	drawPlanetsShadow();
+
+	glPopMatrix();
+
+	   glDisable(GL_BLEND);
+   glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
 }
 
 void display (void)
@@ -184,14 +279,14 @@ void display (void)
 	glLoadIdentity();
 
 
-    camera.update();
-
 
 	
+	camera.update();
 
 
 	skybox.display();
 	table.display();
+	drawShadows();
 	centralPole.display();
 	mainGear.display();
 	powerGear.display();
@@ -205,13 +300,15 @@ void display (void)
 	drawPlanets();
 
 
-	glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
-	glutSolidSphere(1.0, 100, 100);
+	//glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
+	//glutSolidSphere(1.0, 100, 100);
 
-	        glPushMatrix();
-			glTranslated(-light_position[0] ,-light_position[1] ,-light_position[2]);
+	       glPushMatrix();
+			//glTranslated(-light_position[0] ,-light_position[1] ,-light_position[2]);
             glLightfv(GL_LIGHT0, GL_POSITION, light_position);
         glPopMatrix();
+
+
 
     glutSwapBuffers();
 }
@@ -231,12 +328,12 @@ void keyboard (unsigned char key, int x, int y)
 {
 	camera.keyboardControl(key , x , y);
 
-	if (key=='k'){light_position[1] += 0.1f;}
-	if (key=='i'){light_position[1] -= 0.1f;}
-	if (key=='j'){light_position[0] += 0.1f;}
-	if (key=='l'){light_position[0] -= 0.1f;}
-	if (key=='u'){light_position[2] += 0.1f;}
-	if (key=='o'){light_position[2] -= 0.1f;}
+	if (key=='k'){light_position[1] += 1;}
+	if (key=='i'){light_position[1] -= 1;}
+	if (key=='j'){light_position[0] += 1;}
+	if (key=='l'){light_position[0] -= 1;}
+	if (key=='u'){light_position[2] += 1;}
+	if (key=='o'){light_position[2] -= 1;}
 	if (key=='m'){orbitSpeed += 0.0001f;}
 	if (key=='n'){orbitSpeed -= 0.0001f;}
 }

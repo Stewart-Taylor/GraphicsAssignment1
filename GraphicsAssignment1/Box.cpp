@@ -163,6 +163,77 @@ void Box::display(void)
 }
 
 
+void Box::displayShadow(void)
+{
+	glPushMatrix(); 
+
+
+	glMatrixMode(GL_MODELVIEW);
+
+	glTranslated(xPosition ,yPosition ,zPosition);
+	glRotatef(xAngle, 1.0, 0.0, 0.0);
+	glRotatef(yAngle, 0.0, 1.0, 0.0);
+	glRotatef(zAngle, 0.0, 0.0, 1.0);
+	glTranslated(0,0 ,0);
+	glScaled(width ,height ,length);
+			   
+	glColor4f(0.2,0.2,0.2,0.1);	  
+	
+	glBegin(GL_POLYGON);
+
+	glVertex3f(0.5,0.5,0.5);
+	glVertex3f(-0.5,0.5,0.5);
+	glVertex3f(-0.5,-0.5,0.5);
+	glVertex3f(0.5,-0.5,0.5);
+	
+	glEnd();
+
+	glBegin(GL_POLYGON);
+
+	glVertex3f(0.5,0.5,0.5);
+	glVertex3f(0.5,-0.5,0.5);
+	glVertex3f(0.5,-0.5,-0.5);
+	glVertex3f(0.5,0.5,-0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+
+	glVertex3f(0.5,0.5,-0.5);
+	glVertex3f(0.5,-0.5,-0.5);
+	glVertex3f(-0.5,-0.5,-0.5);
+	glVertex3f(-0.5,0.5,-0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+
+	glVertex3f(-0.5,0.5,0.5);
+	glVertex3f(-0.5,0.5,-0.5);
+	glVertex3f(-0.5,-0.5,-0.5);
+    glVertex3f(-0.5,-0.5,0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+
+	glVertex3f(0.5,0.5,0.5);
+	glVertex3f(0.5,0.5,-0.5);
+	glVertex3f(-0.5,0.5,-0.5);
+    glVertex3f(-0.5,0.5,0.5);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+
+	glVertex3f(0.5,-0.5,0.5);
+	glVertex3f(-0.5,-0.5,0.5);
+	glVertex3f(-0.5,-0.5,-0.5);
+	glVertex3f(0.5,-0.5,-0.5);
+	glEnd();
+
+	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+}
+
+
 void Box::setAngle(float xAngleT , float yAngleT , float zAngleT)
 {
 	xAngle = xAngleT;

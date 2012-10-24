@@ -16,6 +16,7 @@ public:
 	Sun(float x , float y , float z );
 	~Sun(void);
 	void display(void);
+	void displayShadow(void);
 	void setAngle(float xAngleT , float yAngleT , float zAngleT);
 	void update();
 };

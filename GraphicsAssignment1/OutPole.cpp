@@ -115,6 +115,44 @@ void OutPole::display(void)
 }
 
 
+
+void OutPole::displayShadow(void)
+{
+	glPushMatrix(); 
+
+	glMatrixMode(GL_MODELVIEW);
+	glTranslated(0,0 ,0);
+	glRotatef(yAngle, 0.0, 1.0, 0.0);
+
+	glTranslated(xPosition ,yPosition ,length/2);
+	glScaled(scale ,scale ,scale);
+		glColor4f(0.2,0.2,0.2,0.1);	   
+
+	GLfloat hl = length * 0.5f;
+	GLfloat a = 0.0f;
+	GLfloat step = 6.28318 / (GLfloat)slices;
+
+
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i = 0; i < slices + 1; ++i)
+	{
+		GLfloat x = cos(a) * radius;
+		GLfloat y = sin(a) * radius;
+
+		glNormal3f(x, y, 0);
+		glTexCoord2f(x,0); glVertex3f(x,y, hl);
+		glTexCoord2f(x,4);    glVertex3f(x,y,-hl);
+    
+		a += step;
+	}
+	glEnd();
+
+
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+}
+
+
 void OutPole::setAngle(float xAngleT , float yAngleT , float zAngleT)
 {
 	xAngle = xAngleT;

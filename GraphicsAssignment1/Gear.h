@@ -20,6 +20,7 @@ public:
 	Gear(GLfloat x , GLfloat y , GLfloat z , GLfloat innerRad , GLfloat outerRad ,GLfloat widthT , GLuint teethT , GLfloat depthT );
 	~Gear(void);
 	void display(void);
+	void displayShadow(void);
 	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
 	void spin(GLfloat speed);
 };
