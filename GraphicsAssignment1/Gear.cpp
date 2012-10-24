@@ -185,7 +185,7 @@ void Gear::displayShadow(void)
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
 
-	glColor4f(0.2,0.2,0.2,0.1);
+	glColor4f(0.2,0.2,0.2,0.2);	   
 			   
 	GLint i;
 	GLfloat r0, r1, r2;

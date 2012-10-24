@@ -177,7 +177,7 @@ void Box::displayShadow(void)
 	glTranslated(0,0 ,0);
 	glScaled(width ,height ,length);
 			   
-	glColor4f(0.2,0.2,0.2,0.1);	  
+	glColor4f(0.1,0.1,0.1,0.3);	    
 	
 	glBegin(GL_POLYGON);
 

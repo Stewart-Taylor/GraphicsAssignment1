@@ -126,7 +126,7 @@ void OutPole::displayShadow(void)
 
 	glTranslated(xPosition ,yPosition ,length/2);
 	glScaled(scale ,scale ,scale);
-		glColor4f(0.2,0.2,0.2,0.1);	   
+		glColor4f(0.2,0.2,0.2,0.2);	   
 
 	GLfloat hl = length * 0.5f;
 	GLfloat a = 0.0f;

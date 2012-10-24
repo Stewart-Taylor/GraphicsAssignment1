@@ -89,8 +89,9 @@ void Cylinder::display(void)
 		GLfloat yT = radius * sinf(theta);//calculate the y component 
 
 		glNormal3f(xT, yT, 0);
-		glTexCoord2f(0,0);		glVertex3f(0 , 0 , hl);
 		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, hl );//output vertex 
+		glTexCoord2f(0,0);		glVertex3f(0 , 0 , hl);
+
 	}
 	glEnd();
 
@@ -103,8 +104,8 @@ void Cylinder::display(void)
 		GLfloat yT = radius * sinf(theta);//calculate the y component 
 
 		glNormal3f(xT, yT, 0);
-		glTexCoord2f(0,0);		glVertex3f(0 , 0 , -hl);
 		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, -hl );//output vertex 
+		glTexCoord2f(0,0);		glVertex3f(0 , 0 , -hl);
 	}
 	glEnd();
 

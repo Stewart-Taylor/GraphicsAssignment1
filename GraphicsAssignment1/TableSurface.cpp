@@ -36,7 +36,7 @@ void TableSurface::display(void)
 {
 	glPushMatrix(); 
 
-	glEnable(GL_TEXTURE_2D);  // move
+//	glEnable(GL_TEXTURE_2D);  // move
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
@@ -51,10 +51,11 @@ void TableSurface::display(void)
 	glScaled(scale ,scale ,scale);
 			   
 	glBegin(GL_POLYGON);
-	glTexCoord2f(2.0, -2.0);   glVertex3f(  0.5, -0.5, 0.0 );      
-	glTexCoord2f(2.0,  2.0);   glVertex3f(  0.5,  0.5, 0.0 );     
-	glTexCoord2f(-2.0,  2.0);  glVertex3f( -0.5,  0.5, 0.0 );      
-	glTexCoord2f(-2.0, -2.0);  glVertex3f( -0.5, -0.5, 0.0 );      
+	glNormal3f(0.0 , 1.0 , 0.0);
+	glColor3f( 1.0, 1.0, 1.0 );   glTexCoord2f(2.0, -2.0);   glVertex3f(  0.5, -0.5, 0.0 );      
+	glColor3f( 0.5, 0.5, 0.5 );	   glTexCoord2f(2.0,  2.0);   glVertex3f(  0.5,  0.5, 0.0 );     
+	glColor3f( 0.0, 0.0, 0.0 );	  glTexCoord2f(-2.0,  2.0);  glVertex3f( -0.5,  0.5, 0.0 );      
+	glColor3f( 0.5, 0.5, 0.5 ); 	   glTexCoord2f(-2.0, -2.0);  glVertex3f( -0.5, -0.5, 0.0 );      
 	glEnd();
 
 	glPopMatrix();

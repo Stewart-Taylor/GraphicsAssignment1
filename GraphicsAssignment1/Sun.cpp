@@ -149,7 +149,7 @@ void Sun::displayShadow(void)
 	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
-		glColor4f(0.2,0.2,0.2,0.1);	   
+		glColor4f(0.1,0.1,0.1,0.3);	     
 
 	GLfloat r = 1.0;
 	int i,j;
