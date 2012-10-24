@@ -18,7 +18,7 @@ Gear::Gear(GLfloat x , GLfloat y , GLfloat z , GLfloat innerRad , GLfloat outerR
 	xPosition = x;
 	yPosition = y;
 	zPosition = z;
-	xAngle = 90;
+	xAngle =90;
 	yAngle = 0;
 	zAngle = 0;
 	scale = 1;

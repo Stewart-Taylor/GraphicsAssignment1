@@ -27,6 +27,8 @@ Gear bigGear;
 Gear powerGear; 
 Gear bigPowerGear; 
 Gear smallMiddleGear; 
+Gear sideGear; 
+Cylinder sidePole; 
 
 GLfloat angleX;
 GLfloat angleY;
@@ -131,6 +133,10 @@ void init (void)
 	bigPowerGear = Gear(-4.3 ,2.8 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
 	powerGear = Gear(4.3 ,2.3 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
 	smallMiddleGear = Gear(0 ,2.8 ,0 , 0.5 , 1.6 ,  0.4 , 20 ,0.35);
+	sideGear = Gear(5.9 ,1.5 ,3.8 , 0.2 , 0.7 ,  0.2 , 10 ,0.35);
+	sidePole = Cylinder(5.9 ,1.5 ,3.8 ,0.18 , 2.0 , 30);
+	sidePole.setAngle(180 ,90 ,0);
+	sideGear.setAngle(180 ,90 ,0);
 	powerPole = Cylinder(4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 
@@ -230,6 +236,8 @@ void drawShadows()
 	powerGear.displayShadow();
 	smallMiddleGear.displayShadow();
 	bigPowerGear.displayShadow();
+	sideGear.displayShadow();
+	sidePole.display();
 	powerPole.displayShadow();
 	powerPole2.displayShadow();
 	sun.displayShadow();
@@ -291,6 +299,8 @@ void display (void)
 	powerGear.display();
 	smallMiddleGear.display();
 	bigPowerGear.display();
+	sideGear.display();
+	sidePole.display();
 	powerPole.display();
 	powerPole2.display();
 	sun.display();
@@ -367,6 +377,8 @@ void idle(void)
 	smallMiddleGear.spin(orbitSpeed * 200);
 	powerPole2.spin(orbitSpeed * 60);
 	bigPowerGear.spin(-orbitSpeed * 60);
+	sideGear.spin(-orbitSpeed * 400);
+	sidePole.spin(orbitSpeed * 400);
 	sun.update();
 	skybox.update();
 	updatePlanets();
