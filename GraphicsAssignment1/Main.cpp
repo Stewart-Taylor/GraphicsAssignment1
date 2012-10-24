@@ -44,6 +44,7 @@ Cylinder mercuryPole;
 
 Cylinder moonCylinder;
 
+
 GLfloat angleX;
 GLfloat angleY;
 GLfloat angleZ;
@@ -178,7 +179,7 @@ void init (void)
 	setUpPlanet(saturn , 30 ,0.0339 ,7.0 , 1.5 , "Textures\\saturn.bmp");
 	setUpPlanet(uranus , 35 ,0.011 ,6.5 , 1.2 , "Textures\\uranus.bmp");
 	setUpPlanet(neptune , 40 ,0.006 ,6.0 , 1.2, "Textures\\neptune.bmp");
-	setUpPlanet(moon , 2 ,13 ,8.8  , 0.3 , "Textures\\neptune.bmp");
+	setUpPlanet(moon , 2 ,13 ,8.8  , 0.3 , "Textures\\moon.bmp");
 }
 
 
