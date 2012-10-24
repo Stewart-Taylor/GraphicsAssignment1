@@ -16,13 +16,19 @@
 Camera camera = Camera();
 
 Box boxTest; 
-Box coverBox; 
+Box coverBox;
+Box coverBox2; 
+Box coverBox3; 
+Box coverBox4;
+
 SpaceWall skybox; 
 TableSurface table; 
 Sun sun; 
 Cylinder centralPole; 
 Cylinder powerPole; 
 Cylinder powerPole2; 
+Cylinder powerPole3; 
+Cylinder powerPole4; 
 Cylinder saturnRing; 
 Gear mainGear; 
 Gear bigGear; 
@@ -144,6 +150,11 @@ void init (void)
 	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
 	boxTest = Box(0,1.01,0 , 10,10,2);
 	coverBox = Box(0,3.2,3.8 , 10,1,0.5);
+	coverBox2 = Box(0,3.2,-3.8 , 10,1,0.5);
+	coverBox3 = Box(4.4,3.3,0 , 9,1,0.5);
+	coverBox3.setAngle(90 ,180 , 90);
+	coverBox4 = Box(-4.4,3.3,0 , 9,1,0.5);
+	coverBox4.setAngle(90 ,180 , 90);
 	mainGear = Gear(0 ,2.3 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
 	bigPowerGear = Gear(-4.3 ,2.8 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
 	powerGear = Gear(4.3 ,2.3 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
@@ -154,6 +165,9 @@ void init (void)
 	sideGear.setAngle(180 ,90 ,0);
 	powerPole = Cylinder(4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
+	powerPole3 = Cylinder(-4.3 ,3.3 ,-3.8 ,0.18 , 2.0 , 30);
+	powerPole4 = Cylinder(4.3 ,3.3 ,-3.8 ,0.18 , 2.0 , 30);
+	
 	moonCylinder = Cylinder(-4.3 ,3.3 ,2.0 ,0.3, 1.0 , 30);
 
 	neptunePole = Cylinder(0,4.62,0 ,0.9 , 3.3 , 30);
@@ -210,8 +224,10 @@ void drawPlanetsShadow()
 	saturn.displayShadow();
 	uranus.displayShadow();
 	neptune.displayShadow();
+	
 
 	saturnRing.displayShadow();
+
 }
 
 void shadow_matrix(GLfloat lt[4],
@@ -272,6 +288,9 @@ void drawShadows()
 		
 
 	coverBox.displayShadow();
+	coverBox2.displayShadow();
+	coverBox3.displayShadow();
+	coverBox4.displayShadow();
 	mainGear.displayShadow();
 	powerGear.displayShadow();
 	smallMiddleGear.displayShadow();
@@ -280,6 +299,8 @@ void drawShadows()
 	sidePole.displayShadow();
 	powerPole.displayShadow();
 	powerPole2.displayShadow();
+	powerPole3.displayShadow();
+	powerPole4.displayShadow();
 	sun.displayShadow();
 	boxTest.displayShadow();
 	moonCylinder.displayShadow();
@@ -353,9 +374,14 @@ void display (void)
 	sidePole.display();
 	powerPole.display();
 	powerPole2.display();
+	powerPole3.display();
+	powerPole4.display();
 	sun.display();
 	boxTest.display();
 	coverBox.display();
+	coverBox2.display();
+	coverBox3.display();
+	coverBox4.display();
 	moonCylinder.display();
 	
 	drawPlanets();
