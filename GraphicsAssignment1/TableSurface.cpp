@@ -52,10 +52,10 @@ void TableSurface::display(void)
 			   
 	glBegin(GL_POLYGON);
 	glNormal3f(0.0 , 1.0 , 0.0);
-	glColor3f( 1.0, 1.0, 1.0 );   glTexCoord2f(2.0, -2.0);   glVertex3f(  0.5, -0.5, 0.0 );      
-	glColor3f( 0.5, 0.5, 0.5 );	   glTexCoord2f(2.0,  2.0);   glVertex3f(  0.5,  0.5, 0.0 );     
-	glColor3f( 0.0, 0.0, 0.0 );	  glTexCoord2f(-2.0,  2.0);  glVertex3f( -0.5,  0.5, 0.0 );      
-	glColor3f( 0.5, 0.5, 0.5 ); 	   glTexCoord2f(-2.0, -2.0);  glVertex3f( -0.5, -0.5, 0.0 );      
+	glColor3f( 1.0, 1.0, 1.0 );		glTexCoord2f(2.0, -2.0);   glVertex3f(  0.5, -0.5, 0.0 );      
+	glColor3f( 0.5, 0.5, 0.5 );		glTexCoord2f(2.0,  2.0);   glVertex3f(  0.5,  0.5, 0.0 );     
+	glColor3f( 0.0, 0.0, 0.0 );		glTexCoord2f(-2.0,  2.0);  glVertex3f( -0.5,  0.5, 0.0 );      
+	glColor3f( 0.5, 0.5, 0.5 );		glTexCoord2f(-2.0, -2.0);  glVertex3f( -0.5, -0.5, 0.0 );      
 	glEnd();
 
 	glPopMatrix();

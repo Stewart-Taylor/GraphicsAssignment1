@@ -9,7 +9,7 @@
 
 
 //angle of rotation
-float xpos = 2, ypos = 7.0, zpos = 10, xrot = 30, yrot = 0, angle=0.0;
+float xpos = 2.312, ypos = 13.4, zpos = 16.97, xrot = 29, yrot = 0, angle=0.0;
 
 float cRadius = 10.0f; // our radius distance from our character
 
@@ -32,7 +32,7 @@ Camera::~Camera(void)
 
 void Camera::update()
 {
-		    glTranslatef(0.0f, 0.0f, -cRadius);
+	glTranslatef(0.0f, 0.0f, -cRadius);
     glRotatef(xrot,1.0,0.0,0.0);
     
     

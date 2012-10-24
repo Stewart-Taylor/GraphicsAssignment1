@@ -273,8 +273,6 @@ void display (void)
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	
-	
-	
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity();
 
