@@ -3,6 +3,13 @@
 class Box
 {
 public:
+	Box();
+	Box(GLfloat x , GLfloat y , GLfloat z , GLfloat widthT , GLfloat heightT , GLfloat lengthT );
+	~Box(void);
+	void display(void);
+	void displayShadow(void);
+	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
+private:
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
@@ -13,12 +20,12 @@ public:
 	GLfloat height;
 	GLfloat length;
 	GLuint texName;
-	Box();
-	Box(float x , float y , float z , float widthT , float heightT , float lengthT );
-	~Box(void);
-	void display(void);
-	void displayShadow(void);
-	void setAngle(float xAngleT , float yAngleT , float zAngleT);
-	void update();
+	GLfloat normal1[3];
+	GLfloat normal2[3];
+	GLfloat normal3[3];
+	GLfloat normal4[3];
+	GLfloat normal5[3];
+	GLfloat normal6[3];
+	void calculateNormals(void);
 };
 
