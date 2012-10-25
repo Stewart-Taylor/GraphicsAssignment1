@@ -4,6 +4,14 @@
 class Sun
 {
 public:
+	Sun();
+	Sun(GLfloat x , GLfloat y , GLfloat z );
+	~Sun(void);
+	void display(void);
+	void displayShadow(void);
+	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
+	void update();
+private:
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
@@ -12,12 +20,5 @@ public:
 	GLfloat zAngle;
 	GLfloat scale;
 	GLuint texName;
-	Sun();
-	Sun(float x , float y , float z );
-	~Sun(void);
-	void display(void);
-	void displayShadow(void);
-	void setAngle(float xAngleT , float yAngleT , float zAngleT);
-	void update();
 };
 

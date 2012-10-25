@@ -1,20 +1,34 @@
-#include "Sun.h"
+/*		Sun Class
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * This class is used to generate the sun
+ * It has a slight glow to it
+ *
+ * Last Updated: 23/10/2012
+*/
 
+#define _USE_MATH_DEFINES // Allows me to use PI constant 
+
+#include "Sun.h"
 #include "TextureLoader.h"
 
-#include <windows.h>	
 #include <stdio.h>	
-#include <freeglut.h>
-#include <glaux.h>
 #include <math.h>
+
+
+typedef struct 
+{
+  double x;
+  double y;
+  double z;
+} Vertex;
 
 Sun::Sun()
 {
 
 }
 
-
-Sun::Sun(float x , float y , float z )
+Sun::Sun(GLfloat x , GLfloat y , GLfloat z )
 {
 	xPosition = x;
 	yPosition = y;
@@ -31,25 +45,17 @@ Sun::~Sun(void)
 {
 }
 
-typedef struct {
-  double x;
-  double y;
-  double z;
-} XYZ;
-
-
 void Sun::display(void)
 {
 	glPushMatrix(); 
 
-	XYZ c;
+	Vertex c;
 	c.x = 0;
 	c.y = 0;
 	c.z = 0;
 
 
-
-	glEnable(GL_TEXTURE_2D);  // move
+	glEnable(GL_TEXTURE_2D);  
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
@@ -62,65 +68,55 @@ void Sun::display(void)
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
 
-		GLfloat whiteSpecularMaterial[] = {0.1, 0.1, 0.1};
-		GLfloat blank[] = {0.0, 0.0, 0.0};
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteSpecularMaterial);
+	GLfloat emissionColor[] = {0.1, 0.1, 0.1};
+	GLfloat blank[] = {0.0, 0.0, 0.0};
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionColor);
 			   
 
-		GLfloat r = 1.0;
-   int i,j;
-   double phi1,phi2,theta, s, t;
-   XYZ e,p;
-   float PI = 3.141;
-   float TWOPI = PI * 2;
+	GLfloat radius = 1.0;
+	GLuint slices = 70;
 
-   int n = 70;
+	GLuint i,j;
+	GLdouble phi1,phi2,theta, s, t;
+	Vertex e,p;
 
-   if (r < 0)
-      r = -r;
-   if (n < 0)
-      n = -n;
-   if (n < 4 || r <= 0) {
-      glBegin(GL_POINTS);
-      glVertex3f(c.x,c.y,c.z);
-      glEnd();
-      return;
-   }
 
-   for (j=0;j <= n; j++) {
-      phi1 = j * TWOPI / n;
-      phi2 = (j + 1) * TWOPI / n;	//next phi
+	for (j=0;j <= slices; j++) 
+	{
+		phi1 = j * (2* M_PI) / slices;
+		phi2 = (j + 1) * (2* M_PI) / slices;	
 
-      glBegin(GL_QUAD_STRIP);
-      for (i=0;i <= n;i++) {
-         theta = i * PI / n;
+		glBegin(GL_QUAD_STRIP);
+		for (i=0;i <= slices;i++) 
+		{
+			theta = i * M_PI / slices;
 
-        e.x = sin ( theta ) * cos ( phi2 );
-	e.y = sin ( theta ) * sin ( phi2 );
-        e.z = cos ( theta );
-        p.x = c.x + r * e.x;
-        p.y = c.y + r * e.y;
-        p.z = c.z + r * e.z;
+			e.x = sin ( theta ) * cos ( phi2 );
+			e.y = sin ( theta ) * sin ( phi2 );
+			e.z = cos ( theta );
+			p.x = c.x + radius * e.x;
+			p.y = c.y + radius * e.y;
+			p.z = c.z + radius * e.z;
 
-        glNormal3f(e.x,e.y,e.z);
-        s = phi2 / TWOPI;          // column
-        t = 1 - theta/PI;          // row
-	glTexCoord2f(s, t);
-        glVertex3f(p.x,p.y,p.z);
+			glNormal3f(e.x,e.y,e.z);
+			s = phi2 / (2* M_PI);         
+			t = 1 - theta/M_PI;       
+			glTexCoord2f(s, t);
+			glVertex3f(p.x,p.y,p.z);
 
-        e.x = sin ( theta ) * cos ( phi1 );
-	e.y = sin ( theta ) * sin ( phi1 );
-        e.z = cos ( theta );
-        p.x = c.x + r * e.x;
-        p.y = c.y + r * e.y;
-        p.z = c.z + r * e.z;
+			e.x = sin ( theta ) * cos ( phi1 );
+			e.y = sin ( theta ) * sin ( phi1 );
+			e.z = cos ( theta );
+			p.x = c.x + radius * e.x;
+			p.y = c.y + radius * e.y;
+			p.z = c.z + radius * e.z;
 
-        glNormal3f(e.x,e.y,e.z);
-        s = phi1/TWOPI;        // column
-        t = 1 - theta/PI;      // row
-        glTexCoord2f(s, t);
+			glNormal3f(e.x,e.y,e.z);
+			s = phi1/(2* M_PI);       
+			t = 1 - theta/M_PI;      
+			glTexCoord2f(s, t);
  
-	glVertex3f(p.x,p.y,p.z);
+			glVertex3f(p.x,p.y,p.z);
       }
       glEnd();
    }
@@ -135,7 +131,7 @@ void Sun::displayShadow(void)
 {
 	glPushMatrix(); 
 
-	XYZ c;
+	Vertex c;
 	c.x = 0;
 	c.y = 0;
 	c.z = 0;
@@ -149,35 +145,24 @@ void Sun::displayShadow(void)
 	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
-		glColor4f(0.1,0.1,0.1,0.3);	     
+	glColor4f(0.1,0.1,0.1,0.3);	     
 
 	GLfloat r = 1.0;
-	int i,j;
-	double phi1,phi2,theta, s, t;
-	XYZ e,p;
-	float PI = 3.141;
-	float TWOPI = PI * 2;
+	GLuint n = 20;
 
-   int n = 20;
+	GLuint i,j;
+	GLdouble phi1,phi2,theta, s, t;
+	Vertex e,p;
 
-   if (r < 0)
-      r = -r;
-   if (n < 0)
-      n = -n;
-   if (n < 4 || r <= 0) {
-      glBegin(GL_POINTS);
-      glVertex3f(c.x,c.y,c.z);
-      glEnd();
-      return;
-   }
 
-   for (j=0;j <= n; j++) {
-      phi1 = j * TWOPI / n;
-      phi2 = (j + 1) * TWOPI / n;	//next phi
+   for (j=0;j <= n; j++) 
+   {
+      phi1 = j * (2*M_PI) / n;
+      phi2 = (j + 1) * (2*M_PI) / n;	
 
       glBegin(GL_QUAD_STRIP);
       for (i=0;i <= n;i++) {
-         theta = i * PI / n;
+         theta = i * M_PI / n;
 
         e.x = sin ( theta ) * cos ( phi2 );
 	e.y = sin ( theta ) * sin ( phi2 );
@@ -186,37 +171,30 @@ void Sun::displayShadow(void)
         p.y = c.y + r * e.y;
         p.z = c.z + r * e.z;
 
-        s = phi2 / TWOPI;          // column
-        t = 1 - theta/PI;          // row
+        s = phi2 / (2*M_PI);         
+        t = 1 - theta/M_PI;        
         glVertex3f(p.x,p.y,p.z);
 
         e.x = sin ( theta ) * cos ( phi1 );
-	e.y = sin ( theta ) * sin ( phi1 );
+		e.y = sin ( theta ) * sin ( phi1 );
         e.z = cos ( theta );
         p.x = c.x + r * e.x;
         p.y = c.y + r * e.y;
         p.z = c.z + r * e.z;
 
-        s = phi1/TWOPI;        // column
-        t = 1 - theta/PI;      // row
+        s = phi1/(2*M_PI);       
+        t = 1 - theta/M_PI; 
  
-	glVertex3f(p.x,p.y,p.z);
+		glVertex3f(p.x,p.y,p.z);
       }
       glEnd();
    }
 
 	glPopMatrix();
-
-	glDisable(GL_TEXTURE_2D);
 }
 
 
-void Sun::setAngle(float xAngleT , float yAngleT , float zAngleT)
-{
-	xAngle = xAngleT;
-	yAngle = yAngleT;
-	zAngle = zAngleT;
-}
+
 
 void Sun::update()
 {

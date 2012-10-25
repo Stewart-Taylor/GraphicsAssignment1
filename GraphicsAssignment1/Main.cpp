@@ -89,6 +89,7 @@ struct PlanetPart
 	OutPole outPole;
 	GLfloat radius;
 	GLfloat rotateModifier;
+	GLfloat spinSpeed;
 
 	void update(void)
 	{
@@ -96,7 +97,6 @@ struct PlanetPart
 		float zPositionT = 0 + cos(orbitTimer*rotateModifier)*radius;
 
 		planet.setPosition(xPositionT ,planet.yPosition , zPositionT);
-		planet.spin();
 
 		upPole.setPosition(xPositionT , upPole.yPosition , zPositionT);
 		upPole.spin(1.0);
@@ -488,7 +488,6 @@ void updatePlanets(void)
 	float zPositionT =  earth.planet.zPosition + cos(orbitTimer* moon.rotateModifier)*moon.radius;
 
 	moon.planet.setPosition(xPositionT ,moon.planet.yPosition , zPositionT);
-	moon.planet.spin();
 
 	moon.upPole.setPosition(xPositionT , moon.upPole.yPosition , zPositionT);
 	moon.upPole.spin(1.0);

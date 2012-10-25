@@ -1,6 +1,5 @@
 /*		Surface Normal Helper
  *	AUTHOR: STEWART TAYLOR
- *	DATE STARTED: 20/10/2012
  *------------------------------------
  * This class is used to help calculate surface normals. 
  * It uses the cross product.
