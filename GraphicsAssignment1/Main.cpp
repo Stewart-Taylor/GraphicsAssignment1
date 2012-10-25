@@ -11,6 +11,8 @@
  * Last Updated: 25/10/2012
 */
 
+#define _USE_MATH_DEFINES
+
 #include "Camera.h"
 #include "Main.h"
 #include "SpaceWall.h"
@@ -21,12 +23,12 @@
 #include "Gear.h"
 #include "Planet.h"
 #include "OutPole.h"
+#include "ShadowHelper.h"
 
 #include <math.h>
 #include <stdlib.h>
 #include <freeglut.h>
 
-#define _USE_MATH_DEFINES
 
 Camera camera = Camera();
 
@@ -35,7 +37,6 @@ Box coverBox;
 Box coverBox2; 
 Box coverBox3; 
 Box coverBox4;
-
 SpaceWall skybox; 
 TableSurface table; 
 Sun sun; 
@@ -61,14 +62,8 @@ Cylinder marsPole;
 Cylinder earthPole;
 Cylinder venusPole;
 Cylinder mercuryPole;
-
-
 Cylinder moonCylinder;
 
-
-GLfloat angleX;
-GLfloat angleY;
-GLfloat angleZ;
 
 
 GLfloat specular = 1.0;
@@ -79,8 +74,11 @@ GLfloat orbitTimer  = 9939;
 GLfloat orbitSpeed = 0.001f;
 
 GLfloat light_position[] = { 20.0 , 48.0 ,7.0 , 1.0};
+GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
+GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
+GLfloat mat_shininess[] = { shiny };
 
-//lx = 0.0;ly = 3.0;lz = 7.0;lw = 1.0;
+
 
 struct PlanetPart
 {
@@ -93,19 +91,17 @@ struct PlanetPart
 
 	void update(void)
 	{
-		float	xPositionT= 0 + sin(orbitTimer*rotateModifier)*radius;
-		float zPositionT = 0 + cos(orbitTimer*rotateModifier)*radius;
+		float xPositionT = 0 + sin(orbitTimer * rotateModifier) * radius;
+		float zPositionT = 0 + cos(orbitTimer * rotateModifier) * radius;
 
 		planet.setPosition(xPositionT ,planet.yPosition , zPositionT);
-
 		upPole.setPosition(xPositionT , upPole.yPosition , zPositionT);
 		upPole.spin(1.0);
 
-
-		float angle = atan2(zPositionT , xPositionT);
-		angle = -angle * 180 / 3.1415926;;
+		GLfloat angle = atan2(zPositionT , xPositionT);
+		angle = -angle * 180 / M_PI;
 		angle+= 90;
-		outPole.setAngle(0,  angle, 0);  // 57.3
+		outPole.setAngle(0,  angle, 0);
 	}
 
 	void display(void)
@@ -115,14 +111,12 @@ struct PlanetPart
 		outPole.display();
 	}
 
-
 	void displayShadow(void)
 	{
 		planet.displayShadow();
 		upPole.displayShadow();
 		outPole.displayShadow();
 	}
-
 };
 
 PlanetPart mercury;
@@ -135,10 +129,8 @@ PlanetPart uranus;
 PlanetPart neptune;
 PlanetPart moon;
 
-void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y );
 
-
-void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y  , GLfloat planetScale , char* path )
+void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat rotateMod , GLfloat y  , GLfloat planetScale , char* path )
 {
 	part.planet = Planet(10 ,(y+ 4) ,0 , path);
 	part.planet.scale = planetScale;
@@ -146,7 +138,7 @@ void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat mod , GLfloat y  ,
 	part.outPole = OutPole(0 , y ,0 , 0.2 , radiusT + 0.2 , 15);
 	part.outPole.setAngle(0,0,90);
 	part.radius = radiusT;
-	part.rotateModifier = mod;
+	part.rotateModifier = rotateMod;
 }
 
 void init (void) 
@@ -161,8 +153,10 @@ void init (void)
 
 	skybox = SpaceWall();
 	table = TableSurface();
+	
 	sun = Sun(0.0 , 13.0 , 0.0);
 	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
+	
 	baseBox = Box(0,1.01,0 , 10,10,2);
 	coverBox = Box(0,3.2,3.8 , 10,1,0.5);
 	coverBox2 = Box(0,3.2,-3.8 , 10,1,0.5);
@@ -170,6 +164,7 @@ void init (void)
 	coverBox3.setAngle(90 ,180 , 90);
 	coverBox4 = Box(-4.4,3.3,0 , 9,1,0.5);
 	coverBox4.setAngle(90 ,180 , 90);
+	
 	mainGear = Gear(0 ,2.3 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
 	bigPowerGear = Gear(-4.3 ,2.8 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
 	powerGear = Gear(4.3 ,2.3 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
@@ -178,6 +173,7 @@ void init (void)
 	sidePole = Cylinder(5.9 ,1.5 ,3.8 ,0.18 , 2.0 , 30);
 	sidePole.setAngle(180 ,90 ,0);
 	sideGear.setAngle(180 ,90 ,0);
+	
 	powerPole = Cylinder(4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
 	powerPole3 = Cylinder(-4.3 ,3.3 ,-3.8 ,0.18 , 2.0 , 30);
@@ -194,12 +190,9 @@ void init (void)
 	venusPole = Cylinder(0,6.96,0 ,0.3 , 4.5 , 30);
 	mercuryPole = Cylinder(0,8,0 ,0.2 , 5.0 , 30);
 
-
-
 	saturnRing = Cylinder(0 ,11.0 ,0 ,2.4 , 0.2 , 30);
 	saturnRing.yAngle = -12;
 	
-
 	setUpPlanet(mercury , 5 ,4.1 ,9.5 , 0.4 , "Textures\\mercury.bmp");
 	setUpPlanet(venus , 10 ,1.62 ,9.0 , 1.0 , "Textures\\venus.bmp");
 	setUpPlanet(earth , 15 ,1 ,8.5 , 1.0 , "Textures\\earth.bmp");
@@ -222,10 +215,8 @@ void drawPlanets()
 	saturn.display();
 	uranus.display();
 	neptune.display();
-
-	saturnRing.display();
-
 	moon.display();
+	saturnRing.display();
 }
 
 void drawPlanetsShadow()
@@ -239,69 +230,25 @@ void drawPlanetsShadow()
 	saturn.displayShadow();
 	uranus.displayShadow();
 	neptune.displayShadow();
-	
-
 	saturnRing.displayShadow();
-
-}
-
-void shadow_matrix(GLfloat lt[4],
-				   GLfloat pl[4],
-				   GLfloat shadow_proj[16])
-// First define values for usual notation  
-// for plane and light position/direction.
-{
-	GLfloat lx, ly, lz, lw; // light coordinates
-	GLfloat a, b, c, d; // for equation of plane
-	GLfloat rdotl; //dot product of normal and light position/direction
-
- // Light position is (lx, ly, lz, lw). The plane on which to draw the 
- // shadows has equation a*x + b*y + c*z + d = 0
-
-	lx = lt[0]; ly = lt[1]; lz = lt[2]; lw = lt[3];
-	a = pl[0]; b = pl[1]; c = pl[2]; d = pl[3];
-    rdotl = a*lx + b*ly + c*lz + d*lw;
-
-   shadow_proj[0]  = -a*lx + rdotl;
-   shadow_proj[1]  = -a*ly;
-   shadow_proj[2]  = -a*lz;
-   shadow_proj[3]  = -a*lw;
-   shadow_proj[4]  = -b*lx;
-   shadow_proj[5]  = -b*ly + rdotl;
-   shadow_proj[6]  = -b*lz;
-   shadow_proj[7]  = -b*lw;
-   shadow_proj[8]  = -c*lx;
-   shadow_proj[9]  = -c*ly;
-   shadow_proj[10] = -c*lz + rdotl;
-   shadow_proj[11] = -c*lw;
-   shadow_proj[12] = -d*lx;
-   shadow_proj[13] = -d*ly;
-   shadow_proj[14] = -d*lz;
-   shadow_proj[15] = -d*lw + rdotl;
+	moon.displayShadow();
 }
 
 
 void drawShadows()
 {
-
-	   GLfloat shadow_proj[16];
+	GLfloat shadow_proj[16];
 	glDisable(GL_TEXTURE_2D);
-// Disable lighting and depth testing for drawing of shadows
-   glDisable(GL_LIGHTING);
-   glDisable(GL_DEPTH_TEST);
-// Enable blending so shadows are combined with floor pattern
-   glEnable(GL_BLEND);
-   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-   glPushMatrix();
-// Multiply modelview matrix by the shadow projection matrix
-
-// Draw shadows in dark grey, with opacity 0.5
-
-      GLfloat plane_eq[] = {0.0, 1.0, 0.0, 0.0};
-   shadow_matrix(light_position,plane_eq,shadow_proj);
-      glMultMatrixf(shadow_proj);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	glPushMatrix();
+    GLfloat plane_eq[] = {0.0, 1.0, 0.0, 0.0};
+	ShadowHelper::shadow_matrix(light_position,plane_eq,shadow_proj);
+	glMultMatrixf(shadow_proj);
 		
-
 	coverBox.displayShadow();
 	coverBox2.displayShadow();
 	coverBox3.displayShadow();
@@ -319,8 +266,9 @@ void drawShadows()
 	sun.displayShadow();
 	baseBox.displayShadow();
 	moonCylinder.displayShadow();
+	drawPlanetsShadow();
 	
-	neptunePole.displayShadow();   // ONLY one visible at set lighting angle
+	neptunePole.displayShadow();   // ONLY one visible at set lighting angle . Inner MIddle POle
 	//uranusPole.displayShadow();  
 	//saturnPole.displayShadow();
 	//jupiterPole.displayShadow();
@@ -329,16 +277,15 @@ void drawShadows()
 	//venusPole.displayShadow();
 	//mercuryPole.displayShadow();
 
-	drawPlanetsShadow();
-
 	glPopMatrix();
 
-	   glDisable(GL_BLEND);
-   glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
 }
 
-void display (void)
+
+void displayFog(void)
 {
 	GLfloat density = 0.002f;
 	GLfloat fogColor[4] = {0.10, 0.027, 0.188, 1.0};
@@ -349,38 +296,34 @@ void display (void)
 	glFogf(GL_FOG_START, 100.0f);
 	glFogf(GL_FOG_END, 600.0f); 
     glEnable(GL_FOG);
+}
 
 
-
-	GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
-	GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
-	GLfloat mat_shininess[] = { shiny };
-	GLfloat mat_diffuse2[] = { 0.8, 0.2, 0.2, 1.0 };
-	GLfloat mat_diffuse3[] = { 0.2, 0.8, 0.2, 1.0 };
-
+void display (void)
+{
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel (GL_SMOOTH);
-  //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );  // WIREFRAME
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );  // WIREFRAME
+	
+	displayFog();
 
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-	
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity();
 
-
-
-	
 	camera.update();
 
 	glDisable(GL_CULL_FACE);
 	skybox.display();
 	glEnable(GL_CULL_FACE);
+
 	table.display();
 	drawShadows();
-	//centralPole.display();
 	mainGear.display();
 	powerGear.display();
 	smallMiddleGear.display();
@@ -398,10 +341,7 @@ void display (void)
 	coverBox3.display();
 	coverBox4.display();
 	moonCylinder.display();
-	
 	drawPlanets();
-
-
 	neptunePole.display();
 	uranusPole.display();
 	saturnPole.display();
@@ -410,20 +350,8 @@ void display (void)
 	earthPole.display();
 	venusPole.display();
 	mercuryPole.display();
-	
 
-
-	//glTranslated(light_position[0] ,light_position[1] ,light_position[2]);  // REMOVE LATER
-	//glutSolidSphere(1.0, 100, 100);
-
-	       glPushMatrix();
-			//glTranslated(-light_position[0] ,-light_position[1] ,-light_position[2]);
-            glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-        glPopMatrix();
-
-
-
-    glutSwapBuffers();
+	glutSwapBuffers();
 }
 
 void reshape (int w, int h)
@@ -447,8 +375,15 @@ void keyboard (unsigned char key, int x, int y)
 	if (key=='l'){light_position[0] -= 1;}
 	if (key=='u'){light_position[2] += 1;}
 	if (key=='o'){light_position[2] -= 1;}
-	if (key=='m'){orbitSpeed += 0.0001f;}
-	if (key=='n'){orbitSpeed -= 0.0001f;}
+	
+	if (key=='m')
+	{
+		orbitSpeed += 0.0001f;
+	}
+	else if (key=='n')
+	{
+		orbitSpeed -= 0.0001f;
+	}
 }
 
 void mouseUpdate(int x , int y)
@@ -482,26 +417,22 @@ void updatePlanets(void)
 	venusPole.zAngle = -venus.outPole.yAngle;
 	mercuryPole.zAngle = -mercury.outPole.yAngle;
 
-
-
-	float xPositionT= earth.planet.xPosition + sin(orbitTimer* moon.rotateModifier)*moon.radius;
-	float zPositionT =  earth.planet.zPosition + cos(orbitTimer* moon.rotateModifier)*moon.radius;
+	GLfloat xPositionT= earth.planet.xPosition + sin(orbitTimer* moon.rotateModifier)*moon.radius;
+	GLfloat zPositionT =  earth.planet.zPosition + cos(orbitTimer* moon.rotateModifier)*moon.radius;
 
 	moon.planet.setPosition(xPositionT ,moon.planet.yPosition , zPositionT);
 
 	moon.upPole.setPosition(xPositionT , moon.upPole.yPosition , zPositionT);
 	moon.upPole.spin(1.0);
-
-	//moon.outPole.setPosition(earth.planet.xPosition , moon.outPole.yPosition ,  earth.planet.zPosition);
 	moon.outPole.setOriginPosition(earth.planet.xPosition , 0 , earth.planet.zPosition); 
 
 	GLfloat deltaZ = moon.planet.zPosition - earth.planet.zPosition;
 	GLfloat deltaX = moon.planet.xPosition - earth.planet.xPosition;
-	GLfloat angle = atan2(deltaZ , deltaX) ; // * 180 /  3.1415926;
+	GLfloat angle = atan2(deltaZ , deltaX) ; 
 	angle = -angle * 180 / 3.1415926;
 	angle+= 90;
 
-	moon.outPole.setAngle(0,  angle , 0);  // 57.3
+	moon.outPole.setAngle(0,  angle , 0);
 
 	moonCylinder.setPosition(earth.upPole.xPosition ,earth.upPole.yPosition - 1.8 , earth.upPole.zPosition);
 }
@@ -510,8 +441,8 @@ void updatePlanets(void)
 
 void idle(void)
 {
-	mainGear.spin(orbitSpeed * 60);  // 0.06
-	powerGear.spin(-orbitSpeed * 200); // -0.2
+	mainGear.spin(orbitSpeed * 60);  // values defined allow for good interlocking and speed , obtained through trial and error
+	powerGear.spin(-orbitSpeed * 200); 
 	smallMiddleGear.spin(orbitSpeed * 200);
 	bigPowerGear.spin(-orbitSpeed * 60);
 	sideGear.spin(-orbitSpeed * 400);
@@ -527,16 +458,14 @@ int main (int argc, char **argv)
 {
     glutInit (&argc, argv);
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize (500, 500); 
-    glutInitWindowPosition (200, 200);
-    glutCreateWindow ("Mechanical Orrey"); 
+    glutInitWindowSize (600, 600); 
+    glutInitWindowPosition (200, 100);
+    glutCreateWindow ("Mechanical Orrery"); 
     init (); 
     glutDisplayFunc (display); 
     glutIdleFunc (idle); 
     glutReshapeFunc (reshape);
-
-	glutPassiveMotionFunc(mouseUpdate); //check for mousemovement
-
+	glutPassiveMotionFunc(mouseUpdate); 
     glutKeyboardFunc (keyboard); 
     glutMainLoop (); 
     return 0;

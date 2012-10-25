@@ -9,11 +9,6 @@ public:
 	GLfloat xAngle;
 	GLfloat yAngle;
 	GLfloat zAngle;
-	GLfloat scale;
-	GLuint texName;
-	GLuint slices;
-	GLfloat radius;
-	GLfloat length;
 	Cylinder();
 	Cylinder(GLfloat x , GLfloat y , GLfloat z , GLfloat radius , GLfloat length , GLuint slices );
 	~Cylinder(void);
@@ -22,5 +17,11 @@ public:
 	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
 	void setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT);
 	void spin(GLfloat speed);
+private:
+	GLfloat scale;
+	GLuint texName;
+	GLuint slices;
+	GLfloat radius;
+	GLfloat length;
 };
 
