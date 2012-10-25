@@ -135,7 +135,7 @@ void Cylinder::displayShadow(void)
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
 
-	glColor4f(0.2,0.2,0.2,0.1);
+	glColor4f(0.2f,0.2f,0.2f,0.1f);
 	
 	GLfloat halfLength = length * 0.5f;
 	GLfloat a = 0.0f;
@@ -181,8 +181,8 @@ void Cylinder::spin(GLfloat speed)
 {
 	zAngle -= speed;
 	
-	if(zAngle <= -360.0)
+	if(zAngle <= -360.0f)
 	{
-		zAngle += 360.0;
+		zAngle += 360.0f;
 	}
 }

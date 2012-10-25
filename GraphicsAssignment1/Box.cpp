@@ -99,7 +99,7 @@ void Box::display(void)
 	glTranslated(0,0 ,0);
 	glScaled(width ,height ,length);
 			   
-	glColor3f(0.4,0.4,0.4);
+	glColor3f(0.4f,0.4f,0.4f);
 	
 	glBegin(GL_POLYGON);
 	glNormal3f(normal1[0], normal1[1], normal1[2]);
@@ -161,9 +161,9 @@ void Box::displayShadow(void)
 	glMatrixMode(GL_MODELVIEW);
 
 	glTranslated(xPosition ,yPosition ,zPosition);
-	glRotatef(xAngle, 1.0, 0.0, 0.0);
-	glRotatef(yAngle, 0.0, 1.0, 0.0);
-	glRotatef(zAngle, 0.0, 0.0, 1.0);
+	glRotatef(xAngle, 1.0f, 0.0, 0.0);
+	glRotatef(yAngle, 0.0, 1.0f, 0.0);
+	glRotatef(zAngle, 0.0, 0.0, 1.0f);
 	glTranslated(0,0 ,0);
 	glScaled(width ,height ,length);
 			   

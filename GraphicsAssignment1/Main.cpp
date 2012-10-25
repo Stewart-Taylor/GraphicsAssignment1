@@ -102,8 +102,8 @@ struct PlanetPart
 		upPole.spin(1.0);
 
 		GLfloat angle = atan2(zPositionT , xPositionT);
-		angle = -angle * 180 / M_PI;
-		angle+= 90;
+		angle = -angle * 180.0f / (GLfloat)M_PI;
+		angle+= 90.0f;
 		outPole.setAngle(0,  angle, 0);
 	}
 
@@ -137,8 +137,8 @@ void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat rotateMod , GLfloa
 {
 	part.planet = Planet(10 ,(y+ 4) ,0 , path);
 	part.planet.scale = planetScale;
-	part.upPole = Cylinder(10 , (y + 2.0) ,0 , 0.1 , 4.0 , 15);
-	part.outPole = OutPole(0 , y ,0 , 0.2 , radiusT + 0.2 , 15);
+	part.upPole = Cylinder(10 , (y + 2.0f) ,0 , 0.1f , 4.0f , 15);
+	part.outPole = OutPole(0 , y ,0 , 0.2f , radiusT + 0.2f , 15);
 	part.outPole.setAngle(0,0,90);
 	part.radius = radiusT;
 	part.rotateModifier = rotateMod;
@@ -157,54 +157,54 @@ void init (void)
 	skybox = SpaceWall();
 	table = TableSurface();
 	
-	sun = Sun(0.0 , 13.0 , 0.0);
-	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
+	sun = Sun(0.0f , 13.0f , 0.0f);
+	centralPole = Cylinder(0,8.0f,0 ,0.54f , 12.0f , 30);
 	
-	baseBox = Box(0,1.01,0 , 10,10,2);
-	coverBox = Box(0,3.2,3.8 , 10,1,0.5);
-	coverBox2 = Box(0,3.2,-3.8 , 10,1,0.5);
-	coverBox3 = Box(4.4,3.3,0 , 9,1,0.5);
+	baseBox = Box(0,1.01f,0 , 10,10,2);
+	coverBox = Box(0,3.2f,3.8f , 10,1,0.5);
+	coverBox2 = Box(0,3.2f,-3.8f , 10,1,0.5);
+	coverBox3 = Box(4.4f,3.3f,0 , 9,1,0.5);
 	coverBox3.setAngle(90 ,180 , 90);
-	coverBox4 = Box(-4.4,3.3,0 , 9,1,0.5);
+	coverBox4 = Box(-4.4f,3.3f,0 , 9,1,0.5f);
 	coverBox4.setAngle(90 ,180 , 90);
 	
-	mainGear = Gear(0 ,2.3 ,0 , 0.5 , 4.0 ,  0.4 , 50 ,0.35);
-	bigPowerGear = Gear(-4.3 ,2.8 ,3.8 , 0.2 , 4.0 ,  0.4 , 50 ,0.35);
-	powerGear = Gear(4.3 ,2.3 ,3.8 , 0.2 , 1.6 ,  0.4 , 20 ,0.35);
-	smallMiddleGear = Gear(0 ,2.8 ,0 , 0.5 , 1.6 ,  0.4 , 20 ,0.35);
-	sideGear = Gear(5.9 ,1.5 ,3.8 , 0.2 , 0.7 ,  0.2 , 10 ,0.35);
-	sidePole = Cylinder(5.9 ,1.5 ,3.8 ,0.18 , 2.0 , 30);
+	mainGear = Gear(0 ,2.3f ,0 , 0.5f , 4.0f ,  0.4f , 50 ,0.35f);
+	bigPowerGear = Gear(-4.3f ,2.8f ,3.8f , 0.2f , 4.0f ,  0.4f , 50 ,0.35f);
+	powerGear = Gear(4.3f ,2.3f ,3.8f , 0.2f , 1.6f ,  0.4f , 20 ,0.35f);
+	smallMiddleGear = Gear(0 ,2.8f ,0 , 0.5f , 1.6f ,  0.4f , 20 ,0.35f);
+	sideGear = Gear(5.9f ,1.5f ,3.8f , 0.2f , 0.7f ,  0.2f , 10 ,0.35f);
+	sidePole = Cylinder(5.9f ,1.5f ,3.8f ,0.18f , 2.0f , 30);
 	sidePole.setAngle(180 ,90 ,0);
 	sideGear.setAngle(180 ,90 ,0);
 	
-	powerPole = Cylinder(4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
-	powerPole2 = Cylinder(-4.3 ,3.3 ,3.8 ,0.18 , 2.0 , 30);
-	powerPole3 = Cylinder(-4.3 ,3.3 ,-3.8 ,0.18 , 2.0 , 30);
-	powerPole4 = Cylinder(4.3 ,3.3 ,-3.8 ,0.18 , 2.0 , 30);
+	powerPole = Cylinder(4.3f ,3.3f ,3.8f ,0.18f , 2.0f , 30);
+	powerPole2 = Cylinder(-4.3f ,3.3f ,3.8f ,0.18f , 2.0f , 30);
+	powerPole3 = Cylinder(-4.3f ,3.3f ,-3.8f ,0.18f , 2.0f , 30);
+	powerPole4 = Cylinder(4.3f ,3.3f ,-3.8f ,0.18f , 2.0f , 30);
 	
-	moonCylinder = Cylinder(-4.3 ,3.3 ,2.0 ,0.3, 1.0 , 30);
+	moonCylinder = Cylinder(-4.3f ,3.3f ,2.0f ,0.3f, 1.0f , 30);
 
-	neptunePole = Cylinder(0,4.62,0 ,0.9 , 3.3 , 30);
-	uranusPole = Cylinder(0,5.0,0 ,0.8 , 3.5 , 30);
-	saturnPole = Cylinder(0,5.4,0 ,0.7 , 3.7 , 30);
-	jupiterPole = Cylinder(0,5.8,0 ,0.6 , 3.9 , 30);
-	marsPole = Cylinder(0,6.2,0 ,0.5 , 4.1 , 30);
-	earthPole = Cylinder(0,6.58,0 ,0.4 , 4.3 , 30);
-	venusPole = Cylinder(0,6.96,0 ,0.3 , 4.5 , 30);
-	mercuryPole = Cylinder(0,8,0 ,0.2 , 5.0 , 30);
+	neptunePole = Cylinder(0,4.62f,0 ,0.9f , 3.3f , 30);
+	uranusPole = Cylinder(0,5.0f,0 ,0.8f , 3.5f , 30);
+	saturnPole = Cylinder(0,5.4f,0 ,0.7f , 3.7f , 30);
+	jupiterPole = Cylinder(0,5.8f,0 ,0.6f , 3.9f , 30);
+	marsPole = Cylinder(0,6.2f,0 ,0.5f , 4.1f , 30);
+	earthPole = Cylinder(0,6.58f,0 ,0.4f , 4.3f , 30);
+	venusPole = Cylinder(0,6.96f,0 ,0.3f , 4.5f , 30);
+	mercuryPole = Cylinder(0,8,0 ,0.2f , 5.0f , 30);
 
-	saturnRing = Cylinder(0 ,11.0 ,0 ,2.4 , 0.2 , 30);
+	saturnRing = Cylinder(0 ,11.0f ,0 ,2.4f , 0.2f , 30);
 	saturnRing.yAngle = -12;
 	
-	setUpPlanet(mercury , 5 ,4.1 ,9.5 , 0.4 , "Textures\\mercury.bmp");
-	setUpPlanet(venus , 10 ,1.62 ,9.0 , 1.0 , "Textures\\venus.bmp");
-	setUpPlanet(earth , 15 ,1 ,8.5 , 1.0 , "Textures\\earth.bmp");
-	setUpPlanet(mars , 20 ,0.53 ,8.0 , 0.53 , "Textures\\mars.bmp");
-	setUpPlanet(jupiter , 25 ,0.08 ,7.5 , 2.0 , "Textures\\jupiter.bmp");
-	setUpPlanet(saturn , 30 ,0.0339 ,7.0 , 1.5 , "Textures\\saturn.bmp");
-	setUpPlanet(uranus , 35 ,0.011 ,6.5 , 1.2 , "Textures\\uranus.bmp");
-	setUpPlanet(neptune , 40 ,0.006 ,6.0 , 1.2, "Textures\\neptune.bmp");
-	setUpPlanet(moon , 2 ,13 ,8.8  , 0.3 , "Textures\\moon.bmp");
+	setUpPlanet(mercury , 5 ,4.1f ,9.5f , 0.4f , "Textures\\mercury.bmp");
+	setUpPlanet(venus , 10 ,1.62f ,9.0f , 1.0f , "Textures\\venus.bmp");
+	setUpPlanet(earth , 15 ,1 ,8.5f , 1.0 , "Textures\\earth.bmp");
+	setUpPlanet(mars , 20 ,0.53f ,8.0f , 0.53f , "Textures\\mars.bmp");
+	setUpPlanet(jupiter , 25 ,0.08f ,7.5 , 2.0f , "Textures\\jupiter.bmp");
+	setUpPlanet(saturn , 30 ,0.0339f ,7.0f , 1.5f , "Textures\\saturn.bmp");
+	setUpPlanet(uranus , 35 ,0.011f ,6.5f , 1.2f , "Textures\\uranus.bmp");
+	setUpPlanet(neptune , 40 ,0.006f ,6.0f , 1.2f, "Textures\\neptune.bmp");
+	setUpPlanet(moon , 2 ,13 ,8.8f  , 0.3f , "Textures\\moon.bmp");
 
 	//Earths Tilt
 	earth.planet.setAngle(-90,23.5,0);
@@ -294,7 +294,7 @@ void drawShadows()
 void displayFog(void)
 {
 	GLfloat density = 0.002f;
-	GLfloat fogColor[4] = {0.10, 0.027, 0.188, 1.0};
+	GLfloat fogColor[4] = {0.10f, 0.027f, 0.188f, 1.0f};
 	glFogi (GL_FOG_MODE, GL_LINEAR);
 	glFogfv (GL_FOG_COLOR, fogColor);
 	glFogf (GL_FOG_DENSITY, density);
@@ -437,12 +437,12 @@ void updatePlanets(void)
 	GLfloat deltaZ = moon.planet.zPosition - earth.planet.zPosition;
 	GLfloat deltaX = moon.planet.xPosition - earth.planet.xPosition;
 	GLfloat angle = atan2(deltaZ , deltaX) ; 
-	angle = -angle * 180 / 3.1415926;
+	angle = -angle * 180.0f / (GLfloat)M_PI;
 	angle+= 90;
 
 	moon.outPole.setAngle(0,  angle , 0);
 
-	moonCylinder.setPosition(earth.upPole.xPosition ,earth.upPole.yPosition - 1.8 , earth.upPole.zPosition);
+	moonCylinder.setPosition(earth.upPole.xPosition ,earth.upPole.yPosition - 1.8f , earth.upPole.zPosition);
 }
 
 
