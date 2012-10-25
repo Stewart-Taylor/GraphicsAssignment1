@@ -8,7 +8,7 @@
  * Last Updated: 22/10/2012
 */
 
-#define _USE_MATH_DEFINES // Allows me to use M_PI
+#define _USE_MATH_DEFINES // Allows me to use PI constant
 
 #include "Camera.h"
 

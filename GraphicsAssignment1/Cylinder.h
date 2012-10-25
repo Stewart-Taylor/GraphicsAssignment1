@@ -15,12 +15,12 @@ public:
 	GLfloat radius;
 	GLfloat length;
 	Cylinder();
-	Cylinder(float x , float y , float z , float radius , float length , int slices );
+	Cylinder(GLfloat x , GLfloat y , GLfloat z , GLfloat radius , GLfloat length , GLuint slices );
 	~Cylinder(void);
 	void display(void);
 		void displayShadow(void);
-	void setAngle(float xAngleT , float yAngleT , float zAngleT);
-	void setPosition(float xPositionT , float yPositionT , float zPositionT);
+	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
+	void setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT);
 	void spin(GLfloat speed);
 };
 

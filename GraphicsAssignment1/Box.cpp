@@ -1,12 +1,20 @@
-#include "Box.h"
+/*		CUBE CLASS
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * This class generates a textured cube.
+ * It also provides a crude shadow method
+ * 
+ * Last Updated: 24/10/2012
+*/
 
+#include "Box.h"
 #include "TextureLoader.h"
 #include "NormalHelper.h"
+
 #include <windows.h>	
 #include <stdio.h>	
 #include <freeglut.h>
-#include <glaux.h>
-#include <math.h>
+
 
 Box::Box()
 {
@@ -14,18 +22,18 @@ Box::Box()
 }
 
 
-Box::Box(GLfloat x , GLfloat y , GLfloat z, GLfloat widthT , GLfloat heightT , GLfloat lengthT )
+Box::Box(GLfloat x , GLfloat y , GLfloat z, GLfloat boxWidth , GLfloat boxHeight , GLfloat boxLength )
 {
 	xPosition = x;
 	yPosition = y;
 	zPosition = z;
-	xAngle = 90;
+	xAngle = 90; 
 	yAngle = 0;
 	zAngle = 0;
-	width = widthT;
-	height = heightT;
-	length = lengthT;
-	texName = TextureLoader::loadTexture("Textures\\brass.bmp"); // CHANGE
+	width = boxWidth;
+	height = boxHeight;
+	length = boxLength;
+	texName = TextureLoader::loadTexture("Textures\\brass.bmp"); 
 }
 
 
@@ -34,12 +42,11 @@ Box::~Box(void)
 }
 
 
-
 void Box::display(void)
 {
 	glPushMatrix(); 
 
-	glEnable(GL_TEXTURE_2D);  // move
+	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
@@ -166,7 +173,6 @@ void Box::display(void)
 void Box::displayShadow(void)
 {
 	glPushMatrix(); 
-
 
 	glMatrixMode(GL_MODELVIEW);
 
