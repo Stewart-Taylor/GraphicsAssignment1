@@ -1,3 +1,13 @@
+/*		Surface Normal Helper
+ *	AUTHOR: STEWART TAYLOR
+ *	DATE STARTED: 20/10/2012
+ *------------------------------------
+ * This class is used to help calculate surface normals. 
+ * It uses the cross product.
+ *
+ * Last Updated: 22/10/2012
+*/
+
 #include "NormalHelper.h"
 
 #include <math.h>
@@ -14,50 +24,47 @@ NormalHelper::~NormalHelper(void)
 }
 
 
-void NormalHelper::getFaceNormal(GLfloat *norm,GLfloat pointa[3],GLfloat pointb[3],GLfloat pointc[3])
+void NormalHelper::getSurfaceNormal(GLfloat *normalVector,GLfloat vertexA[3],GLfloat vertexB[3],GLfloat vertexC[3])
 {
-		float vect[2][3];
-	int a,b;
-	float point[3][3];
+	GLfloat vectorTemp[2][3];
+	GLuint a;
+	GLuint b;
+	GLfloat vertexTemp[3][3];
 
 	for (a=0;a<3;++a)
 	{
-		point[0][a]=pointa[a];						//copies points into point[][]
-		point[1][a]=pointb[a]; 
-		point[2][a]=pointc[a];
+		vertexTemp[0][a]=vertexA[a];
+		vertexTemp[1][a]=vertexB[a]; 
+		vertexTemp[2][a]=vertexC[a];
 	}
 
-	for (a=0;a<2;++a)									//calculates vectors from point[0] to point[1]
-	{														//and point[0] to point[2]
-		for (b=0;b<3;++b)
+	for (a=0; a<2; ++a)								
+	{													
+		for (b=0; b<3; ++b)
 		{
-			vect[a][b]=point[2-a][b]-point[0][b];			
+			vectorTemp[a][b]=vertexTemp[2-a][b]-vertexTemp[0][b];			
 		}
 	}
 
-	crossProduct(norm,vect[0],vect[1]);			//calculates vector at 90° to to 2 vectors
-	normalize(norm);	
+	crossProduct(normalVector,vectorTemp[0],vectorTemp[1]);	
+	normalize(normalVector);	
 
 }
 
-void NormalHelper::normalize(GLfloat * vect)	//scales a vector a length of 1
+void NormalHelper::normalize(GLfloat * vector)
 {
-	float length;
-	int a;
+	GLfloat length;
+	GLuint a;
 
-	length=sqrt(					//A^2 + B^2 + C^2 = length^2
-				pow(vect[0],2)+	
-				pow(vect[1],2)+
-				pow(vect[2],2)
-				);
+	length=sqrt(pow(vector[0],2) + pow(vector[1],2) + pow(vector[2],2));
 
-	for (a=0;a<3;++a)				//divides vector by its length to normalise
+	for (a=0;a<3;++a)// Divide by it's length to normalize
 	{
-		vect[a]/=length;
+		vector[a]/=length;
 	}
 }
 
-void NormalHelper::crossProduct(GLfloat *c,GLfloat a[3], GLfloat b[3])		//finds the cross product of two vectors
+void NormalHelper::crossProduct(GLfloat *c,GLfloat a[3], GLfloat b[3])
 {															
 	c[0]=a[1]*b[2] - b[1]*a[2];
 	c[1]=a[2]*b[0] - b[2]*a[0];
