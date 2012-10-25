@@ -508,9 +508,6 @@ void updatePlanets(void)
 
 
 
-
-
-
 void idle(void)
 {
 	mainGear.spin(orbitSpeed * 60);  // 0.06

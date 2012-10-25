@@ -1,10 +1,22 @@
+/*		Gear CLASS
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * This class generates a textured gear.
+ * it has variables to adust it
+ * It also provides a crude shadow method
+ * 
+ * Reference : Used http://www.codeforge.com/read/201880/GEARS.C__html as a starting point , Heavily modified
+ * Had to add texture cooridnates and surface normals , shadow model
+ *
+ * Last Updated: 23/10/2012
+*/
+
+#define _USE_MATH_DEFINES // Allows me to use PI constant 
+
 #include "Gear.h"
 #include "TextureLoader.h"
 
-#include <windows.h>	
-#include <stdio.h>	
 #include <freeglut.h>
-#include <glaux.h>
 #include <math.h>
 
 Gear::Gear()
@@ -36,14 +48,11 @@ Gear::~Gear(void)
 }
 
 
-
 void Gear::display(void)
 {
 	glPushMatrix(); 
 
-	GLfloat M_PI = 3.14159265359; // change
-
-	glEnable(GL_TEXTURE_2D);  // move
+	glEnable(GL_TEXTURE_2D);  
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
@@ -69,7 +78,7 @@ void Gear::display(void)
 
 	da = 2.0 * M_PI / teeth / 4.0;
 
-	glShadeModel(GL_FLAT);
+
 	glNormal3f(0.0, 0.0, 1.0);
 	glBegin(GL_QUAD_STRIP);
 	for (i = 0; i <= teeth; i++) 
@@ -88,7 +97,6 @@ void Gear::display(void)
 	for (i = 0; i < teeth; i++) 
 	{
 		angle = i * 2.0 * M_PI / teeth;
-
 		glNormal3f(0.0, 0.0, 1.0);	glTexCoord2f(r1 * cos(angle), r1 * sin(angle) ); 	glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
 		glNormal3f(0.0, 0.0, 1.0);	glTexCoord2f(r2 * cos(angle + da), r2 * sin(angle + da) ); 	glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
 		glNormal3f(0.0, 0.0, 1.0);	glTexCoord2f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da) ); 	glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5);
@@ -150,7 +158,6 @@ void Gear::display(void)
 
 	glEnd();
 	
-	glShadeModel(GL_SMOOTH);
 	glBegin(GL_QUAD_STRIP);
 	for (i = 0; i <= teeth; i++) 
 	{
@@ -162,7 +169,6 @@ void Gear::display(void)
 	glEnd();
 
 	glPopMatrix();
-
 	glDisable(GL_TEXTURE_2D);
 }
 
@@ -172,8 +178,6 @@ void Gear::display(void)
 void Gear::displayShadow(void)
 {
 	glPushMatrix(); 
-
-	GLfloat M_PI = 3.14159265359; // change
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -197,8 +201,6 @@ void Gear::displayShadow(void)
 
 	da = 2.0 * M_PI / teeth / 4.0;
 
-	glShadeModel(GL_FLAT);
-	glNormal3f(0.0, 0.0, 1.0);
 	glBegin(GL_QUAD_STRIP);
 	for (i = 0; i <= teeth; i++) 
 	{
@@ -216,7 +218,6 @@ void Gear::displayShadow(void)
 	for (i = 0; i < teeth; i++) 
 	{
 		angle = i * 2.0 * M_PI / teeth;
-
 		glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
 		glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
 		glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5);
@@ -224,7 +225,6 @@ void Gear::displayShadow(void)
 	}
 	glEnd();
 
-	glNormal3f(0.0, 0.0, -1.0);
 	glBegin(GL_QUAD_STRIP);
 	for (i = 0; i <= teeth; i++) 
 	{
@@ -273,7 +273,6 @@ void Gear::displayShadow(void)
 
 	glEnd();
 	
-	glShadeModel(GL_SMOOTH);
 	glBegin(GL_QUAD_STRIP);
 	for (i = 0; i <= teeth; i++) 
 	{
@@ -289,7 +288,7 @@ void Gear::displayShadow(void)
 }
 
 
-void Gear::setAngle(float xAngleT , float yAngleT , float zAngleT)
+void Gear::setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT)
 {
 	xAngle = xAngleT;
 	yAngle = yAngleT;
@@ -298,7 +297,5 @@ void Gear::setAngle(float xAngleT , float yAngleT , float zAngleT)
 
 void Gear::spin(GLfloat speed)
 {
-	//xAngle += 0.01f;
-	//yAngle  += 0.01f;
 	zAngle  += speed;
 }
