@@ -1,3 +1,16 @@
+/*		MECHANICAL ORRERY
+ *	AUTHOR: STEWART TAYLOR
+ *	DATE STARTED: 20/10/2012
+ *------------------------------------
+ * This program is part of the Graphics modules first assignment.
+ * It demonstrates the use of defining 3D objects manually, 
+ * making use of matrix manipulations, textures ,the use of shadows and lights.
+ * 
+ * The main class is used as a controler and is also used to set the program up.
+ *
+ * Last Updated: 25/10/2012
+*/
+
 #include "Camera.h"
 #include "Main.h"
 #include "SpaceWall.h"
@@ -13,9 +26,11 @@
 #include <stdlib.h>
 #include <freeglut.h>
 
+#define _USE_MATH_DEFINES
+
 Camera camera = Camera();
 
-Box boxTest; 
+Box baseBox; 
 Box coverBox;
 Box coverBox2; 
 Box coverBox3; 
@@ -148,7 +163,7 @@ void init (void)
 	table = TableSurface(0.0 , 0.0 , 0.0);
 	sun = Sun(0.0 , 13.0 , 0.0);
 	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
-	boxTest = Box(0,1.01,0 , 10,10,2);
+	baseBox = Box(0,1.01,0 , 10,10,2);
 	coverBox = Box(0,3.2,3.8 , 10,1,0.5);
 	coverBox2 = Box(0,3.2,-3.8 , 10,1,0.5);
 	coverBox3 = Box(4.4,3.3,0 , 9,1,0.5);
@@ -302,7 +317,7 @@ void drawShadows()
 	powerPole3.displayShadow();
 	powerPole4.displayShadow();
 	sun.displayShadow();
-	boxTest.displayShadow();
+	baseBox.displayShadow();
 	moonCylinder.displayShadow();
 	
 	neptunePole.displayShadow();   // ONLY one visible at set lighting angle
@@ -377,7 +392,7 @@ void display (void)
 	powerPole3.display();
 	powerPole4.display();
 	sun.display();
-	boxTest.display();
+	baseBox.display();
 	coverBox.display();
 	coverBox2.display();
 	coverBox3.display();
@@ -438,7 +453,7 @@ void keyboard (unsigned char key, int x, int y)
 
 void mouseUpdate(int x , int y)
 {
-	//	camera.mouseControl(x,y);
+	//camera.mouseControl(x,y);
 }
 
 void updatePlanets(void)
@@ -457,7 +472,6 @@ void updatePlanets(void)
 	//update saturn ring
 	saturnRing.xPosition = saturn.planet.xPosition;
 	saturnRing.zPosition = saturn.planet.zPosition;
-
 
 	neptunePole.zAngle = -neptune.outPole.yAngle;
 	uranusPole.zAngle = -uranus.outPole.yAngle;

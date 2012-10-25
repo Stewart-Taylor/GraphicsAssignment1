@@ -1,19 +1,34 @@
-#include "Camera.h"
+/*		CAMERA CLASS
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * This class provides matrix manipulations to provide control over a camera type system
+ * by manipulating  the viewport. 
+ * It also provides controls for the camera manipulation.
+ * 
+ * Last Updated: 22/10/2012
+*/
 
+#define _USE_MATH_DEFINES // Allows me to use M_PI
+
+#include "Camera.h"
 
 #include <math.h>
 #include <stdlib.h>
 #include <freeglut.h>
 
 
+//Values taken from setting the camera at a good starting position manually in the program.
+GLfloat xPosition = 2.312;
+GLfloat yPosition = 13.4;
+GLfloat zPosition = 16.97;
+GLfloat xRotation = 29;
+GLfloat yRotation = 0;
+GLfloat angle =0.0;
 
+GLfloat radius = 10.0f; // This is used to allow the camera to rotate around a point slightly in front of it. Looks Smoother.
 
-//angle of rotation
-float xpos = 2.312, ypos = 13.4, zpos = 16.97, xrot = 29, yrot = 0, angle=0.0;
-
-float cRadius = 10.0f; // our radius distance from our character
-
-float lastx, lasty;
+GLfloat lastX;
+GLfloat lastY;
 
 
 
@@ -21,108 +36,105 @@ Camera::Camera(void)
 {
 }
 
-
 Camera::~Camera(void)
 {
 }
 
 
-
-
-
 void Camera::update()
 {
-	glTranslatef(0.0f, 0.0f, -cRadius);
-    glRotatef(xrot,1.0,0.0,0.0);
+	glTranslatef(0.0f, 0.0f, -radius);
+    glRotatef(xRotation,1.0,0.0,0.0);
     
-    
-    glRotatef(yrot,0.0,1.0,0.0);  //rotate our camera on the y-axis (up and down)
-    glTranslated(-xpos,-ypos,-zpos); //translate the screento the position of our camera
-
+    glRotatef(yRotation,0.0,1.0,0.0);  
+    glTranslated(-xPosition,-yPosition,-zPosition); 
 }
 
 
-void Camera::mouseControl(int x , int y)
+void Camera::keyboardControl(unsigned char key, int x, int y) 
 {
-	   int diffx=x-lastx; //check the difference between the current x and the last x position
-    int diffy=y-lasty; //check the difference between the current y and the last y position
-    lastx=x; //set lastx to the current x position
-    lasty=y; //set lasty to the current y position
-    xrot -= (float) diffy; //set the xrot to xrot with the addition of the difference in the y position
-    yrot -= (float) diffx;    //set the xrot to yrot with the addition of the difference in the x position
-
-
-}
-
-
-void Camera::keyboardControl(unsigned char key, int x, int y) {
-    if (key=='q')
+    if (key=='x') // Tilt camera up
     {
-    xrot += 1;
-    if (xrot >360) xrot -= 360;
-    }
-
-    if (key=='z')
-    {
-    xrot -= 1;
-    if (xrot < -360) xrot += 360;
-    }
-
-	    if (key=='x')
-    {
-		ypos -= 0.1f;
+		xRotation += 1;
+		if (xRotation >360)
+		{
+			xRotation -= 360;
 		}
+    }
 
-			    if (key=='c')
+    if (key=='z')// Tilt camera down
     {
-		ypos += 0.1f;
+		xRotation -= 1;
+		if (xRotation < -360) 
+		{
+			xRotation += 360;
 		}
-
-	if (key=='e')
-    {
-    yrot -= 1;
-    if (yrot < -360) yrot += 360;
     }
 
-    if (key=='w')
+	if (key=='r') // Move up 
     {
-    float xrotrad, yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xrotrad = (xrot / 180 * 3.141592654f); 
-    xpos += float(sin(yrotrad));
-    zpos -= float(cos(yrotrad));
-    ypos -= float(sin(xrotrad));
+		yPosition += 0.1f;
+	}
+
+	if (key=='f') // Move down  
+    {
+		yPosition -= 0.1f;
+	}
+
+	if (key=='e') // Look Left
+    {
+		yRotation -= 1;
+		if (yRotation < -360)
+		{
+			yRotation += 360;
+		}
+	}
+
+	if (key=='q') //  Look Right
+    {
+		yRotation += 1;
+		if (yRotation < -360) 
+		{
+			yRotation += 360;
+		}
     }
 
-    if (key=='s')
+    if (key=='w') // Move forward in direction you are looking
     {
-    float xrotrad, yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xrotrad = (xrot / 180 * 3.141592654f); 
-    xpos -= float(sin(yrotrad));
-    zpos += float(cos(yrotrad));
-    ypos += float(sin(xrotrad));
+		GLfloat xRoationRadius;
+		GLfloat yRotationRadius;
+		yRotationRadius = (yRotation / 180 * M_PI); 
+		xRoationRadius = (xRotation / 180 * M_PI); 
+		xPosition += GLfloat(sin(yRotationRadius));
+		zPosition -= GLfloat(cos(yRotationRadius));
+		yPosition -= GLfloat(sin(xRoationRadius));
     }
 
-    if (key=='d')
+    if (key=='s')// Move back in direction you are looking
     {
-    float yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xpos += float(cos(yrotrad)) * 0.2;
-    zpos += float(sin(yrotrad)) * 0.2;
+		GLfloat xRoationRadius;
+		GLfloat yRotationRadius;
+		yRotationRadius = (yRotation / 180 * M_PI);
+		xRoationRadius = (xRotation / 180 * M_PI); 
+		xPosition -= float(sin(yRotationRadius));
+		zPosition += float(cos(yRotationRadius));
+		yPosition += float(sin(xRoationRadius));
     }
 
-    if (key=='a')
+    if (key=='d') // Strafe to the Right
     {
-    float yrotrad;
-    yrotrad = (yrot / 180 * 3.141592654f);
-    xpos -= float(cos(yrotrad)) * 0.2;
-    zpos -= float(sin(yrotrad)) * 0.2;
+		GLfloat yRotationRadius;
+		yRotationRadius = (yRotation / 180 * M_PI);
+		xPosition += GLfloat(cos(yRotationRadius)) * 0.2;
+		zPosition += GLfloat(sin(yRotationRadius)) * 0.2;
     }
 
-    if (key==27)
+    if (key=='a') // Strafe to the Left
     {
-    exit(0);
+		GLfloat yRotationRadius;
+		yRotationRadius = (yRotation / 180 * M_PI);
+		xPosition -= GLfloat(cos(yRotationRadius)) * 0.2;
+		zPosition -= GLfloat(sin(yRotationRadius)) * 0.2;
     }
 }
 
