@@ -180,4 +180,9 @@ void Cylinder::setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPo
 void Cylinder::spin(GLfloat speed)
 {
 	zAngle -= speed;
+	
+	if(zAngle <= -360.0)
+	{
+		zAngle += 360.0;
+	}
 }

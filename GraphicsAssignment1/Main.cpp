@@ -94,8 +94,8 @@ struct PlanetPart
 
 	void update(void)
 	{
-		float xPositionT = 0 + sin(orbitTimer * rotateModifier) * radius;
-		float zPositionT = 0 + cos(orbitTimer * rotateModifier) * radius;
+		GLfloat xPositionT = 0 + sin(orbitTimer * rotateModifier) * radius;
+		GLfloat zPositionT = 0 + cos(orbitTimer * rotateModifier) * radius;
 
 		planet.setPosition(xPositionT ,planet.yPosition , zPositionT);
 		upPole.setPosition(xPositionT , upPole.yPosition , zPositionT);
@@ -205,6 +205,9 @@ void init (void)
 	setUpPlanet(uranus , 35 ,0.011 ,6.5 , 1.2 , "Textures\\uranus.bmp");
 	setUpPlanet(neptune , 40 ,0.006 ,6.0 , 1.2, "Textures\\neptune.bmp");
 	setUpPlanet(moon , 2 ,13 ,8.8  , 0.3 , "Textures\\moon.bmp");
+
+	//Earths Tilt
+	earth.planet.setAngle(-90,23.5,0);
 }
 
 
