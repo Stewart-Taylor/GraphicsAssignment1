@@ -13,6 +13,7 @@
 
 #define _USE_MATH_DEFINES
 
+
 #include "Camera.h"
 #include "Main.h"
 #include "SpaceWall.h"
@@ -28,6 +29,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <freeglut.h>
+#include <fstream>
+#include <iostream>
 
 
 Camera camera = Camera();
@@ -367,6 +370,8 @@ void reshape (int w, int h)
 
 void keyboard (unsigned char key, int x, int y)
 {
+	key = tolower(key); // Allows Caps Lock to still work
+
 	camera.keyboardControl(key , x , y);
 
 	if (key=='k'){light_position[1] += 1;}
@@ -453,9 +458,31 @@ void idle(void)
 	glutPostRedisplay();
 }
 
+void printInfo()
+{
+	std::cout << "	OpenGL Mechanical 3D Orrery" << std::endl << std::endl;
+	std::cout << "	Created by Stewart Taylor" << std::endl << std::endl;
+	std::cout << "-------------------------------------" << std::endl;
+	std::cout << "CONTROLS" << std::endl;
+	std::cout << std::endl;
+	std::cout << "CAMERA" << std::endl;
+	std::cout << " W,A,S,D  - Move Camera" << std::endl;
+	std::cout << " Q,E - Look Left/Right" << std::endl;
+	std::cout << " R,F - Move Camera Up/Down " << std::endl;
+	std::cout << " Z,X - Tilt Camera Up/Down" << std::endl;
+	std::cout << std::endl;
+	std::cout << "Main " << std::endl;
+	std::cout << " M - Increase speed" << std::endl;
+	std::cout << " N - Decrease speed" << std::endl;
+	std::cout << std::endl;
+	std::cout << "LIGHT " << std::endl;
+	std::cout << " U,I,K,L,J - Move Light Source" << std::endl;
+	std::cout << std::endl;
+}
 
 int main (int argc, char **argv)
 {
+	printInfo();
     glutInit (&argc, argv);
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (600, 600); 
