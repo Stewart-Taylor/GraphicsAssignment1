@@ -3,11 +3,20 @@
 class OutPole
 {
 public:
+	GLfloat yAngle;
+	OutPole();
+	OutPole(GLfloat x , GLfloat y , GLfloat z , GLfloat radius , GLfloat length , GLuint slices );
+	~OutPole(void);
+	void display(void);
+	void displayShadow(void);
+	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
+	void setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT);
+	void setOriginPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT  );
+private:
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
 	GLfloat xAngle;
-	GLfloat yAngle;
 	GLfloat zAngle;
 	GLfloat scale;
 	GLuint texName;
@@ -17,12 +26,5 @@ public:
 	GLfloat originPosX;
 	GLfloat originPosY;
 	GLfloat originPosZ;
-	OutPole();
-	OutPole(float x , float y , float z , float radius , float length , int slices );
-	~OutPole(void);
-	void display(void);
-	void displayShadow(void);
-	void setAngle(float xAngleT , float yAngleT , float zAngleT);
-	void setPosition(float xPositionT , float yPositionT , float zPositionT);
-	void setOriginPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT  );
+
 };

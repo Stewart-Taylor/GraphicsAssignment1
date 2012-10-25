@@ -520,7 +520,6 @@ void idle(void)
 	sideGear.spin(-orbitSpeed * 400);
 	sidePole.spin(orbitSpeed * 400);
 	sun.update();
-	skybox.update();
 	updatePlanets();
 
 	glutPostRedisplay();

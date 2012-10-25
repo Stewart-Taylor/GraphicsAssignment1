@@ -1,10 +1,18 @@
+/*		OutPole Class
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * This class is to generate a cylinder
+ * It rotates around an origin from an offset out to the planet
+ *
+ * Last Updated: 23/10/2012
+*/
+
+#define _USE_MATH_DEFINES // Allows me to use PI constant 
+
 #include "OutPole.h"
 #include "TextureLoader.h"
 
-#include <windows.h>	
-#include <stdio.h>	
 #include <freeglut.h>
-#include <glaux.h>
 #include <math.h>
 
 
@@ -14,7 +22,7 @@ OutPole::OutPole()
 }
 
 
-OutPole::OutPole(float x , float y , float z , float radiusT , float lengthT  ,int slicesT)
+OutPole::OutPole(GLfloat x , GLfloat y , GLfloat z , GLfloat radiusT , GLfloat lengthT  ,GLuint slicesT)
 {
 	xPosition = x;
 	yPosition = y;
@@ -48,11 +56,6 @@ void OutPole::display(void)
 	glBindTexture(GL_TEXTURE_2D, texName);
 
 	glMatrixMode(GL_MODELVIEW);
-//	glTranslated(xPosition ,yPosition ,zPosition);
-	//glRotatef(xAngle, 1.0, 0.0, 0.0);
-//	glRotatef(yAngle, 0.0, 1.0, 0.0);
-	//glRotatef(zAngle, 0.0, 0.0, 1.0);
-	//glTranslated(0,0 ,0);
 	glTranslated(originPosX,originPosY,originPosZ);
 	glRotatef(yAngle, 0.0, 1.0, 0.0);
 
@@ -60,15 +63,10 @@ void OutPole::display(void)
 	glScaled(scale ,scale ,scale);
 			   
 
-	GLfloat hl = length * 0.5f;
+	GLfloat halfLength = length * 0.5f;
 	GLfloat a = 0.0f;
-	GLfloat step = 6.28318 / (GLfloat)slices;
+	GLfloat step = (2 * M_PI) / (GLfloat)slices;
 
-	GLfloat Nx ; //= X ; //= radius *cos(Theta)
-	GLfloat Ny ; //= Y ; //= 0
-	GLfloat Nz ; //= Z ; // = R*SIN(Theta)
-	GLfloat angle ;
- 
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i < slices + 1; ++i)
 	{
@@ -76,40 +74,39 @@ void OutPole::display(void)
 		GLfloat y = sin(a) * radius;
 
 		glNormal3f(x, y, 0);
-		glTexCoord2f(x,0); glVertex3f(x,y, hl);
-		glTexCoord2f(x,4);    glVertex3f(x,y,-hl);
+		glTexCoord2f(x,0); glVertex3f(x,y, halfLength);
+		glTexCoord2f(x,4);    glVertex3f(x,y,-halfLength);
     
 		a += step;
 	}
 	glEnd();
 
-
-
-	glBegin(GL_TRIANGLE_STRIP);  //ENDS
+	//CYLINDER ENDS
+	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i < slices + 1; ++i)
 	{
-		GLfloat theta = 2.0f * 3.14159265359 * GLfloat(i) / GLfloat(slices);//get the current angle 
+		GLfloat theta = 2.0f * M_PI * GLfloat(i) / GLfloat(slices);
 
-		GLfloat xT = radius * cosf(theta);//calculate the x component 
-		GLfloat yT = radius * sinf(theta);//calculate the y component 
+		GLfloat xT = radius * cosf(theta);
+		GLfloat yT = radius * sinf(theta);
 
 		glNormal3f(xT, yT, 0);
-		glTexCoord2f(0,0);		glVertex3f(0 , 0 , hl);
-		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, hl );//output vertex 
+		glTexCoord2f(0,0);		glVertex3f(0 , 0 , halfLength);
+		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, halfLength );
 	}
 	glEnd();
 
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i < slices + 1; ++i)
 	{
-		GLfloat theta = 2.0f * 3.14159265359 * GLfloat(i) / GLfloat(slices);//get the current angle 
+		GLfloat theta = 2.0f * M_PI * GLfloat(i) / GLfloat(slices);
 
-		GLfloat xT = radius * cosf(theta);//calculate the x component 
-		GLfloat yT = radius * sinf(theta);//calculate the y component 
+		GLfloat xT = radius * cosf(theta);
+		GLfloat yT = radius * sinf(theta);
 
 		glNormal3f(xT, yT, 0);
-		glTexCoord2f(0,0);		glVertex3f(0 , 0 , -hl);
-		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, -hl );//output vertex 
+		glTexCoord2f(0,0);		glVertex3f(0 , 0 , -halfLength);
+		glTexCoord2f(xT,yT);	glVertex3f(xT , yT, -halfLength );
 	}
 	glEnd();
 
@@ -129,11 +126,11 @@ void OutPole::displayShadow(void)
 
 	glTranslated(xPosition ,yPosition ,length/2);
 	glScaled(scale ,scale ,scale);
-		glColor4f(0.2,0.2,0.2,0.2);	   
+	glColor4f(0.2,0.2,0.2,0.2);	   
 
-	GLfloat hl = length * 0.5f;
+	GLfloat halfLength = length * 0.5f;
 	GLfloat a = 0.0f;
-	GLfloat step = 6.28318 / (GLfloat)slices;
+	GLfloat step = (2*M_PI) / (GLfloat)slices;
 
 
 	glBegin(GL_TRIANGLE_STRIP);
@@ -142,35 +139,31 @@ void OutPole::displayShadow(void)
 		GLfloat x = cos(a) * radius;
 		GLfloat y = sin(a) * radius;
 
-		glNormal3f(x, y, 0);
-		glTexCoord2f(x,0); glVertex3f(x,y, hl);
-		glTexCoord2f(x,4);    glVertex3f(x,y,-hl);
+		glVertex3f(x,y, halfLength);
+		glVertex3f(x,y,-halfLength);
     
 		a += step;
 	}
 	glEnd();
-
 
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
 }
 
 
-void OutPole::setAngle(float xAngleT , float yAngleT , float zAngleT)
+void OutPole::setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT)
 {
 	xAngle = xAngleT;
 	yAngle = yAngleT;
 	zAngle = zAngleT;
 }
 
-void OutPole::setPosition(float xPositionT , float yPositionT , float zPositionT)
+void OutPole::setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT)
 {
 	xPosition = xPositionT;
 	yPosition = yPositionT;
 	zPosition = zPositionT;
 }
-
-
 
 void OutPole::setOriginPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT  )
 {
