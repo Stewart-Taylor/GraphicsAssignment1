@@ -159,7 +159,7 @@ void init (void)
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
 
-	skybox = SpaceWall(0.0 , 0.0 , -10.0);
+	skybox = SpaceWall();
 	table = TableSurface();
 	sun = Sun(0.0 , 13.0 , 0.0);
 	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
