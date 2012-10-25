@@ -160,7 +160,7 @@ void init (void)
 	glEnable(GL_TEXTURE_2D);
 
 	skybox = SpaceWall(0.0 , 0.0 , -10.0);
-	table = TableSurface(0.0 , 0.0 , 0.0);
+	table = TableSurface();
 	sun = Sun(0.0 , 13.0 , 0.0);
 	centralPole = Cylinder(0,8.0,0 ,0.54 , 12.0 , 30);
 	baseBox = Box(0,1.01,0 , 10,10,2);
