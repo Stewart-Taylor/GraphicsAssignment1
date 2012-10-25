@@ -23,6 +23,7 @@
 #include "Box.h"
 #include "Gear.h"
 #include "Planet.h"
+#include "SaturnRing.h"
 #include "OutPole.h"
 #include "ShadowHelper.h"
 
@@ -48,7 +49,7 @@ Cylinder powerPole;
 Cylinder powerPole2; 
 Cylinder powerPole3; 
 Cylinder powerPole4; 
-Cylinder saturnRing; 
+SaturnRing saturnRing; 
 Gear mainGear; 
 Gear bigGear; 
 Gear powerGear; 
@@ -56,6 +57,7 @@ Gear bigPowerGear;
 Gear smallMiddleGear; 
 Gear sideGear; 
 Cylinder sidePole; 
+Cylinder saturnRingPole; 
 
 Cylinder neptunePole;
 Cylinder uranusPole;
@@ -177,6 +179,9 @@ void init (void)
 	sidePole.setAngle(180 ,90 ,0);
 	sideGear.setAngle(180 ,90 ,0);
 	
+	saturnRingPole = Cylinder(4.3f ,3.3f ,3.8f ,0.04f , 4.3f , 20);
+	saturnRingPole.setAngle(0,0 ,0);
+	
 	powerPole = Cylinder(4.3f ,3.3f ,3.8f ,0.18f , 2.0f , 30);
 	powerPole2 = Cylinder(-4.3f ,3.3f ,3.8f ,0.18f , 2.0f , 30);
 	powerPole3 = Cylinder(-4.3f ,3.3f ,-3.8f ,0.18f , 2.0f , 30);
@@ -193,7 +198,7 @@ void init (void)
 	venusPole = Cylinder(0,6.96f,0 ,0.3f , 4.5f , 30);
 	mercuryPole = Cylinder(0,8,0 ,0.2f , 5.0f , 30);
 
-	saturnRing = Cylinder(0 ,11.0f ,0 ,2.4f , 0.2f , 30);
+	saturnRing = SaturnRing(0 ,11.0f ,0 ,2.4f , 0.2f , 30);
 	saturnRing.yAngle = -12;
 	
 	setUpPlanet(mercury , 5 ,4.1f ,9.5f , 0.4f , "Textures\\mercury.bmp");
@@ -273,6 +278,7 @@ void drawShadows()
 	baseBox.displayShadow();
 	moonCylinder.displayShadow();
 	drawPlanetsShadow();
+	saturnRingPole.displayShadow();
 	
 	neptunePole.displayShadow();   // ONLY one visible at set lighting angle . Inner MIddle POle
 	//uranusPole.displayShadow();  
@@ -356,6 +362,7 @@ void display (void)
 	earthPole.display();
 	venusPole.display();
 	mercuryPole.display();
+	saturnRingPole.display();
 
 	glutSwapBuffers();
 }
@@ -443,6 +450,9 @@ void updatePlanets(void)
 	moon.outPole.setAngle(0,  angle , 0);
 
 	moonCylinder.setPosition(earth.upPole.xPosition ,earth.upPole.yPosition - 1.8f , earth.upPole.zPosition);
+
+
+	saturnRingPole.setPosition(saturn.planet.xPosition , saturn.planet.yPosition  , saturn.planet.zPosition);
 }
 
 

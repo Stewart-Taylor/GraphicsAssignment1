@@ -54,6 +54,9 @@
     <ClInclude Include="ShadowHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SaturnRing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShadowHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaturnRing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
