@@ -65,7 +65,7 @@ void SaturnRing::display(void)
 			   
 	GLfloat width = 0.1;
 	GLfloat inner_radius = 2.1;
-	GLfloat outer_radius = 3.5;
+	GLfloat outer_radius = 3.2;
 	GLfloat tooth_depth = 0;
 	GLfloat teeth = 30;
 	GLint i;
@@ -180,7 +180,7 @@ void SaturnRing::displayShadow(void)
 	
 	GLfloat width = 0.1;
 	GLfloat inner_radius = 2.1;
-	GLfloat outer_radius = 3.5;
+	GLfloat outer_radius = 3.2;
 	GLfloat tooth_depth = 0;
 	GLfloat teeth = 30;
 	GLint i;

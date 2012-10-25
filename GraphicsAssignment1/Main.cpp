@@ -92,7 +92,6 @@ struct PlanetPart
 	OutPole outPole;
 	GLfloat radius;
 	GLfloat rotateModifier;
-	GLfloat spinSpeed;
 
 	void update(void)
 	{
@@ -101,7 +100,6 @@ struct PlanetPart
 
 		planet.setPosition(xPositionT ,planet.yPosition , zPositionT);
 		upPole.setPosition(xPositionT , upPole.yPosition , zPositionT);
-		upPole.spin(1.0);
 
 		GLfloat angle = atan2(zPositionT , xPositionT);
 		angle = -angle * 180.0f / (GLfloat)M_PI;
@@ -135,7 +133,7 @@ PlanetPart neptune;
 PlanetPart moon;
 
 
-void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat rotateMod , GLfloat y  , GLfloat planetScale , char* path )
+void setUpPlanet(PlanetPart& part , GLfloat radiusT , GLfloat rotateMod , GLfloat y  , GLfloat planetScale  ,char* path )
 {
 	part.planet = Planet(10 ,(y+ 4) ,0 , path);
 	part.planet.scale = planetScale;
@@ -202,14 +200,14 @@ void init (void)
 	saturnRing.yAngle = -12;
 	
 	setUpPlanet(mercury , 5 ,4.1f ,9.5f , 0.4f , "Textures\\mercury.bmp");
-	setUpPlanet(venus , 10 ,1.62f ,9.0f , 1.0f , "Textures\\venus.bmp");
-	setUpPlanet(earth , 15 ,1 ,8.5f , 1.0 , "Textures\\earth.bmp");
-	setUpPlanet(mars , 20 ,0.53f ,8.0f , 0.53f , "Textures\\mars.bmp");
-	setUpPlanet(jupiter , 25 ,0.08f ,7.5 , 2.0f , "Textures\\jupiter.bmp");
-	setUpPlanet(saturn , 30 ,0.0339f ,7.0f , 1.5f , "Textures\\saturn.bmp");
-	setUpPlanet(uranus , 35 ,0.011f ,6.5f , 1.2f , "Textures\\uranus.bmp");
-	setUpPlanet(neptune , 40 ,0.006f ,6.0f , 1.2f, "Textures\\neptune.bmp");
-	setUpPlanet(moon , 2 ,13 ,8.8f  , 0.3f , "Textures\\moon.bmp");
+	setUpPlanet(venus , 10 ,1.62f ,9.0f , 1.0f ,  "Textures\\venus.bmp");
+	setUpPlanet(earth , 15 ,1 ,8.5f , 1.0 ,  "Textures\\earth.bmp");
+	setUpPlanet(mars , 20 ,0.53f ,8.0f , 0.53f ,  "Textures\\mars.bmp");
+	setUpPlanet(jupiter , 25 ,0.08f ,7.5 , 2.0f ,  "Textures\\jupiter.bmp");
+	setUpPlanet(saturn , 30 ,0.0339f ,7.0f , 1.5f ,  "Textures\\saturn.bmp");
+	setUpPlanet(uranus , 35 ,0.011f ,6.5f , 1.2f ,  "Textures\\uranus.bmp");
+	setUpPlanet(neptune , 40 ,0.006f ,6.0f , 1.2f,  "Textures\\neptune.bmp");
+	setUpPlanet(moon , 2 ,13 ,8.8f  , 0.3f ,  "Textures\\moon.bmp");
 
 	//Earths Tilt
 	earth.planet.setAngle(-90,23.5,0);
@@ -450,7 +448,6 @@ void updatePlanets(void)
 	moon.outPole.setAngle(0,  angle , 0);
 
 	moonCylinder.setPosition(earth.upPole.xPosition ,earth.upPole.yPosition - 1.8f , earth.upPole.zPosition);
-
 
 	saturnRingPole.setPosition(saturn.planet.xPosition , saturn.planet.yPosition  , saturn.planet.zPosition);
 }

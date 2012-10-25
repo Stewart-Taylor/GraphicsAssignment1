@@ -6,6 +6,7 @@ public:
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
+	GLfloat zAngle;
 	GLfloat scale;
 	Planet();
 	Planet(GLfloat x , GLfloat y , GLfloat z , char* path );
@@ -18,6 +19,5 @@ private:
 	GLfloat time;
 	GLfloat xAngle;
 	GLfloat yAngle;
-	GLfloat zAngle;
 	GLuint texName;
 };
